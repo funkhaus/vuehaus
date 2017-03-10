@@ -1,0 +1,35 @@
+{
+  "name": "funkhaus-webpack-template",
+  "version": "1.0.0",
+  "description": "A template for all Funkhaus webpack-based sites.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_PATH=. webpack --progress --colors --watch",
+    "build": "NODE_PATH=. NODE_ENV=production webpack --compress --progress --hide-modules"
+  },
+  "author": "Funkhaus",
+  "license": "ISC",
+  "dependencies": {
+    "autoprefixer": "^6.7.2",
+    "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-2": "^6.22.0",
+    "compression-webpack-plugin": "^0.3.2",
+    "css-loader": "^0.26.4",
+    "eslint": "^3.14.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.9.0",
+    "jquery": "^3.1.1",
+    "postcss-import": "^9.1.0",
+    "postcss-loader": "^1.3.3",
+    "postcss-url": "^5.1.2",
+    "style-loader": "^0.13.1",
+    "vue": "^2.2.2",
+    "vue-loader": "^11.1.4",
+    "vue-template-compiler": "^2.2.2",
+    "webpack": "^2.2.1"
+  }
+}

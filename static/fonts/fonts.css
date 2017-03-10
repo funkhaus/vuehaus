@@ -1,0 +1,26 @@
+/*
+    Load fonts in this file using @font-face
+    Example:
+        @font-face {
+           font-family: 'FontName';
+           src: url('FontName.eot');
+           src: url('FontName.eot?#iefix') format('embedded-opentype'),
+                 url('FontName.woff2') format('woff2'),
+                 url('FontName.woff') format('woff'),
+                 url('FontName.ttf') format('truetype');
+            font-style: normal;
+            font-weight: 400;
+        }
+
+    Font Weights:
+        100 - Thin
+        200 - Extra Light (Ultra Light)
+        300 - Light
+        400 - Normal
+        500 - Medium
+        600 - Semi Bold (Demi Bold)
+        700 - Bold
+        800 - Extra Bold (Ultra Bold)
+        900 - Black (Heavy)
+*/
+

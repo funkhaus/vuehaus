@@ -1,0 +1,13 @@
+# Logs
+logs
+*.log
+
+# build files
+static/build*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+node_modules

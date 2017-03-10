@@ -1,0 +1,74 @@
+/*
+ * Used to style the TinyMCE editor.
+ * By Drew Baker - 2011
+ * drew@funkhausdesign.com
+ *
+ */
+
+/*
+ * Import Fonts
+ */ 
+    @import url("../fonts/stylesheet.css"); 
+    
+    
+/*
+ * Globals
+ */
+	html .mceContentBody {
+		max-width: 960px;
+		font-family: "Neutraface2TextBook", Helvetica, Arial, sans-serif;
+		font-size: 14px; 
+	}
+	* {
+		font-family: "Neutraface2TextBook", Helvetica, Arial, sans-serif;
+		color: #444545;
+		line-height: 1.4;
+	}
+	h1,h2,h3,h4,h5,h6 {
+        font-weight: normal;
+	}	
+	h1 {
+		color: #999999;
+		font-size: 30px;
+	}
+	h2 {
+		color: #db8f39;
+		font-size: 28px;
+	}
+	h3 {
+		font-size: 14px;
+		color: #db8f39;
+		font-family: "Neutraface2TextDemi", Helvetica, Arial, sans-serif;
+		margin: 0;
+	}
+
+
+
+/*
+ * Links
+ */
+	a { 
+	    color: #676767; 
+	    text-decoration: none;
+	    outline: none;
+	}
+	a:hover { 
+	    color: #a8c7c9;
+	}
+
+
+/*
+ * Page styles
+ */
+    .break {
+        display: block;
+        width: 100%;
+        width: 970px;
+        margin-left: -25px;
+        height: 5px;
+        background: url(../images/line-green-ball.png) center center no-repeat;
+    }
+    strong {
+        font-weight: normal;
+        font-family: "Neutraface2TextDemi", Helvetica, Arial, sans-serif;
+	}

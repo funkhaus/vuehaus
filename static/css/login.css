@@ -1,0 +1,105 @@
+/*
+ * Style login page
+ * By Drew Baker - 2011
+ * drew@funkhausdesign.com
+ *
+ */	
+
+/*
+ * Import fonts
+ */ 
+    @import url("../fonts/fonts.css");
+
+
+/*
+ * Globals
+ */
+    html { 
+    	background: white;
+    }
+    
+    body.login {
+        font-size: 13px; 
+        color: #666666;    
+        background: white;
+    	line-height: 1.4; 
+    	padding: 0;
+    	margin: 0;
+    	border: none;     
+    	width: 100%;    	   
+    }
+    a {
+    	outline: none;
+    }
+
+
+/*
+ * Login Banner Image
+ */
+    #login h1 a { 
+    	background: url(../images/backend/login-banner.png) no-repeat 9px 0;
+    	margin: 0; 
+    	background-size: auto;
+    	width: auto;
+    }	
+
+
+/*
+ * Login Form
+ */
+    .login label {
+        color: #DB8F39;
+    }   
+    body.login input[type='text'], 
+    body.login input[type='password'] {
+    	background: #F2F2F2;
+    	border: 1px solid #CCCCCC;
+    	font-family: inherit;
+    }
+    body.login input[type="checkbox"], 
+    body.login input[type="radio"] {
+        vertical-align: baseline;
+    }    
+
+
+/*
+ * Login Submit Button
+ */     
+    #wp-submit {
+    	background: #a8c7c9;
+    	border: none;
+    	text-shadow: none;
+    	box-shadow: 0 0 0 0;
+    } 
+    #wp-submit:hover {
+        color: #333;
+    }
+    
+
+/*
+ * "Lost password" dialog
+ */
+    .login #nav { 
+    	text-shadow: none; 
+    } 
+    .login #nav a { 
+    	text-decoration: none; 
+    	color: #444545 !important; 
+    	padding: auto 1px auto 1px; 
+    	text-shadow: none;
+    }
+    .login #nav a:hover { 
+    	color: #DB8F39 !important; 
+    	font-weight: bold; 
+    	text-shadow: none; 
+    }    
+
+
+/*
+ * "Back to blog" link header
+ */
+    #backtoblog {
+    	display: none;
+    }
+
+
