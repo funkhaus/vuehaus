@@ -1,9 +1,8 @@
 import $ from 'jquery'
 
-export default function(prop){
+let cache = {}
 
-    // init global cache object and assign local var
-    let cache = this.svgCache = this.svgCache || {}
+export default function(prop){
 
     // Set total and counter
     let $svgs = $('img.svg')

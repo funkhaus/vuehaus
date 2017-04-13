@@ -1,4 +1,6 @@
 <?php
+	include 'serializers/index.php';
+
 /*
  * Setup WordPress
  */
@@ -53,19 +55,11 @@
  * Enqueue Custom Scripts
  */
     function custom_scripts() {
-			wp_register_script('bundle', get_template_directory_uri() . '/static/bundle.js', array(), '1.0');
-			wp_register_script('site', get_template_directory_uri() . '/static/js/site.js', array(), '1.0');
-			wp_enqueue_script('bundle');
-			// wp_enqueue_script('site');
+		wp_register_script('bundle', get_template_directory_uri() . '/static/bundle.js', array(), '1.0');
+		wp_enqueue_script('bundle', null, array(), false, true);
 
-        // Setup JS variables in scripts
-		/*
-		wp_localize_script('site', 'siteVars', array(
-    		'themeURL' => get_template_directory_uri(),
-    		'homeURL'  => home_url()
-        ));
-		*/
-
+		$queryData = load_query_data();
+		wp_localize_script('bundle', 'queryData', $queryData);
     }
     add_action('wp_enqueue_scripts', 'custom_scripts', 10);
 
@@ -118,6 +112,24 @@
         // return post state
         return $output;
     }
+
+	function output_api_data(){
+
+		$json_header = $_SERVER['CONTENT_TYPE'] == 'application/json';
+		$json_type = $_REQUEST['content'] == 'json';
+
+		if ( $json_header || $json_type ){
+
+			header('Content-Type: application/json');
+
+			$data = load_query_data();
+			echo json_encode($data);
+			exit();
+
+		}
+
+	}
+	add_action('wp', 'output_api_data');
 
 /*
  * Custom Background Classes

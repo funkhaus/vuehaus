@@ -1,11 +1,6 @@
 import './main.css'
-import replaceSVGs from 'replaceSVGs'
-import $ from 'jquery'
+import App from './components/App.vue'
+import Vue from 'vue'
 
-// doc ready
-$(document).ready(() => {
-
-    // replace SVGs
-    replaceSVGs()
-
-})
+// boot app
+new Vue(App)
