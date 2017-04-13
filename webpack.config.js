@@ -6,7 +6,7 @@ const webpack = require('webpack')
 const config = {
     entry: './src/main',
     output: {
-        path: './static',
+        path: resolve('static'),
         filename: 'bundle.js'
     },
     module: {
@@ -18,8 +18,8 @@ const config = {
             {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract({
-                    fallbackLoader: 'style-loader',
-                    loader: [
+                    fallback: 'style-loader',
+                    use: [
                         { loader: 'css-loader' },
                         { loader: 'postcss-loader' }
                     ]

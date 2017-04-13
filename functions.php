@@ -90,8 +90,11 @@
 
             // set state conditions here
             switch (true){
-                case $target_post->ID == 2 :
+                case $target_post->post_name == 'about' :
                     $output = 'about';
+                    break;
+                case $target_post->post_name == 'contact' :
+                    $output = 'contact';
                     break;
             }
 

@@ -1,7 +1,7 @@
 <template>
-    <div class="main">
+    <div class="main" v-html="query.post_content">
 
-        Main App
+        <span v-if="!query">Error loading!</span>
 
     </div>
 </template>
@@ -12,10 +12,12 @@
     export default {
         el: '#app',
         data () {
-            return {}
+            return {
+                query: queryData[0]
+            }
         },
         created () {
-            console.log(queryData)
+
         }
     }
 </script>

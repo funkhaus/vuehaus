@@ -15,7 +15,8 @@
                 return pull_serializer('home');
                 break;
             default:
-                return pull_serializer( $state );
+                $fallback = file_exists( $state . '.php' ) ? $state : 'default';
+                return pull_serializer( $fallback );
                 break;
         }
     }
