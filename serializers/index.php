@@ -13,5 +13,9 @@
         switch (true){
             case is_front_page():
                 return pull_serializer('home');
+                break;
+            default:
+                return pull_serializer( $state );
+                break;
         }
     }

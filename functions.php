@@ -90,18 +90,9 @@
 
             // set state conditions here
             switch (true){
-                case $target_post->ID == 5 :
-                    $output = 'work';
+                case $target_post->ID == 2 :
+                    $output = 'about';
                     break;
-
-                case has_children($target_post->ID) and is_tree(5, $target_post) :
-                    $output = 'work-grid';
-                    break;
-
-                case !has_children($target_post->ID) and is_tree(5, $target_post) :
-                    $output = 'work-detail';
-                    break;
-
             }
 
             // set new 1 second transient
