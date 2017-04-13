@@ -1,5 +1,5 @@
 <template>
-    <div class="main" v-html="query.post_content">
+    <div class="main" v-html="query.data[0].post_content">
 
         <span v-if="!query">Error loading!</span>
 
@@ -13,11 +13,11 @@
         el: '#app',
         data () {
             return {
-                query: queryData[0]
+                query: queryData
             }
         },
         created () {
-
+            console.log(queryData)
         }
     }
 </script>

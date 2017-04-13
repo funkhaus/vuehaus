@@ -96,6 +96,9 @@
                 case $target_post->post_name == 'contact' :
                     $output = 'contact';
                     break;
+                // default:
+                //     $output = 'default';
+                //     break;
             }
 
             // set new 1 second transient

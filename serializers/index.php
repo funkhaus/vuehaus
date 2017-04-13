@@ -1,22 +1,42 @@
 <?php
 
-    function pull_serializer($slug){
-        $export = array();
-        include $slug . '.php';
-        return $export;
+    function build_meta( $post = null, $state = 'default' ){
+
+        $meta = array(
+            'self'      => get_permalink($post),
+            'state'     => $state
+        );
+
+        return $meta;
     }
 
-    function load_query_data () {
-        global $post;
-        $state = get_conditional_state($post);
+    function build_shared( $post = null, $state = 'default' ){
 
-        switch (true){
-            case is_front_page():
-                return pull_serializer('home');
-                break;
-            default:
-                $fallback = file_exists( $state . '.php' ) ? $state : 'default';
-                return pull_serializer( $fallback );
-                break;
+        $shared = array(
+            // TODO: build menu item serializer - active, permalink,
+            'mainMenu'     => wp_get_nav_menu_items('Main Menu')
+        );
+
+        return $shared;
+
+    }
+
+    function load_query_data ($post = null) {
+
+        $state = get_conditional_state( $post );
+        $path = dirname(__FILE__) . '/' . $state . '.php';
+
+        // Build $data
+        if ( !realpath($path) ){
+            $path = dirname(__FILE__) . '/default.php';
         }
+        include $path;
+
+        $export = array(
+            'meta'      => build_meta( $post, $state ),
+            'shared'    => build_shared( $post, $state ),
+            'data'      => $data
+        );
+
+        return $export;
     }

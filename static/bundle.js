@@ -9450,10 +9450,12 @@ exports.default = {
     el: '#app',
     data: function data() {
         return {
-            query: queryData[0]
+            query: queryData
         };
     },
-    created: function created() {}
+    created: function created() {
+        console.log(queryData);
+    }
 }; //
 //
 //
@@ -19886,7 +19888,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "main",
     domProps: {
-      "innerHTML": _vm._s(_vm.query.post_content)
+      "innerHTML": _vm._s(_vm.query.data[0].post_content)
     }
   }, [(!_vm.query) ? _c('span', [_vm._v("Error loading!")]) : _vm._e()])
 },staticRenderFns: []}

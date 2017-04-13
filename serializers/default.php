@@ -1,4 +1,4 @@
 <?php
     global $post;
 
-    $export = array(get_post($post));
+    $data = array(get_post($post));
