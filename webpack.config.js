@@ -1,12 +1,12 @@
-const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const resolve = file => path.resolve(__dirname, file)
-const webpack = require('webpack')
+const path = require( 'path' )
+const ExtractTextPlugin = require( 'extract-text-webpack-plugin' )
+const resolve = file => path.resolve( __dirname, file )
+const webpack = require( 'webpack' )
 
 const config = {
     entry: './src/main',
     output: {
-        path: resolve('static'),
+        path: resolve( 'static' ),
         filename: 'bundle.js'
     },
     module: {
@@ -17,13 +17,13 @@ const config = {
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract({
+                loader: ExtractTextPlugin.extract( {
                     fallback: 'style-loader',
                     use: [
                         { loader: 'css-loader' },
                         { loader: 'postcss-loader' }
                     ]
-                })
+                } )
             }, {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
@@ -37,31 +37,31 @@ const config = {
     },
     resolve: {
         modules: [
-            path.resolve(__dirname, 'app'),
-            resolve('./'),
+            path.resolve( __dirname, 'app' ),
+            resolve( './' ),
             'node_modules'
         ],
         alias: {
             vue: 'vue/dist/vue.js',
-            'replaceSVGs': resolve('src/libs/replaceSVGs.js')
+            'replaceSVGs': resolve( 'src/libs/replaceSVGs.js' )
         }
     },
     plugins: [
-        new ExtractTextPlugin('bundle.css')
+        new ExtractTextPlugin( 'bundle.css' )
     ]
 }
 
-if ( process.env.NODE_ENV === 'production' ) {
+if ( process.env.NODE_ENV === 'production' ){
 
     // add these plugins for production mode
-    config.plugins = config.plugins.concat([
-        new webpack.optimize.UglifyJsPlugin({
+    config.plugins = config.plugins.concat( [
+        new webpack.optimize.UglifyJsPlugin( {
             compress: {
                 warnings: false
             }
-        }),
-        new webpack.optimize.OccurenceOrderPlugin()
-    ])
+        } ),
+        new webpack.optimize.OccurrenceOrderPlugin()
+    ] )
 
 } else {
 

@@ -1,23 +1,18 @@
 <template>
-    <div class="main" v-html="query.data[0].post_content">
+    <div class="main">
 
-        <span v-if="!query">Error loading!</span>
+        <router-view></router-view>
 
     </div>
 </template>
 
 <script>
-    import replaceSVGs from 'replaceSVGs'
+    import store from 'src/store'
+    import router from 'src/router'
 
     export default {
         el: '#app',
-        data () {
-            return {
-                query: queryData
-            }
-        },
-        created () {
-            console.log(queryData)
-        }
+        store,
+        router
     }
 </script>

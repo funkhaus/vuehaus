@@ -35,7 +35,8 @@
         $export = array(
             'meta'      => build_meta( $post, $state ),
             'shared'    => build_shared( $post, $state ),
-            'data'      => $data
+            'data'      => $data,
+            'state'     => $state
         );
 
         return $export;

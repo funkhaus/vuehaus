@@ -2,16 +2,16 @@ import $ from 'jquery'
 
 let cache = {}
 
-export default function(prop){
+export default function( prop ){
 
     // Set total and counter
-    let $svgs = $('img.svg')
+    let $svgs = $( 'img.svg' )
     let total = $svgs.length
     let count = 0
 
     // If no SVGs on page, fire callback event
     if ( total === count ){
-        $(document).trigger('svgsLoaded', [count])
+        $( document ).trigger( 'svgsLoaded', [count] )
         return
     }
 
@@ -19,44 +19,44 @@ export default function(prop){
     let replaceSVG = function( data ){
 
         // get img and attributes
-        let $img = $(this),
-            attributes = $img.prop('attributes')
+        let $img = $( this ),
+            attributes = $img.prop( 'attributes' )
 
-		// Increment counter
+        // Increment counter
         count++
 
         // Clone the SVG tag, ignore the rest
-        let $svg = $(data).find('svg').clone()
+        let $svg = $( data ).find( 'svg' ).clone()
 
         // Remove any invalid XML tags as per http://validator.w3.org
-        $svg = $svg.removeAttr('xmlns:a')
+        $svg = $svg.removeAttr( 'xmlns:a' )
 
         // Loop through IMG attributes and add them to SVG
-        $.each(attributes, function() {
-            $svg.attr(this.name, this.value)
-        })
+        $.each( attributes, function(){
+            $svg.attr( this.name, this.value )
+        } )
 
         // Replace image with new SVG
-        $img.replaceWith($svg)
+        $img.replaceWith( $svg )
 
-		// If this is the last svg, fire callback event
-        if ( total === count ) $(document).trigger('svgsLoaded', [count])
+        // If this is the last svg, fire callback event
+        if ( total === count ) $( document ).trigger( 'svgsLoaded', [count] )
 
     }
 
     // loop all svgs
-    $svgs.each(function(){
+    $svgs.each( function(){
 
         // get URL from this SVG
-        let imgURL = $(this).attr('src')
+        let imgURL = $( this ).attr( 'src' )
 
         // if not cached, make new AJAX request
-        if ( ! cache[imgURL] ){
-            cache[imgURL] = $.get(imgURL).promise()
+        if ( !cache[imgURL] ){
+            cache[imgURL] = $.get( imgURL ).promise()
         }
 
         // when we have SVG data, replace img with data
-        cache[imgURL].done( replaceSVG.bind(this) )
+        cache[imgURL].done( replaceSVG.bind( this ) )
 
-    })
+    } )
 }

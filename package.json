@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_PATH=. webpack --progress --colors --watch",
-    "build": "NODE_PATH=. NODE_ENV=production webpack --compress --progress --hide-modules"
+    "build": "NODE_PATH=. NODE_ENV=production webpack --progress --hide-modules"
   },
   "author": "Funkhaus",
   "license": "ISC",
@@ -20,6 +20,14 @@
     "compression-webpack-plugin": "^0.3.2",
     "css-loader": "^0.26.4",
     "eslint": "^3.14.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-config-vue": "^2.0.2",
+    "eslint-plugin-html": "^2.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-vue": "^2.0.1",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.9.0",
     "jquery": "^3.1.1",
@@ -29,7 +37,9 @@
     "style-loader": "^0.13.1",
     "vue": "^2.2.2",
     "vue-loader": "^11.1.4",
+    "vue-router": "^2.5.1",
     "vue-template-compiler": "^2.2.2",
+    "vuex": "^2.3.1",
     "webpack": "^2.2.1"
   }
 }

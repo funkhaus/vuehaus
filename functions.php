@@ -79,9 +79,6 @@
     function get_conditional_state($target_post = null){
         $target_post = get_post($target_post);
 
-        // init output
-        $output = false;
-
         // make key that's unique to this post
         $transient_key = 'fh_state_' . $target_post->ID;
 
@@ -90,15 +87,16 @@
 
             // set state conditions here
             switch (true){
+                // case get_option( 'page_on_front',  )
                 case $target_post->post_name == 'about' :
                     $output = 'about';
                     break;
                 case $target_post->post_name == 'contact' :
                     $output = 'contact';
                     break;
-                // default:
-                //     $output = 'default';
-                //     break;
+                default:
+                    $output = 'front-page';
+                    break;
             }
 
             // set new 1 second transient
