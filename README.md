@@ -1,5 +1,5 @@
 ## What
-Vuepress is a template them used to build smooth, responsive [Wordpress](https://wordpress.org/) sites with [Vue.js](https://vuejs.org/).
+Vuepress is a theme used to build smooth, responsive [Wordpress](https://wordpress.org/) sites with [Vue.js](https://vuejs.org/).
 
 ## Install
 1. Clone or download this repo.
