@@ -2,17 +2,23 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import $ from 'jquery'
+import _ from 'lodash'
 // add vuex
 Vue.use( Vuex )
 
 export default new Vuex.Store( {
     state: {
-        state: '',
+        state: _.get(queryData, 'state'),
         queryData: queryData
     },
     mutations: {
         'REPLACE_QUERYDATA': ( state, data ) => {
+            state.state = _.get(data, 'state')
             state.queryData = data
+            return state
+        },
+        'REPLACE_STATE': ( state, data ) => {
+            state.state = data
             return state
         }
     },

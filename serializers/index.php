@@ -1,5 +1,7 @@
 <?php
 
+    include_once( dirname(__FILE__) . '/serializers.php' );
+
     function build_meta( $post = null, $state = 'default' ){
 
         $meta = array(
@@ -24,6 +26,8 @@
     function load_query_data ($post = null) {
 
         $state = get_conditional_state( $post );
+
+        // Serializers define $data
         $path = dirname(__FILE__) . '/' . $state . '.php';
 
         // Build $data

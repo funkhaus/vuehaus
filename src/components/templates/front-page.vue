@@ -10,11 +10,13 @@
 </template>
 
 <script>
+import _ from 'lodash'
 
 export default {
     computed: {
         content(){
-            return this.$store.state.queryData.data[0].post_content
+            const pageData = _.get(this.$store, 'state.queryData.data[0].content')
+            return pageData
         }
     }
 }

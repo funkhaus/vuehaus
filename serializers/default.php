@@ -1,4 +1,4 @@
 <?php
     global $post;
 
-    $data = array(get_post($post));
+    $data = array( serializer_standard($post) );

@@ -229,14 +229,14 @@
 /*
  * Next page/post ID
  */
-	function get_next_page_id($exclude = null, $loop = true) {
-		global $post;
+	function get_next_page_id($target_post = null, $exclude = null, $loop = true) {
+		$target_post = get_post($target_post);
 
 		// set current post type
-		$post_type = get_post_type( $post );
+		$post_type = get_post_type( $target_post );
 
 		// Set vars
-		$current_project_id = $post->ID;
+		$current_project_id = $target_post->ID;
 		$cache_key = 'all_pages_parent_'.$current_project_id;
 
 		// Check for cached $pages
@@ -246,7 +246,7 @@
 				'post_type'         => $post_type,
 				'order'             => 'ASC',
 				'orderby'           => 'menu_order',
-				'post_parent'       => $post->post_parent,
+				'post_parent'       => $target_post->post_parent,
 				'fields'            => 'ids',
 				'posts_per_page'    => -1,
 				'post__not_in' 		=> $exclude
@@ -278,14 +278,14 @@
 /*
  * Previous page/post ID
  */
-    function get_previous_page_id($exclude = null, $loop = true) {
-		global $post;
+    function get_previous_page_id($target_post = null, $exclude = null, $loop = true) {
+        $target_post = get_post($target_post);
 
 		// set current post type
-		$post_type = get_post_type( $post );
+		$post_type = get_post_type( $target_post );
 
 		// Set vars
-        $current_project_id = $post->ID;
+        $current_project_id = $target_post->ID;
         $cache_key = 'all_pages_parent_'.$current_project_id;
 
         // Check for cached $pages
@@ -295,7 +295,7 @@
 				'post_type'         => $post_type,
 				'order'             => 'ASC',
 				'orderby'           => 'menu_order',
-				'post_parent'       => $post->post_parent,
+				'post_parent'       => $target_post->post_parent,
 				'fields'            => 'ids',
 				'posts_per_page'    => -1,
 				'post__not_in' 		=> $exclude
