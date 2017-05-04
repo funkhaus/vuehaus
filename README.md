@@ -14,18 +14,15 @@ First, some Vuepress definitions:
     * Example: 'front-page', 'work-grid', or 'single' are all page states.
 * A **query** is a server-side request for a particular page or pages.
     * Example: The 'work-grid' state may run a query for all the child pages of the 'work-grid' page.
-* A **serializer** is a function that accepts a single `WP_Post` or post ID and returns a PHP array of relevant information from that post.
+* A **serializer** is a function that accepts a single `WP_Post` or post ID and returns an array of relevant information from that post.
     * Example: Each child page retrieved with the `work-grid` query will be run through a serializer that returns that child's title and metadata.
-
-States and queries are closely linked - when you create a new state, you'll probably want to create a new query in `/queries` as well, using the same name as the state.
 
 ### State/Query Rules
 * Define new states in the `get_conditional_state` function in `functions.php`.
 * Once you've defined a new state, you can either:
-    * Create a new query with the same name as the state in the `queries/` folder, **OR**
-    * Don't create a new query for the state, falling back to the query in `queries/default.php`.
-* Each query **must** contain a variable called `$data` that contains an array of serialized information. The contents and organization of $`data` are entirely up to the developer.
-
+    * Create a new query with the same name as the state in the `queries/` folder, which Vuepress will automatically run on that state, **OR**
+    * Don't create a new query for the state, falling back to `queries/default.php`.
+* Each query **must** contain an array called `$data`, which will be converted to JSON when the page loads. The contents of `$data` are up to the developer.
 
 ## Under the Hood
 Vuepress handles Wordpress pages a little different than normal.
