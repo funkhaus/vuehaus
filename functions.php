@@ -1,4 +1,5 @@
 <?php
+    include 'states.php';
 	include 'queries/index.php';
 
 /*
@@ -74,39 +75,8 @@
 	add_action( 'admin_enqueue_scripts', 'custom_admin_scripts' );
 
 /*
- * Function to get state of page
+ * Output JSON data
  */
-    function get_conditional_state($target_post = null){
-        $target_post = get_post($target_post);
-
-        // make key that's unique to this post
-        $transient_key = 'fh_state_' . $target_post->ID;
-
-        // check for transient, set a new one if needed.
-        if ( ! $output = get_transient( $transient_key ) ){
-
-            // set state conditions here
-            switch (true){
-                // case get_option( 'page_on_front',  )
-                case $target_post->post_name == 'about' :
-                    $output = 'about';
-                    break;
-                case $target_post->post_name == 'contact' :
-                    $output = 'contact';
-                    break;
-                default:
-                    $output = 'front-page';
-                    break;
-            }
-
-            // set new 1 second transient
-            set_transient( $transient_key, $output, 1 );
-
-        }
-
-        // return post state
-        return $output;
-    }
 
 	function output_api_data(){
 
