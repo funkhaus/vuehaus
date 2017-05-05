@@ -1,5 +1,5 @@
 <?php
-	include 'serializers/index.php';
+	include 'queries/index.php';
 
 /*
  * Setup WordPress
