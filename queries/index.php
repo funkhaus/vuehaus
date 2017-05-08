@@ -12,12 +12,33 @@
         return $meta;
     }
 
+    function build_routes(){
+
+        // Unchanging
+        $category_base = '/' . get_option('category_base');
+
+        return array(
+
+            // Per-site
+            // '/path'                              => 'VueComponent',
+            // '/path/:var'                         => 'ComponentWithVar'
+            // '/path/*/:var'                       => 'WildcardAndVar'
+
+            // Unchanging
+            '/' . $category_base                    => 'archive',
+            '/:slug'                                => 'default'
+        );
+
+    }
+
     function build_shared( $post = null, $state = 'default' ){
 
         $shared = array(
             // TODO: build menu item serializer - active, permalink
             // TODO: Note when query is 404
-            'mainMenu'     => wp_get_nav_menu_items('Main Menu')
+            'mainMenu'      => wp_get_nav_menu_items('Main Menu'),
+            'routes'        => build_routes(),
+            'themeUrl'      => get_template_directory_uri()
         );
 
         return $shared;
