@@ -15,7 +15,8 @@
     function build_shared( $post = null, $state = 'default' ){
 
         $shared = array(
-            // TODO: build menu item serializer - active, permalink,
+            // TODO: build menu item serializer - active, permalink
+            // TODO: Note when query is 404
             'mainMenu'     => wp_get_nav_menu_items('Main Menu')
         );
 
