@@ -24,7 +24,8 @@
             // '/path/:var'                         => 'ComponentWithVar'
             // '/path/*/:var'                       => 'WildcardAndVar'
 
-            // Unchanging
+            // Probably unchanging
+            ''                                      => 'FrontPage',
             '/' . $category_base                    => 'archive',
             '/:slug'                                => 'default'
         );

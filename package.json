@@ -1,7 +1,7 @@
 {
-  "name": "funkhaus-webpack-template",
+  "name": "vuepress",
   "version": "1.0.0",
-  "description": "A template for all Funkhaus webpack-based sites.",
+  "description": "Build smooth, responsive Wordpress sites with Vue.",
   "main": "index.js",
   "scripts": {
     "dev": "NODE_PATH=. webpack --progress --colors --watch",
