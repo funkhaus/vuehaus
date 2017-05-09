@@ -35,10 +35,10 @@
     function build_shared( $post = null, $state = 'default' ){
 
         $shared = array(
-            // TODO: Note when query is 404
             'mainMenu'      => serializer_menu( 'Main Menu' ),
             'routes'        => build_routes(),
-            'themeUrl'      => get_template_directory_uri()
+            'themeUrl'      => get_template_directory_uri(),
+            'is404'         => is_404()
         );
 
         return $shared;
