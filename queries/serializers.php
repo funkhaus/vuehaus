@@ -40,7 +40,7 @@
             'excerpt'       => get_the_excerpt($target_post),
             'permalink'     => get_permalink($target_post),
             'slug'          => $target_post->post_name,
-            'relativeLink'  => remove_siteurl( $target_post ),
+            'relativePath'  => remove_siteurl( $target_post ),
             'featuredImage' => serializer_image( get_post_thumbnail_id( $target_post->ID ) ),
             'meta'          => array_map( 'reset', $filtered_meta )
         );
