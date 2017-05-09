@@ -39,6 +39,8 @@
             'content'       => apply_filters('the_content', $target_post->post_content),
             'excerpt'       => get_the_excerpt($target_post),
             'permalink'     => get_permalink($target_post),
+            'slug'          => $target_post->post_name,
+            'relativeLink'  => remove_siteurl( $target_post ),
             'featuredImage' => serializer_image( get_post_thumbnail_id( $target_post->ID ) ),
             'meta'          => array_map( 'reset', $filtered_meta )
         );
@@ -49,4 +51,15 @@
     // Used on array_filter to remove $key with leading underscore ( _fails )
     function filter_leading_underscore( $key ){
         return ! preg_match('/^_/', $key);
+    }
+
+    // Removes site url to retrieve relative path
+    function remove_siteurl( $target_post ){
+        $replaced = preg_replace(
+            '@' . get_option('siteurl') . '@',
+            '',
+            (string)get_the_permalink( $target_post )
+        );
+
+        return rtrim( $replaced, '/' );
     }
