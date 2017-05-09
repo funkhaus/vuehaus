@@ -48,6 +48,44 @@
         return $output;
     }
 
+    // Serializes all menu items, given menu slug/name/ID
+    function serializer_menu( $menu_name ){
+
+        $fetched = wp_get_nav_menu_items( $menu_name );
+
+        // Exit if menu not found
+        if( ! $fetched ) return false;
+
+        // Format menu items
+        $formatted_items = array_map( 'serializer_menu_item', $fetched );
+
+        // Save menu object
+        $menu_object = wp_get_nav_menu_object( $menu_name );
+
+        $output = array(
+            'name'          => $menu_object->name,
+            'slug'          => $menu_object->slug,
+            'items'         => $formatted_items
+        );
+
+        return $output;
+
+    }
+
+    function serializer_menu_item( $item ){
+
+        $target_id = (int)$item->object_id;
+
+        $output = array(
+            'title'         => $item->title,
+            'classes'       => $item->classes,
+            'permalink'     => get_the_permalink( $target_id ),
+            'relativePath'  => remove_siteurl( $target_id )
+        );
+
+        return $output;
+    }
+
     // Used on array_filter to remove $key with leading underscore ( _fails )
     function filter_leading_underscore( $key ){
         return ! preg_match('/^_/', $key);

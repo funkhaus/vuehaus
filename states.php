@@ -33,8 +33,8 @@
                     break;
             }
 
-            // set new 1 second transient
-            update_post_meta( '_custom_state', $output );
+            // update state meta
+            update_post_meta( $target_post, '_custom_state', $output );
 
         }
 
