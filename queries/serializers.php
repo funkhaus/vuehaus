@@ -76,11 +76,18 @@
 
         $target_id = (int)$item->object_id;
 
+        $relative_path = remove_siteurl( $target_id );
+
+        // Make sure we get at least an slash from the relative path
+        if( ! $relative_path ){
+            $relative_path = '/';
+        }
+
         $output = array(
             'title'         => $item->title,
             'classes'       => $item->classes,
             'permalink'     => get_the_permalink( $target_id ),
-            'relativePath'  => remove_siteurl( $target_id )
+            'relativePath'  => $relative_path
         );
 
         return $output;
@@ -93,11 +100,7 @@
 
     // Removes site url to retrieve relative path
     function remove_siteurl( $target_post ){
-        $replaced = preg_replace(
-            '@' . get_option('siteurl') . '@',
-            '',
-            (string)get_the_permalink( $target_post )
-        );
+        $replaced = str_replace( get_option('siteurl'), '', get_the_permalink( $target_post ) );
 
         return rtrim( $replaced, '/' );
     }

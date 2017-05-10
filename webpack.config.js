@@ -43,7 +43,8 @@ const config = {
         ],
         alias: {
             vue: 'vue/dist/vue.js',
-            'replaceSVGs': resolve( 'src/libs/replaceSVGs.js' )
+            'replaceSVGs': resolve( 'src/libs/replaceSVGs.js' ),
+            '_': 'lodash'
         }
     },
     plugins: [
