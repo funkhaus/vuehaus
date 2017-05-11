@@ -7,7 +7,17 @@ Vuepress is a theme used to build smooth, responsive [Wordpress](https://wordpre
 1. `npm run dev`
 
 ## Development
-TODO
+1. Plan structure of Wordpress pages:
+    * Front page
+        * Front Slide
+        * ...
+    * Work Grid
+        * Work detail
+        * ...
+1. Define paths in `queries/index.php`'s `build_routes` function.
+    * `'/' . get_page( 123 )->post_name     => 'VueTemplate'`
+
+TODO: Continue
 
 ## Under the Hood
 Vuepress handles Wordpress pages a little different than normal.
