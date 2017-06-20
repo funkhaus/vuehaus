@@ -2,18 +2,31 @@
 
     function serializer_image( $attachment = null ){
 
+        if ( !$attachment ) return false;
+
         $output = array();
 
         $attachment = get_post($attachment);
         $sizes = get_intermediate_image_sizes();
 
+        $output['title'] = get_the_title($attachment->ID);
+
+        // add image colors if FIC is installed
+        if ( function_exists('get_primary_image_color') )
+            $output['primary_color'] = get_primary_image_color($attachment->ID);
+
+        if ( function_exists('get_second_image_color') )
+            $output['secondary_color'] = get_second_image_color($attachment->ID);
+
+        // build out sizes
         foreach ( $sizes as $size ){
             $img_data = wp_get_attachment_image_src($attachment->ID, $size);
 
-            $output[$size] = array(
+            $output['sizes'][$size] = array(
                 'url'       => $img_data[0],
                 'width'     => $img_data[1],
-                'height'    => $img_data[2]
+                'height'    => $img_data[2],
+                'html'      => wp_get_attachment_image($attachment->ID, $size)
             );
         }
 
@@ -35,6 +48,7 @@
         $filtered_meta = array_filter( $meta, 'filter_leading_underscore', ARRAY_FILTER_USE_KEY );
 
         $output = array(
+            'id'            => $target_post->ID,
             'title'         => get_the_title($target_post),
             'content'       => apply_filters('the_content', $target_post->post_content),
             'excerpt'       => get_the_excerpt($target_post),
@@ -42,7 +56,8 @@
             'slug'          => $target_post->post_name,
             'relativePath'  => remove_siteurl( $target_post ),
             'featuredImage' => serializer_image( get_post_thumbnail_id( $target_post->ID ) ),
-            'meta'          => array_map( 'reset', $filtered_meta )
+            'meta'          => array_map( 'reset', $filtered_meta ),
+            'date'          => get_the_date('U', $target_post->ID)
         );
 
         return $output;
@@ -86,8 +101,9 @@
         $output = array(
             'title'         => $item->title,
             'classes'       => $item->classes,
-            'permalink'     => get_the_permalink( $target_id ),
-            'relativePath'  => $relative_path
+            'permalink'     => $item->url,
+            'relativePath'  => $relative_path,
+            'is_external'   => $item->type_label == 'Custom Link'
         );
 
         return $output;

@@ -1,4 +1,5 @@
 const path = require( 'path' )
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' )
 const resolve = file => path.resolve( __dirname, file )
 const webpack = require( 'webpack' )
@@ -14,6 +15,10 @@ const config = {
             {
                 test: /\.vue$/,
                 use: 'vue-loader'
+            },
+            {
+                test: /\.svg$/,
+                loader: 'svg-inline-loader?removeSVGTagAttrs=false'
             },
             {
                 test: /\.css$/,
@@ -54,15 +59,35 @@ const config = {
 
 if ( process.env.NODE_ENV === 'production' ){
 
-    // add these plugins for production mode
-    config.plugins = config.plugins.concat( [
+    // inject env variable
+    config.plugins.push(
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"production"'
+            }
+        })
+    )
+
+    // minify JS
+    config.plugins.push(
         new webpack.optimize.UglifyJsPlugin( {
             compress: {
                 warnings: false
             }
-        } ),
-        new webpack.optimize.OccurrenceOrderPlugin()
-    ] )
+        } )
+    )
+
+    // minify CSS
+    config.plugins.push(
+        new OptimizeCssAssetsPlugin({
+            cssProcessorOptions: { removeAllButFirst: true, zindex: false }
+        })
+    )
+
+    config.plugins.push(new webpack.optimize.OccurrenceOrderPlugin())
+
+    // use production version of vue
+    config.resolve.alias.vue = 'vue/dist/vue.min.js'
 
 } else {
 

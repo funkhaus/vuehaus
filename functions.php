@@ -134,10 +134,10 @@
 	     return get_bloginfo('name');
 	}
 	function custom_loginpage_styles() {
-        wp_enqueue_style( 'login_css', get_template_directory_uri() . '/css/login.css' );
+        wp_enqueue_style( 'login_css', get_template_directory_uri() . '/static/css/login.css' );
 	}
 	function custom_admin_styles() {
-        wp_enqueue_style('admin-stylesheet', get_template_directory_uri() . '/css/admin.css');
+        wp_enqueue_style('admin-stylesheet', get_template_directory_uri() . '/static/css/admin.css');
 	}
 	add_filter('login_headerurl','custom_loginpage_logo_link');
 	add_filter('login_headertitle','custom_loginpage_logo_title');

@@ -1,24 +1,28 @@
 /* global queryData */
-import Vue from 'vue'
 import Vuex from 'vuex'
 import $ from 'jquery'
-import _ from 'lodash'
+import Vue from 'vue'
+
 // add vuex
 Vue.use( Vuex )
 
 export default new Vuex.Store( {
     state: {
-        state: _.get(queryData, 'state'),
-        queryData: queryData
+        queryData: queryData,
+        transitioning_in: false,
+        transitioning_out: false
     },
     mutations: {
         'REPLACE_QUERYDATA': ( state, data ) => {
-            state.state = _.get(data, 'state')
             state.queryData = data
             return state
         },
-        'REPLACE_STATE': ( state, data ) => {
-            state.state = data
+        'SET_TRANSITIONING_IN': (state, transitioning) => {
+            state.transitioning_in = transitioning
+            return state
+        },
+        'SET_TRANSITIONING_OUT': (state, transitioning) => {
+            state.transitioning_out = transitioning
             return state
         }
     },
