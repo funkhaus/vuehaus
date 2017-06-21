@@ -4,10 +4,12 @@
         @mouseenter="$emit('mouseenter', $event)"
         @mouseleave="$emit('mouseleave', $event)">
         <slot></slot>
+        <span v-html="arrowRight"></span>
     </div>
 </template>
 
 <script>
+import arrowRightSVG from 'src/icons/arrow-right.svg'
 import { scroller, sizer } from 'src/morlock'
 
 export default {
@@ -34,7 +36,8 @@ export default {
             if ( this.top + this.height <= 0 && this.height ) return 'above-view'
             if ( this.top >= this.$root.winHeight ) return 'below-view'
             return 'in-view'
-        }
+        },
+        arrowRight () { return arrowRightSVG }
     },
     methods: {
         setRect () {

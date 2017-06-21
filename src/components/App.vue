@@ -1,5 +1,5 @@
 <template>
-    <div class="main">
+    <div :class="['main', `breakpoint-${ breakpoint }`]">
 
         <router-view></router-view>
 

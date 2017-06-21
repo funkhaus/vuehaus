@@ -1,13 +1,12 @@
 <template>
 
     <transition
-        name="transition-mask-fade"
+        name="transition-page-fade"
         @before-enter="beforeEnter"
         @enter="enter"
         @leave="leave"
         mode="out-in"
-        :css="false"
-    >
+        :css="false">
         <slot></slot>
     </transition>
 

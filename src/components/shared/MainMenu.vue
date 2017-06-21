@@ -5,7 +5,7 @@
             <ul>
                 <li v-for="(item, i) in menuItems" :class="{ active: $route.path == item.relativePath }">
                     <a
-                        v-if="item.external"
+                        v-if="item.is_external"
                         :href="item.permalink"
                         target="_blank">
                         {{ item.title }}
