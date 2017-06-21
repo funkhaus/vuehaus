@@ -31,7 +31,7 @@
             breakpoint () {
                 return this.winWidth >= 750 ? 'desktop' : 'mobile'
             }
-        }
+        },
         store,
         router
     }

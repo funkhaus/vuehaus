@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import arrowRightSVG from 'src/icons/arrow-right.svg'
 import { scroller, sizer } from 'src/morlock'
 
 export default {

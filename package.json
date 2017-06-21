@@ -41,6 +41,7 @@
     "style-loader": "^0.13.1",
     "svg-inline-loader": "^0.7.1",
     "url-loader": "^0.5.8",
+    "velocity-animate": "^1.5.0",
     "vue": "^2.2.2",
     "vue-loader": "^11.1.4",
     "vue-router": "^2.5.1",

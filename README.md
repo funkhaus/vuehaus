@@ -33,5 +33,11 @@ Requesting a page without that header or query, though, runs the following proce
 
 Any page on Vuepress therefore has access to the full `bundle.js` script, containing all the Webpacked files from `src/`, as well as the initial data for the landing page, rendered using `wp_localize_script`. This is enough to access the entire site from that single page, as any subsequent page loads will simply access the `?content=json` version of a page and render it out with the `bundle.js` code.
 
+## Notes
+
+TODO: Organize these notes
+
+* **SVG Loading** - run like this: ```import arrowRightSVG from 'src/icons/arrow-right.svg'```
+
 ## Todo
 * Handle instant state changing/URL lag
