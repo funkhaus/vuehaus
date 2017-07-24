@@ -2,7 +2,8 @@
 Vuepress is a theme used to build smooth, responsive [Wordpress](https://wordpress.org/) sites with [Vue.js](https://vuejs.org/).
 
 ## Install
-1. Clone or download this repo.
+1. `git clone https://github.com/funkhaus/vuepress my-theme`
+1. `cd my-theme`
 1. `npm install`
 1. `npm run dev`
 
