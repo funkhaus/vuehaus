@@ -20,6 +20,7 @@
     <![endif]-->
 
     <?php get_template_part('parts/og-tags'); ?>
+    <?php get_template_part('parts/schema'); ?>
     <?php wp_head();?>
 </head>
 <body <?php body_class(); ?>>
