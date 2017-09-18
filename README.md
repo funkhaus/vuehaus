@@ -7,20 +7,25 @@ Vuepress is a theme used to build smooth, responsive [Wordpress](https://wordpre
 1. `npm install`
 1. `npm run dev`
 
-## Development
-1. Plan structure of Wordpress pages:
+## Building a Vuepress Site
+Vuepress sites use 
+
+
+
+1. Plan and document structure of Wordpress pages. For example:
     * Front page
-        * Front Slide
+        * Work block
         * ...
     * Work Grid
         * Work detail
         * ...
+1.
 1. Define paths in `queries/index.php`'s `build_routes` function.
     * `'/' . get_page( 123 )->post_name     => 'VueTemplate'`
 
 TODO: Continue
 
-## Under the Hood
+## Development
 Vuepress handles Wordpress pages a little different than normal.
 
 When you request any Vuepress page using the header `CONTENT_TYPE = application/json` or the query `?content=json`, you'll get a JSON dump of the data for that particular page. (Go ahead, try it - add `?content=json` at the end of the URL on any Vuepress site and see what comes back.)

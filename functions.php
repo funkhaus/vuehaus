@@ -2,6 +2,7 @@
     include 'states.php';
 	include 'queries/index.php';
 
+
 /*
  * Setup WordPress
  */
@@ -35,6 +36,27 @@
 
 	}
 	add_action( 'after_setup_theme', 'custom_theme_setup' );
+
+    // Add Developer role
+    function custom_theme_switch(){
+        global $wp_roles;
+        if ( ! isset( $wp_roles ) ){
+            $wp_roles = new WP_Roles();
+        }
+
+        $admin_role = $wp_roles->get_role('administrator');
+
+        add_role(
+            'developer',
+            __('Developer'),
+            $admin_role->capabilities
+        );
+
+        // set initial user to Developer
+        $user = new WP_User(1);
+        $user->set_role('developer');
+    }
+    add_action('after_switch_theme', 'custom_theme_switch');
 
 
 /*
@@ -458,6 +480,7 @@
 
 		// add_meta_box('custom_media_meta', 'Media Meta', 'custom_media_meta', 'page', 'normal', 'low');
 		// add_meta_box('custom_second_featured_image', 'Second Featured Image', 'custom_second_featured_image', 'page', 'side', 'low');
+        add_meta_box('custom_dev_meta', 'Developer Meta', 'custom_dev_meta', 'page', 'normal', 'low');
 
     }
 	add_action('add_meta_boxes', 'custom_add_metaboxes', 10, 2);
@@ -469,6 +492,27 @@
         	<div class="custom-meta">
 				<label for="video-url">Enter the video URL for this page:</label>
 				<input id="video-url" class="short" title="This is needed for all video pages" name="_custom_video_url" type="text" value="<?php echo $post->_custom_video_url; ?>">
+				<br/>
+
+        	</div>
+
+		<?php
+	}
+
+    // Build dev meta box
+	function custom_dev_meta($post) {
+
+		?>
+        	<div class="custom-meta">
+				<label for="state-name">Enter the state for this page <br/> (fallback: <code><?php echo get_conditional_state($post); ?></code>):</label>
+				<input id="state-name" class="short" title="State name" name="_custom_state_name" type="text" value="<?php echo $post->_custom_state_name; ?>">
+				<br/><br/>
+
+        	</div>
+
+            <div class="custom-meta">
+				<label for="custom-lock">Prevent non-dev deletion:</label>
+				<input id="custom-lock" class="short" title="Prevent deletion" name="_custom_lock" type="checkbox" <?php if( $post->_custom_lock ) echo 'checked'; ?>>
 				<br/>
 
         	</div>
@@ -557,6 +601,16 @@
 
         if( isset($_POST['_custom_video_url']) ) {
 	        update_post_meta($post_id, '_custom_video_url', $_POST['_custom_video_url']);
+        }
+        if( isset($_POST['_custom_state_name']) ) {
+            update_post_meta($post_id, '_custom_state_name', $_POST['_custom_state_name']);
+        }
+        if( isset($_POST['_custom_lock']) ) {
+            $value = False;
+            if( $_POST['_custom_lock'] == 'on' ){
+                $value = True;
+            }
+            update_post_meta($post_id, '_custom_lock', $value);
         }
         if( isset($_POST['_second_post_thumbnail']) ) {
 	        //update_post_meta($post_id, '_second_post_thumbnail', $_POST['_second_post_thumbnail']);

@@ -37,8 +37,8 @@
     }
     .custom-meta input[type="checkbox"],
     .custom-meta input[type="radio"] {
-        height: auto;
-        width: auto;
+        height: 16px;
+        width: 16px;
         display: inline-block;
         vertical-align: baseline;
     }

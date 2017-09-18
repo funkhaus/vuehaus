@@ -13,29 +13,25 @@
 
         $target_post = get_post($target_post);
 
-        // check for transient, set a new one if needed.
-        if ( ! $output = get_post_meta( $target_post->ID, '_custom_state', true ) ){
+        // set state conditions here
+        switch (true){
 
-            // set state conditions here
-            switch (true){
+            /* Example:
+            case $target_post->ID == 16 :
+                $output = 'work-grid';
+                break;
+            case is_tree( 16, $target_post ) :
+                $output = 'work-detail';
+                break;
+                */
 
-                /* Example:
-                case $target_post->ID == 16 :
-                    $output = 'work-grid';
-                    break;
-                case is_tree( 16, $target_post ) :
-                    $output = 'work-detail';
-                    break;
-                    */
+            case $target_post->ID == get_option('page_on_front'):
+                $output = 'front-page';
+                break;
 
-                default:
-                    $output = 'front-page';
-                    break;
-            }
-
-            // update state meta
-            update_post_meta( $target_post, '_custom_state', $output );
-
+            default:
+                $output = 'fallback';
+                break;
         }
 
         // return post state
