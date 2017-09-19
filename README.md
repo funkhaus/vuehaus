@@ -8,18 +8,22 @@ Vuepress is a theme used to build smooth, responsive [Wordpress](https://wordpre
 1. `npm run dev`
 
 ## Building a Vuepress Site
-Vuepress sites use 
+Vuepress sites use a state machine to render individual pages. The recommended workflow is:
 
-
-
-1. Plan and document structure of Wordpress pages. For example:
+1. Plan and document the general structure of the site in your README.md. For example:
+```
     * Front page
         * Work block
-        * ...
+        * ... (ellipsis indicates a variable number of the preceding bullet's page type)
     * Work Grid
         * Work detail
         * ...
-1.
+    * About
+        * Our History
+        * Our Employees
+            * Employee Bio
+            * ...
+```
 1. Define paths in `queries/index.php`'s `build_routes` function.
     * `'/' . get_page( 123 )->post_name     => 'VueTemplate'`
 

@@ -1,11 +1,5 @@
 <?php
 
-    function update_conditional_state( $post_id ){
-        delete_post_meta( $post_id, '_custom_state' );
-        get_conditional_state( $post_id );
-    }
-    add_action( 'save_post', 'update_conditional_state' );
-
 /*
  * Function to get state of page
  */
@@ -13,20 +7,35 @@
 
         $target_post = get_post($target_post);
 
+        // Default to customized state name
+        // if( $target_post->_custom_state_name ){
+        //     return $target_post->_custom_state_name;
+        // }
+
         // set state conditions here
         switch (true){
 
             /* Example:
-            case $target_post->ID == 16 :
+            case $target_post->_custom_guid == 'work-grid'' :
                 $output = 'work-grid';
                 break;
-            case is_tree( 16, $target_post ) :
+            case is_tree( 16, $target_post ) and !has_children( $target_post ) :
                 $output = 'work-detail';
+                break;
+            case is_tree( 16, $target_post ) :
+                $output = 'campaign-detail';
+                break;
+            case $target_post->_custom_guid == 'one-of-a-kind' :
+                $output = 'one-of-a-kind-post';
                 break;
                 */
 
             case $target_post->ID == get_option('page_on_front'):
                 $output = 'front-page';
+                break;
+
+            case $target_post->ID == get_option('page_for_posts'):
+                $output = 'home';
                 break;
 
             default:
