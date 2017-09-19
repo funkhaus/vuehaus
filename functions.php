@@ -472,6 +472,17 @@
         return $output;
     }
 
+    // Gets page by a given GUID
+    function get_page_by_guid( $guid ){
+        $args = array(
+            'posts_per_page'   => 1,
+            'meta_key'         => '_custom_guid',
+            'meta_value'       => $guid,
+            'post_type'        => 'page',
+        );
+        return reset( get_posts($args) );
+    }
+
 
 /*
  * Add custom metabox to the new/edit page

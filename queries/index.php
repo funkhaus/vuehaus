@@ -23,6 +23,7 @@
             // '/path'                              => 'VueComponent',
             // '/path/:var'                         => 'ComponentWithVar'
             // '/path/*/:var'                       => 'WildcardAndVar'
+            // '/' . get_page_by_guid('your-guid')->post_name  => 'DefinedByGuid'
 
             // Probably unchanging
             ''                                      => 'FrontPage',

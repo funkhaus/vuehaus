@@ -14,7 +14,7 @@ Vuepress sites use a state machine to render individual pages. The recommended w
 ```
     * Front page
         * Work block
-        * ... (ellipsis indicates a variable number of the preceding bullet's page type)
+        * ...
     * Work Grid
         * Work detail
         * ...
@@ -25,7 +25,11 @@ Vuepress sites use a state machine to render individual pages. The recommended w
             * ...
 ```
 1. Define paths in `queries/index.php`'s `build_routes` function.
-    * `'/' . get_page( 123 )->post_name     => 'VueTemplate'`
+    * It's a good idea to reference a page's slug rather than hardcoding it. For this reason, Vuepress comes with a meta field called `_custom_guid` and a convenience function called `get_page_by_guid( $guid )` that you can use to find a page's slug. For example:  
+        `'/' . get_page_by_guid( 'director_grid' )->post_name => 'DirectorGrid'`
+        You can always use a page's ID, too:
+        `'/' . get_post( $your_page_id )->post_name => 'DirectorGrid'`
+
 
 TODO: Continue
 
