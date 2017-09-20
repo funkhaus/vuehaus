@@ -4,9 +4,6 @@
     <meta charset="<?php bloginfo( 'charset' ); ?>" />
     <title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <?php if( is_front_page() ) : ?>
-        <meta name="description" content="<?php bloginfo('description'); ?>">
-    <?php endif; ?>
 
     <link rel="profile" href="http://gmpg.org/xfn/11" />
     <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_template_directory_uri(); ?>/static/bundle.css?ver=1.0" />
