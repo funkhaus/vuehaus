@@ -9,19 +9,18 @@ Vuepress is a theme used to build smooth, responsive [Wordpress](https://wordpre
 
 ## Building a Vuepress Site
 ### Template selection
-In Vuepress, you'll be building individual pages with Vue templates instead of PHP templates. This can take some getting used to, but ultimately allows for all of the flexibility and power of Vue right from the start.
+In Vuepress, you'll be building individual pages with Vue instead of PHP templates. This can take some getting used to, but ultimately allows for all of the flexibility and power of Vue right from the start.
 
-How does Vuepress pick the correct Vue template to render for a given page? That template is based on the page's URL, with a list of URLs and Vue template names in `queries/index.php`'s `build_routes` function.
+How does Vuepress pick the correct Vue template to render for a given page? The decision is based on the page's URL, with a list of URLs and Vue template names in `queries/index.php`'s `build_routes` function.
 
 For example, if you wanted to build a front page and an About page, you could set up the following in `build_routes`:
 
 ```php
 // Don't do it like this! See below for more
 array(
+    // The key is the relative path that a page must match, while the value is the Vue template name
     ''              => 'FrontPage',
     '/about'        => 'About'
-    // The key is the relative path that a page must match...
-    // ...while the value is the Vue template name
 );
 ```
 
@@ -34,33 +33,32 @@ If we set the About page's GUID to `about`, then rewrite the relevant line in `b
 
 ```php
 ...
-    '/' . get_page_by_guid('about')->post_name        => 'About'
     // get_page_by_guid is a helper function built into Vuepress
+    '/' . get_page_by_guid('about')->post_name        => 'About'
 ...
 ```
 
-This will guarantee that the path will always render the About template, even if the user changes the path later on.
+This will guarantee that the path to this page will always render the About template, even if the user changes that path later on.
 
 ### Preventing deletion
-Any missing page in the `build_routes` function (for example, if `get_page_by_guid('about')` didn't find any pages) would break the router entirely; a Developer can lock pages to prevent this type of bug. Simply check the "Prevent non-dev deletion" box in the Developer Meta screen to prevent other users from placing that page in the Trash accidentally.
+Any missing page in the `build_routes` function (for example, if `get_page_by_guid('about')` didn't find any pages) would break the router entirely; a Developer can lock pages to prevent this type of bug. Check the "Prevent non-dev deletion" box in the Developer Meta screen to prevent other users from placing that page in the Trash accidentally.
 
 ### Example workflow
 1. Plan and document the general structure of the site in your README.md. Example:
 ```
 * Front page
-    * Work block
-    * ...
 * About
     * Our History
     * Our Employees
         * Employee Bio
         * ...
 ```
-1. Figure out which pages are necessary to the structure of the site. Give those pages GUIDs and prevent non-Dev deletion. Example:
+2. Figure out which pages are necessary to the structure of the site. Give those pages GUIDs and prevent non-Dev deletion. Example:
 ```
-Front Page, About, and Our Employees all have child pages, so we'll give them GUIDs of 'front-page', 'about', and 'our-employees', respectively, as well as lock them.
+Front Page, About, and Our Employees all have child pages, so we'll give them GUIDs of
+'front-page', 'about', and 'our-employees', respectively, as well as lock them.
 ```
-1. Create conditions in `build_routes`:
+3. Create conditions in `build_routes`:
 ```
 $about_slug = get_page_by_guid('about')->post_name;
 $employees_slug = get_page_by_guid('our-employees')->post_name;
@@ -79,11 +77,12 @@ array(
     '/*/' . $employees_slug . '/:employee'  => 'EmployeeDetail'
 );
 ```
-1. Create the necessary Vue templates. Example:
+4. Create the necessary Vue templates. Example:
 ```
-We defined 'FrontPage', 'About', 'GenericAboutChild', 'EmployeesGrid', and 'EmployeeDetail' above, so we'll be creating each of those as a .vue file in src/components/templates/.
+We defined 'FrontPage', 'About', 'GenericAboutChild', 'EmployeesGrid', and 'EmployeeDetail' above,
+so we'll be creating each of those as a .vue file in src/components/templates/.
 ```
-1. `npm run dev` and start making your theme!
+5. `npm run dev` and start building in Vue!
 
 ## Development
 Vuepress handles Wordpress pages a little different than normal.
