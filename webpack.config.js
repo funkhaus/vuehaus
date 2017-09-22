@@ -15,7 +15,7 @@ const prodPlugins = devPlugins.concat([
         compress: { warnings: false }
     }),
     new ExtractTextPlugin({
-        filename: 'build.css'
+        filename: 'bundle.css'
     })
 ])
 
