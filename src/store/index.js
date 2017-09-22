@@ -1,20 +1,27 @@
-/* global queryData */
+/* global jsonData */
 import Vuex from 'vuex'
-import $ from 'jquery'
 import Vue from 'vue'
+
+const cache = {
+    '/': Promise.resolve(jsonData)
+}
 
 // add vuex
 Vue.use( Vuex )
 
 export default new Vuex.Store( {
     state: {
-        queryData: queryData,
+        site: jsonData.site,
+        meta: jsonData.meta,
+        page: jsonData.page,
         transitioning_in: false,
         transitioning_out: false
     },
     mutations: {
         'REPLACE_QUERYDATA': ( state, data ) => {
-            state.queryData = data
+            state.site = data.site
+            state.meta = data.meta
+            state.page = data.page
             return state
         },
         'SET_TRANSITIONING_IN': (state, transitioning) => {
@@ -27,21 +34,17 @@ export default new Vuex.Store( {
         }
     },
     actions: {
-        'LOAD_AND_REPLACE_QUERYDATA': ( context, path ) => {
+        'LOAD_AND_REPLACE_QUERYDATA': async ( context, path ) => {
 
-            // TODO: Set loading state
+            // no cache? set it
+            if ( !cache[path] ){
+                const headers = new Headers({ 'Authorization': `Basic ${ btoa('flywheel:funkhaus') }` })
+                cache[path] = fetch(`${path}?contentType=json`, { headers }).then(r => r.json())
+            }
 
-            $.ajax( {
-                url: path,
-                contentType: 'application/json',
-                dataType: 'json',
-                success: ( data ) => {
-                    context.commit( 'REPLACE_QUERYDATA', data )
-                },
-
-                // TODO: Add action on error
-                error: err => console.log( 'error', err )
-            } )
+            // wait for data, replace
+            const data = await cache[path]
+            context.commit( 'REPLACE_QUERYDATA', data )
         }
     }
-} )
+})

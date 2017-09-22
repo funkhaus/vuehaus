@@ -7,12 +7,14 @@
 </template>
 
 <script>
-    import { sizer, scroller } from 'src/morlock'
+    import throttle from 'lodash/throttle'
     import router from 'src/router'
     import store from 'src/store'
 
     export default {
         el: '#app',
+        store,
+        router,
         data () {
             return {
                 winHeight: window.innerHeight,
@@ -20,19 +22,23 @@
                 sTop: 0
             }
         },
-        created () {
-            sizer.on('resize', e => {
-                this.winWidth = e[0]
-                this.winHeight = e[1]
-            })
-            scroller.on('scroll', top => this.sTop = top)
+        mounted () {
+            window.addEventListener('resize', throttle(this.setWinSize, 30))
+            window.addEventListener('scroll', throttle(this.setWinScroll, 10))
+        },
+        methods: {
+            setWinSize () {
+                this.winWidth = window.innerWidth
+                this.winHeight = window.innerHeight
+            },
+            setWinScroll () {
+                this.sTop = document.body.scrollTop
+            }
         },
         computed: {
             breakpoint () {
                 return this.winWidth >= 750 ? 'desktop' : 'mobile'
             }
-        },
-        store,
-        router
+        }
     }
 </script>

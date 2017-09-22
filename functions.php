@@ -1,7 +1,31 @@
 <?php
-    include 'states.php';
-	include 'queries/index.php';
 
+/*
+ * Add vue.js router to rest-easy data
+ */
+	function add_routes_to_json($jsonData){
+
+        // Get the name of the category base. Default to "/categories"
+        $category_base = '/' . get_option('category_base');
+
+        // build out router table to be used with Vue
+        $jsonData['routes'] = array(
+
+            // Per-site
+            // '/path'                              => 'VueComponent',
+            // '/path/:var'                         => 'ComponentWithVar'
+            // '/path/*/:var'                       => 'WildcardAndVar'
+            // '/' . get_page_by_guid('your-guid')->post_name  => 'DefinedByGuid'
+
+            // Probably unchanging
+            ''                                      => 'FrontPage',
+            '/' . $category_base                    => 'archive',
+            '/:slug'                                => 'default'
+        );
+
+		return $jsonData;
+	}
+	add_filter('rez_build_all_data', 'add_routes_to_json');
 
 /*
  * Setup WordPress
@@ -37,54 +61,33 @@
 	}
 	add_action( 'after_setup_theme', 'custom_theme_setup' );
 
-    // Add Developer role
-    function custom_theme_switch(){
-        global $wp_roles;
-        if ( ! isset( $wp_roles ) ){
-            $wp_roles = new WP_Roles();
-        }
-
-        $admin_role = $wp_roles->get_role('administrator');
-
-        add_role(
-            'developer',
-            __('Developer'),
-            $admin_role->capabilities
-        );
-
-        // set initial user to Developer
-        $user = new WP_User(1);
-        $user->set_role('developer');
-    }
-    add_action('after_switch_theme', 'custom_theme_switch');
-
-
-/*
- * Handle content width edge cases
- */
-	function set_content_width() {
-		global $content_width;
-		if ( is_single() ) {
-			$content_width = 960;
-		} else {
-			$content_width = 960;
-		}
-	}
-	add_action( 'template_redirect', 'set_content_width' );
-
-
-
 /*
  * Enqueue Custom Scripts
  */
     function custom_scripts() {
-		wp_register_script('bundle', get_template_directory_uri() . '/static/bundle.js', array(), '1.0');
+		wp_register_script('bundle', get_template_directory_uri() . '/static/bundle.js', array(), custom_latest_timestamp());
 		wp_enqueue_script('bundle', null, array(), false, true);
-
-		$queryData = load_query_data();
-		wp_localize_script('bundle', 'queryData', $queryData);
     }
     add_action('wp_enqueue_scripts', 'custom_scripts', 10);
+
+
+/*
+ * Generate timestamp based on latest edits.
+ */
+    function custom_latest_timestamp() {
+
+		// set base, find top level assets of static dir
+        $base =  get_template_directory();
+		$assets = array_merge(glob($base . '/static/*.js'), glob($base . '/static/*.css'));
+
+		// get m time of each asset
+		$stamps = array_map(function($path){
+			return filemtime($path);
+		}, $assets);
+
+		// if valid return time of latest change, otherwise current time
+        return rsort($stamps) ? reset($stamps) : time();
+    }
 
 
 /*
@@ -95,53 +98,6 @@
 		//wp_enqueue_script('site-admin');
 	}
 	add_action( 'admin_enqueue_scripts', 'custom_admin_scripts' );
-
-/*
- * Output JSON data
- */
-
-	function output_api_data(){
-
-		$json_header = $_SERVER['CONTENT_TYPE'] == 'application/json';
-		$json_type = $_REQUEST['content'] == 'json';
-
-		if ( $json_header || $json_type ){
-
-			header('Content-Type: application/json');
-
-			$data = load_query_data();
-			echo json_encode($data);
-			exit();
-
-		}
-
-	}
-	add_action('wp', 'output_api_data');
-
-/*
- * Custom Background Classes
- */
-    // Add specific CSS class by filter
-    function custom_class_names($classes) {
-        global $post;
-        $state = get_conditional_state($post);
-
-        if ( $state ) {
-            $classes[] = $state;
-        }
-
-		// Mobile Detects
-		if( wp_is_mobile() ) {
-			$classes[] = 'is-mobile';
-		} else {
-			$classes[] = 'not-mobile';
-		}
-
-    	return $classes;
-    }
-    add_filter('body_class','custom_class_names');
-
-
 
 /*
  * Style login page and dashboard
@@ -183,7 +139,7 @@
 	add_filter('the_excerpt_rss', 'rss_post_thumbnail');
 
 /*
- * Custom conditional function. Used to test if a post is an ascendent or descendent of another.
+ * Custom conditional function. Used to get the parent and all it's child.
  */
     function is_tree($tree_id, $target_post = null) {
 
@@ -196,8 +152,6 @@
         // if ID is target post OR in target post tree, return true
         return ( ($target_post->ID == $tree_id) or in_array($tree_id, $ancestors) );
     }
-
-
 
 /*
  * Custom conditional function. Used to test if current page has children.
@@ -219,130 +173,6 @@
     }
 
 /*
- * Next page/post ID
- */
-	function get_next_page_id($target_post = null, $exclude = null, $loop = true) {
-		$target_post = get_post($target_post);
-
-		// set current post type
-		$post_type = get_post_type( $target_post );
-
-		// Set vars
-		$current_project_id = $target_post->ID;
-		$cache_key = 'all_pages_parent_'.$current_project_id;
-
-		// Check for cached $pages
-		$pages = get_transient( $cache_key );
-		if ( empty( $pages ) ){
-			$args = array(
-				'post_type'         => $post_type,
-				'order'             => 'ASC',
-				'orderby'           => 'menu_order',
-				'post_parent'       => $target_post->post_parent,
-				'fields'            => 'ids',
-				'posts_per_page'    => -1,
-				'post__not_in' 		=> $exclude
-			);
-			$pages = get_posts($args);
-
-			// Save cache
-			set_transient($cache_key, $pages, 30 );
-        }
-
-		$current_key = array_search($current_project_id, $pages);
-		$output = false;
-
-		if( isset($pages[$current_key+1]) ) {
-			// Next page exists
-			$output = $pages[$current_key+1];
-
-		// No next page, should we loop to first?
-		} elseif ( $loop ) {
-
-			// Get first page
-			$output = $pages[0];
-		}
-
-		return $output;
-	}
-
-
-/*
- * Previous page/post ID
- */
-    function get_previous_page_id($target_post = null, $exclude = null, $loop = true) {
-        $target_post = get_post($target_post);
-
-		// set current post type
-		$post_type = get_post_type( $target_post );
-
-		// Set vars
-        $current_project_id = $target_post->ID;
-        $cache_key = 'all_pages_parent_'.$current_project_id;
-
-        // Check for cached $pages
-        $pages = get_transient( $cache_key );
-        if ( empty( $pages ) ){
-			$args = array(
-				'post_type'         => $post_type,
-				'order'             => 'ASC',
-				'orderby'           => 'menu_order',
-				'post_parent'       => $target_post->post_parent,
-				'fields'            => 'ids',
-				'posts_per_page'    => -1,
-				'post__not_in' 		=> $exclude
-			);
-			$pages = get_posts($args);
-
-			// Save cache
-			set_transient($cache_key, $pages, 30 );
-        }
-
-        $current_key = array_search($current_project_id, $pages);
-		$output = false;
-
-        if( isset($pages[$current_key-1]) ) {
-            // Previous page exists
-            $output = $pages[$current_key-1];
-
-		// No previous page, should we loop to last?
-        } elseif ( $loop ) {
-
-			// Get last page
-			$output = array_pop($pages);
-        }
-
-		return $output;
-    }
-
-
-/*
- * Redirect to first child
- */
-    function get_first_child_id( $target_post = null ) {
-
-        $target_post = get_post($target_post);
-
-        $id = false;
-        $args = array(
-            'post_type'         => get_post_type($target_post),
-            'post_parent'       => $target_post->ID,
-            'order'             => 'ASC',
-            'orderby'           => 'menu_order',
-            'fields'            => 'ids',
-            'posts_per_page'    => 1
-        );
-        $children = get_posts($args);
-
-        if( isset($children[0]) ) {
-            $id = $children[0];
-        }
-
-        return $id;
-    }
-
-
-/*
  * Allow subscriber to see Private posts/pages
  */
 	function add_theme_caps() {
@@ -354,8 +184,6 @@
 		$role->add_cap('read_private_pages');
 	}
 	//add_action( 'switch_theme', 'add_theme_caps');
-
-
 
 /*
  * Disable Rich Editor on certain pages
@@ -386,7 +214,7 @@
         $mimes['svg'] = 'image/svg+xml';
         return $mimes;
     }
-    //add_filter('upload_mimes', 'add_mime_types');
+    add_filter('upload_mimes', 'add_mime_types');
 
 
 /*
@@ -399,35 +227,6 @@
 		return $output;
 	}
 	//add_shortcode('gallery', 'custom_gallery');
-
-
-/*
- * Get image dimensions and calculate padding percentage based on aspect ratio
- */
-    function get_responsive_image_padding($target_attachment = null, $size = 'post-thumbnail'){
-
-        // Always have an image to work with
-        if ( $target_attachment ){
-            $target_attachment = get_post($target_attachment);
-        } else {
-            $post = get_post();
-            $target_attachment = get_post( get_post_thumbnail_id($post->ID) );
-        }
-
-        // get src data of attachment, set dimensions
-        $img_data = wp_get_attachment_image_src($target_attachment->ID, $size);
-
-        // About if no attachment found
-        if( !$img_data ) {
-            return 0;
-        }
-
-        $width = $img_data[1];
-        $height = $img_data[2];
-
-        // return percentage for padding
-        return ($height / $width) * 100;
-    }
 
 /*
  * Return the URL to a given attachment, while respecting size
@@ -452,38 +251,6 @@
         return get_custom_attachment_url($attachment_id, $size);
     }
 
-
-/*
- * Split and wrap title
- */
-    function get_split_title($post = null) {
-        $post = get_post($post);
-
-        $title = get_the_title($post->ID);
-        $lines = explode(' &#8211; ', $title);
-        $output = false;
-        $count = 0;
-
-        foreach( $lines as $line ) {
-            $count++;
-            $output .= '<span class="line line-'.$count.'">'.$line.'</span> ';
-        }
-
-        return $output;
-    }
-
-    // Gets page by a given GUID
-    function get_page_by_guid( $guid ){
-        $args = array(
-            'posts_per_page'   => 1,
-            'meta_key'         => '_custom_guid',
-            'meta_value'       => $guid,
-            'post_type'        => 'page',
-        );
-        return reset( get_posts($args) );
-    }
-
-
 /*
  * Add custom metabox to the new/edit page
  */
@@ -491,11 +258,6 @@
 
 		// add_meta_box('custom_media_meta', 'Media Meta', 'custom_media_meta', 'page', 'normal', 'low');
 		// add_meta_box('custom_second_featured_image', 'Second Featured Image', 'custom_second_featured_image', 'page', 'side', 'low');
-
-        // only render the following for users with Developer role
-        if( !user_is_developer() ) return;
-
-        add_meta_box('custom_dev_meta', 'Developer Meta', 'custom_dev_meta', 'page', 'normal', 'low');
 
     }
 	add_action('add_meta_boxes', 'custom_add_metaboxes', 10, 2);
@@ -513,49 +275,6 @@
 
 		<?php
 	}
-
-    // Build dev meta box (only for users with Developer role)
-	function custom_dev_meta($post) {
-
-		?>
-            <!--<p>Page state (via <code>get_conditional_state()</code>): <code><?php echo get_conditional_state(); ?></code></p> -->
-
-            <div class="custom-meta">
-                <label for="custom-guid">Enter the GUID for this page:</label>
-                <input id="custom-guid" class="short" title="GUID" name="_custom_guid" type="text" value="<?php echo $post->_custom_guid; ?>">
-                <br/><br/>
-
-            </div>
-
-        	<!-- <div class="custom-meta">
-				<label for="state-name">Enter the state for this page <br/> (fallback: <code><?php echo get_conditional_state($post); ?></code>):</label>
-				<input id="state-name" class="short" title="State name" name="_custom_state_name" type="text" value="<?php echo $post->_custom_state_name; ?>">
-				<br/><br/>
-
-        	</div> -->
-
-            <div class="custom-meta">
-				<label for="custom-lock">Prevent non-dev deletion:</label>
-				<input id="custom-lock" class="short" title="Prevent deletion" name="_custom_lock" type="checkbox" <?php if( $post->_custom_lock ) echo 'checked'; ?>>
-				<br/>
-
-        	</div>
-
-		<?php
-	}
-
-    // Prevent non-dev from deleting locked pages/posts
-    function check_custom_post_lock( $target_post ){
-        $target_post = get_post($target_post);
-
-        if( !user_is_developer() and $target_post->_custom_lock ){
-            echo 'Only a user with the Developer role can delete this page.<br/><br/>';
-            echo '<a href="javascript:history.back()">Back</a>';
-            exit;
-        }
-    }
-    add_action('wp_trash_post', 'check_custom_post_lock', 10, 1);
-    add_action('before_delete_post', 'check_custom_post_lock', 10, 1);
 
     // Second featured image uploader (requires changes to admin.js too).
     // @see: https://codex.wordpress.org/Javascript_Reference/wp.media
@@ -639,33 +358,9 @@
         if( isset($_POST['_custom_video_url']) ) {
 	        update_post_meta($post_id, '_custom_video_url', $_POST['_custom_video_url']);
         }
-        if( isset($_POST['_custom_guid']) ) {
-            update_post_meta($post_id, '_custom_guid', $_POST['_custom_guid']);
-        }
-        if( isset($_POST['_custom_state_name']) ) {
-            update_post_meta($post_id, '_custom_state_name', $_POST['_custom_state_name']);
-        }
         if( isset($_POST['_second_post_thumbnail']) ) {
 	        //update_post_meta($post_id, '_second_post_thumbnail', $_POST['_second_post_thumbnail']);
         }
 
-        // these values will only be updated if the current user is a Developer
-        if( !user_is_developer() ) return;
-
-        if( isset($_POST['_custom_lock']) ) {
-            $value = False;
-            if( $_POST['_custom_lock'] == 'on' ){
-                $value = True;
-            }
-            update_post_meta($post_id, '_custom_lock', $value);
-        } else {
-            update_post_meta($post_id, '_custom_lock', False);
-        }
-
     }
     add_action('save_post', 'custom_save_metabox');
-
-    function user_is_developer(){
-        $roles = wp_get_current_user()->roles;
-        return in_array( 'developer', $roles );
-    }

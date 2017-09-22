@@ -1,9 +1,8 @@
-/* global queryData */
+/* global jsonData */
 
-import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from 'src/store'
-import _ from 'lodash'
+import Vue from 'vue'
 
 Vue.use( VueRouter )
 
@@ -12,7 +11,14 @@ const templates = require.context('src/components/templates', true)
 
 // build routing table
 const routeTable = []
-_.each(queryData.shared.routes, (cmpName, path) => {
+Object.keys(jsonData.routes).forEach(path => {
+
+    const cmpName = jsonData.routes[path]
+
+    if ( cmpName == 'REDIRECT_HOME' ){
+        routeTable.push({ path, redirect: '/' })
+        return true
+    }
 
     // get specified component, fallback to default
     let component = templates(`./default.vue`)
@@ -36,11 +42,11 @@ const router = new VueRouter( {
     }
 })
 
-router.beforeEach( ( to, from, next ) => {
+router.beforeEach(( to, from, next ) => {
     if( to.path !== from.path ){
         store.dispatch( 'LOAD_AND_REPLACE_QUERYDATA', to.path )
     }
     next()
-} )
+})
 
 export default router

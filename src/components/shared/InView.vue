@@ -9,8 +9,6 @@
 </template>
 
 <script>
-import { scroller, sizer } from 'src/morlock'
-
 export default {
     name: 'in-view',
     data () {
@@ -22,8 +20,8 @@ export default {
     mounted () {
         this.setRect()
         this.setHeight()
-        scroller.on('scroll', this.setRect)
-        sizer.on('resize', this.setHeight)
+        window.addEventListener('resize', this.setRect)
+        window.addEventListener('scroll', this.setHeight)
     },
     watch: {
         viewClass (newVal) {
