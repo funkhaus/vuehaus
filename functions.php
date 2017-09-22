@@ -2,6 +2,7 @@
     include 'states.php';
 	include 'queries/index.php';
 
+
 /*
  * Setup WordPress
  */
@@ -35,6 +36,27 @@
 
 	}
 	add_action( 'after_setup_theme', 'custom_theme_setup' );
+
+    // Add Developer role
+    function custom_theme_switch(){
+        global $wp_roles;
+        if ( ! isset( $wp_roles ) ){
+            $wp_roles = new WP_Roles();
+        }
+
+        $admin_role = $wp_roles->get_role('administrator');
+
+        add_role(
+            'developer',
+            __('Developer'),
+            $admin_role->capabilities
+        );
+
+        // set initial user to Developer
+        $user = new WP_User(1);
+        $user->set_role('developer');
+    }
+    add_action('after_switch_theme', 'custom_theme_switch');
 
 
 /*
@@ -161,7 +183,7 @@
 	add_filter('the_excerpt_rss', 'rss_post_thumbnail');
 
 /*
- * Custom conditional function. Used to get the parent and all it's child.
+ * Custom conditional function. Used to test if a post is an ascendent or descendent of another.
  */
     function is_tree($tree_id, $target_post = null) {
 
@@ -450,6 +472,17 @@
         return $output;
     }
 
+    // Gets page by a given GUID
+    function get_page_by_guid( $guid ){
+        $args = array(
+            'posts_per_page'   => 1,
+            'meta_key'         => '_custom_guid',
+            'meta_value'       => $guid,
+            'post_type'        => 'page',
+        );
+        return reset( get_posts($args) );
+    }
+
 
 /*
  * Add custom metabox to the new/edit page
@@ -458,6 +491,11 @@
 
 		// add_meta_box('custom_media_meta', 'Media Meta', 'custom_media_meta', 'page', 'normal', 'low');
 		// add_meta_box('custom_second_featured_image', 'Second Featured Image', 'custom_second_featured_image', 'page', 'side', 'low');
+
+        // only render the following for users with Developer role
+        if( !user_is_developer() ) return;
+
+        add_meta_box('custom_dev_meta', 'Developer Meta', 'custom_dev_meta', 'page', 'normal', 'low');
 
     }
 	add_action('add_meta_boxes', 'custom_add_metaboxes', 10, 2);
@@ -475,6 +513,49 @@
 
 		<?php
 	}
+
+    // Build dev meta box (only for users with Developer role)
+	function custom_dev_meta($post) {
+
+		?>
+            <!--<p>Page state (via <code>get_conditional_state()</code>): <code><?php echo get_conditional_state(); ?></code></p> -->
+
+            <div class="custom-meta">
+                <label for="custom-guid">Enter the GUID for this page:</label>
+                <input id="custom-guid" class="short" title="GUID" name="_custom_guid" type="text" value="<?php echo $post->_custom_guid; ?>">
+                <br/><br/>
+
+            </div>
+
+        	<!-- <div class="custom-meta">
+				<label for="state-name">Enter the state for this page <br/> (fallback: <code><?php echo get_conditional_state($post); ?></code>):</label>
+				<input id="state-name" class="short" title="State name" name="_custom_state_name" type="text" value="<?php echo $post->_custom_state_name; ?>">
+				<br/><br/>
+
+        	</div> -->
+
+            <div class="custom-meta">
+				<label for="custom-lock">Prevent non-dev deletion:</label>
+				<input id="custom-lock" class="short" title="Prevent deletion" name="_custom_lock" type="checkbox" <?php if( $post->_custom_lock ) echo 'checked'; ?>>
+				<br/>
+
+        	</div>
+
+		<?php
+	}
+
+    // Prevent non-dev from deleting locked pages/posts
+    function check_custom_post_lock( $target_post ){
+        $target_post = get_post($target_post);
+
+        if( !user_is_developer() and $target_post->_custom_lock ){
+            echo 'Only a user with the Developer role can delete this page.<br/><br/>';
+            echo '<a href="javascript:history.back()">Back</a>';
+            exit;
+        }
+    }
+    add_action('wp_trash_post', 'check_custom_post_lock', 10, 1);
+    add_action('before_delete_post', 'check_custom_post_lock', 10, 1);
 
     // Second featured image uploader (requires changes to admin.js too).
     // @see: https://codex.wordpress.org/Javascript_Reference/wp.media
@@ -558,9 +639,33 @@
         if( isset($_POST['_custom_video_url']) ) {
 	        update_post_meta($post_id, '_custom_video_url', $_POST['_custom_video_url']);
         }
+        if( isset($_POST['_custom_guid']) ) {
+            update_post_meta($post_id, '_custom_guid', $_POST['_custom_guid']);
+        }
+        if( isset($_POST['_custom_state_name']) ) {
+            update_post_meta($post_id, '_custom_state_name', $_POST['_custom_state_name']);
+        }
         if( isset($_POST['_second_post_thumbnail']) ) {
 	        //update_post_meta($post_id, '_second_post_thumbnail', $_POST['_second_post_thumbnail']);
         }
 
+        // these values will only be updated if the current user is a Developer
+        if( !user_is_developer() ) return;
+
+        if( isset($_POST['_custom_lock']) ) {
+            $value = False;
+            if( $_POST['_custom_lock'] == 'on' ){
+                $value = True;
+            }
+            update_post_meta($post_id, '_custom_lock', $value);
+        } else {
+            update_post_meta($post_id, '_custom_lock', False);
+        }
+
     }
     add_action('save_post', 'custom_save_metabox');
+
+    function user_is_developer(){
+        $roles = wp_get_current_user()->roles;
+        return in_array( 'developer', $roles );
+    }
