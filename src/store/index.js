@@ -2,8 +2,9 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 
+// initialize simple cache object
 const cache = {
-    '/': Promise.resolve(jsonData)
+    [window.location.pathname]: Promise.resolve(jsonData)
 }
 
 // add vuex
