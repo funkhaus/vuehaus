@@ -14,7 +14,7 @@ export default new Vuex.Store( {
     state: {
         site: jsonData.site,
         meta: jsonData.meta,
-        page: jsonData.page,
+        loop: jsonData.loop,
         transitioning_in: false,
         transitioning_out: false
     },
