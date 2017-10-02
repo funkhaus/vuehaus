@@ -29,8 +29,13 @@
     }
 
     // set some helpful vars
-    $image_id = get_post_thumbnail_id( $post );
-    $image_url = reset(wp_get_attachment_image_src($image_id, 'social-preview'));
+    $image_id = false;
+    $image_url = false;
+    $image = wp_get_attachment_image_src($image_id, 'social-preview');
+    if( $image ){
+        $image_id = get_post_thumbnail_id( $post );
+        $image_url = reset( $image );
+    }
     $author = get_user_by('ID', $post->post_author);
     $queried_object = get_queried_object();
     $excerpt = get_the_excerpt($post);
