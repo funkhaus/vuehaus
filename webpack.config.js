@@ -1,42 +1,70 @@
-const path = require( 'path' )
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' )
 const resolve = file => path.resolve( __dirname, file )
 const webpack = require( 'webpack' )
+const path = require( 'path' )
+
+const isProd = process.env.NODE_ENV === 'production'
+
+const devPlugins = [
+    new webpack.EnvironmentPlugin({
+        NODE_ENV: 'development'
+    })
+]
+const prodPlugins = devPlugins.concat([
+    new webpack.optimize.UglifyJsPlugin({
+        compress: { warnings: false }
+    }),
+    new ExtractTextPlugin({
+        filename: 'bundle.css'
+    })
+])
 
 const config = {
-    entry: './src/main',
+    entry: ['whatwg-fetch', './src/main'],
     output: {
         path: resolve( 'static' ),
         filename: 'bundle.js'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.vue$/,
-                use: 'vue-loader'
+                loader: 'vue-loader',
+                options: {
+                    extractCSS: isProd,
+                    preserveWhitespace: false,
+                    postcss: [
+                        require('autoprefixer')({
+                            browsers: ['last 5 versions']
+                        })
+                    ]
+                }
+            },
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
             },
             {
                 test: /\.svg$/,
                 loader: 'svg-inline-loader?removeSVGTagAttrs=false'
             },
             {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract( {
-                    fallback: 'style-loader',
-                    use: [
-                        { loader: 'css-loader' },
-                        { loader: 'postcss-loader' }
-                    ]
-                } )
-            }, {
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader'
+                test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: '[name].[ext]?[hash]'
+                }
             },
             {
-                test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-                loader: 'url-loader?limit=100000'
+                test: /\.css$/,
+                use: isProd
+                    ? ExtractTextPlugin.extract({
+                        use: 'css-loader?minimize',
+                        fallback: 'vue-style-loader'
+                    })
+                    : ['vue-style-loader', 'css-loader']
             }
         ]
     },
@@ -45,54 +73,15 @@ const config = {
             path.resolve( __dirname, 'app' ),
             resolve( './' ),
             'node_modules'
-        ],
-        alias: {
-            vue: 'vue/dist/vue.js',
-            'replaceSVGs': resolve( 'src/libs/replaceSVGs.js' ),
-            '_': 'lodash'
-        }
+        ]
     },
-    plugins: [
-        new ExtractTextPlugin( 'bundle.css' )
-    ]
+    performance: {
+        maxEntrypointSize: 300000,
+        hints: isProd ? 'warning' : false
+    },
+    plugins: isProd ? prodPlugins : devPlugins
 }
 
-if ( process.env.NODE_ENV === 'production' ){
-
-    // inject env variable
-    config.plugins.push(
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: '"production"'
-            }
-        })
-    )
-
-    // minify JS
-    config.plugins.push(
-        new webpack.optimize.UglifyJsPlugin( {
-            compress: {
-                warnings: false
-            }
-        } )
-    )
-
-    // minify CSS
-    config.plugins.push(
-        new OptimizeCssAssetsPlugin({
-            cssProcessorOptions: { removeAllButFirst: true, zindex: false }
-        })
-    )
-
-    config.plugins.push(new webpack.optimize.OccurrenceOrderPlugin())
-
-    // use production version of vue
-    config.resolve.alias.vue = 'vue/dist/vue.min.js'
-
-} else {
-
-    config.devtool = '#source-map'
-
-}
+if (!isProd) config.devtool = '#source-map'
 
 module.exports = config
