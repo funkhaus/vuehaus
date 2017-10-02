@@ -1,5 +1,5 @@
 ## What
-Vuepress is a theme used to build smooth, responsive [Wordpress](https://wordpress.org/) sites with [Vue.js](https://vuejs.org/).
+Vuepress is a boilerplate used to build smooth, responsive [Wordpress](https://wordpress.org/) templates with [Vue.js](https://vuejs.org/).
 
 ## Install
 1. `git clone https://github.com/funkhaus/vuepress my-theme`
@@ -11,9 +11,9 @@ Vuepress is a theme used to build smooth, responsive [Wordpress](https://wordpre
 ### Template selection
 In Vuepress, you'll be building individual pages with Vue instead of PHP templates. This can take some getting used to, but ultimately allows for all of the flexibility and power of Vue right from the start.
 
-How does Vuepress pick the correct Vue template to render for a given page? The decision is based on the page's URL, with a list of URLs and Vue template names in `queries/index.php`'s `build_routes` function.
+How does Vuepress pick the correct Vue template to render for a given page? The decision is based on the page's URL, with a list of URLs and Vue template names in `functions.php`'s [`add_routes_to_json`](https://github.com/funkhaus/vuepress/blob/rest-easy/functions.php#L6-L27) function.
 
-For example, if you wanted to build a front page and an About page, you could set up the following in `build_routes`:
+For example, if you wanted to build a front page and an About page, you might set up the following in `build_routes`:
 
 ```php
 // Don't do it like this! See below for more
