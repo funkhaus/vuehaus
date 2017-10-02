@@ -32,7 +32,7 @@
                 this.winHeight = window.innerHeight
             },
             setWinScroll () {
-                this.sTop = document.body.scrollTop
+                this.sTop = window.pageYOffset || document.documentElement.scrollTop
             }
         },
         computed: {

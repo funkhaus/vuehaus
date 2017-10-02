@@ -8,7 +8,18 @@ Vuepress is a boilerplate used to build smooth, responsive [Wordpress](https://w
 1. Install and activate [Rest-Easy](https://github.com/funkhaus/Rest-Easy)
 1. `npm run dev`
 
-## Building a Vuepress Site
+## Reading List
+To get started with Vuepress, you should already know or familiarize yourself with:
+1. [WordPress](https://wordpress.org/)
+1. [Node.js and NPM](https://nodejs.org/en/download/) (npm is included with Node)
+1. [Vue.js](https://vuejs.org/)
+
+To get the most out of Vuepress, you can continue with:
+1. [Rest-Easy](https://github.com/funkhaus/Rest-Easy), a WordPress plugin by Funkhaus
+1. The [Vue router](https://router.vuejs.org/en/)
+1. [Vuex](https://vuex.vuejs.org/en/intro.html)
+
+## Building a Vuepress Site: Back-End
 Vuepress requires the [Rest-Easy](https://github.com/funkhaus/Rest-Easy) plugin to work correctly, so make sure you have that installed before getting started.
 
 In Vuepress, you'll be building individual pages with Vue instead of PHP templates. This can take some getting used to, but ultimately allows for all of the flexibility and power of Vue right from the start.
@@ -61,7 +72,47 @@ This will guarantee that the path to this page will always render the About temp
 ### Preventing deletion
 Any missing page in the `add_routes_to_json` function (for example, if `get_page_by_guid('about')` didn't find any pages) would break the given route; a Developer can lock pages to prevent this type of bug. Check the "Prevent non-dev deletion" box in the Developer Meta screen to prevent other users from placing that page in the Trash accidentally.
 
+### Vuex & State
+Vuepress uses [Vuex](https://vuex.vuejs.org/en/intro.html) to handle a site's state. The default store in `src/store/index.js` is set up like this:
 
+```js
+{
+    site: jsonData.site,
+    meta: jsonData.meta,
+    loop: jsonData.loop,
+    transitioning_in: false,
+    transitioning_out: false
+}
+```
+
+See the [Rest-Easy documentation](https://github.com/funkhaus/rest-easy) for more information on `jsonData` and its properties, as well as the [Vuex documentation](https://vuex.vuejs.org/en/intro.html) for Vuex terms like store, state, mutation, etc.
+
+#### Mutations
+You can commit a mutation from any Vue component by using:
+
+```js
+this.$store.commit('MUTATION_NAME', payload)
+```
+
+Default Vuepress mutations:
+
+* `'REPLACE_QUERYDATA', { site, meta, loop }` - Replaces the `store`'s `site`, `meta`, and `loop` properties with the `site`, `meta`, and `loop` properties of the payload.
+* `'SET_TRANSITIONING_IN, true | false'` - Sets `state.transitioning_in` to the given value.
+* `'SET_TRANSITIONING_OUT, true | false'` - Sets `state.transitioning_out` to the given value.
+
+#### Actions
+Where mutations are synchronous, actions are asynchronous:
+
+```js
+this.$store.dispatch('ACTION_NAME', payload)
+```
+
+Default Vuepress actions:
+
+* `'LOAD_AND_REPLACE_QUERYDATA, { path: 'url string' }'` - Fetches the data from the the URL at the payload path. Caches in `src/services/cache.js`, which can be `import`ed into any other file. Commits the `REPLACE_QUERYDATA` mutation with the new data when that data is fetched and cached.
+
+## Building a Vuepress Site: Front-End
+Once you've set up the routing for a Vuepress site, you can start working with Vue templates themselves.
 
 ### Example workflow
 1. Plan and document the general structure of the site in your README.md. Example:

@@ -1,11 +1,7 @@
 /* global jsonData */
 import Vuex from 'vuex'
 import Vue from 'vue'
-
-// initialize simple cache object
-const cache = {
-    [window.location.pathname]: Promise.resolve(jsonData)
-}
+import cache from 'src/services/cache'
 
 // add vuex
 Vue.use( Vuex )
@@ -22,7 +18,7 @@ export default new Vuex.Store( {
         'REPLACE_QUERYDATA': ( state, data ) => {
             state.site = data.site
             state.meta = data.meta
-            state.page = data.page
+            state.loop = data.loop
             return state
         },
         'SET_TRANSITIONING_IN': (state, transitioning) => {
@@ -35,16 +31,16 @@ export default new Vuex.Store( {
         }
     },
     actions: {
-        'LOAD_AND_REPLACE_QUERYDATA': async ( context, path ) => {
+        'LOAD_AND_REPLACE_QUERYDATA': async ( context, payload ) => {
 
             // no cache? set it
-            if ( !cache[path] ){
+            if ( !cache[payload.path] ){
                 const headers = new Headers({ 'Authorization': `Basic ${ btoa('flywheel:funkhaus') }` })
-                cache[path] = fetch(`${path}?contentType=json`, { headers }).then(r => r.json())
+                cache[payload.path] = fetch(`${payload.path}?contentType=json`, { headers }).then(r => r.json())
             }
 
             // wait for data, replace
-            const data = await cache[path]
+            const data = await cache[payload.path]
             context.commit( 'REPLACE_QUERYDATA', data )
         }
     }
