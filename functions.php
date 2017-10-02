@@ -89,6 +89,7 @@
         $user = new WP_User(1);
         $user->set_role('developer');
 	}
+	add_action('after_switch_theme', 'custom_theme_switch');
 
 
 /*
