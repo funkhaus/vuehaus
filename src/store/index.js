@@ -33,14 +33,16 @@ export default new Vuex.Store( {
     actions: {
         'LOAD_AND_REPLACE_QUERYDATA': async ( context, payload ) => {
 
+            const path = payload.path || ''
+
             // no cache? set it
             if ( !cache[payload.path] ){
                 const headers = new Headers({ 'Authorization': `Basic ${ btoa('flywheel:funkhaus') }` })
-                cache[payload.path] = fetch(`${payload.path}?contentType=json`, { headers }).then(r => r.json())
+                cache[path] = fetch(`${path}?contentType=json`, { headers }).then(r => r.json())
             }
 
             // wait for data, replace
-            const data = await cache[payload.path]
+            const data = await cache[path]
             context.commit( 'REPLACE_QUERYDATA', data )
         }
     }
