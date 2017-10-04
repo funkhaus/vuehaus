@@ -12,7 +12,8 @@ export default new Vuex.Store( {
         meta: jsonData.meta,
         loop: jsonData.loop,
         transitioning_in: false,
-        transitioning_out: false
+        transitioning_out: false,
+        loading: false
     },
     mutations: {
         'REPLACE_QUERYDATA': ( state, data ) => {
@@ -28,6 +29,9 @@ export default new Vuex.Store( {
         'SET_TRANSITIONING_OUT': (state, transitioning) => {
             state.transitioning_out = transitioning
             return state
+        },
+        'SET_LOADING': (state, loading) => {
+            state.loading = loading || false
         }
     },
     actions: {
@@ -37,6 +41,7 @@ export default new Vuex.Store( {
 
             // no cache? set it
             if ( !cache[payload.path] ){
+                context.commit('SET_LOADING', true)
                 const headers = new Headers({ 'Authorization': `Basic ${ btoa('flywheel:funkhaus') }` })
                 cache[path] = fetch(`${path}?contentType=json`, { headers }).then(r => r.json())
             }
@@ -44,6 +49,7 @@ export default new Vuex.Store( {
             // wait for data, replace
             const data = await cache[path]
             context.commit( 'REPLACE_QUERYDATA', data )
+            context.commit( 'SET_LOADING', false )
         }
     }
 })

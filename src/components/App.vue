@@ -1,5 +1,5 @@
 <template>
-    <div :class="['main', `breakpoint-${ breakpoint }`]">
+    <div :class="['main', `breakpoint-${ breakpoint }`, { loading: $store.state.loading }]">
 
         <router-view></router-view>
 

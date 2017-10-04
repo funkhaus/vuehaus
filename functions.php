@@ -5,8 +5,8 @@
  */
 	function add_routes_to_json($jsonData){
 
-        // Get the name of the category base. Default to "/categories"
-        $category_base = '/' . get_option('category_base');
+        // Get the name of the category base. Default to "categories"
+        $category_base = get_option('category_base');
 
         // build out router table to be used with Vue
         $jsonData['routes'] = array(
@@ -15,7 +15,8 @@
             // '/path'                              => 'VueComponent',
             // '/path/:var'                         => 'ComponentWithVar'
             // '/path/*/:var'                       => 'WildcardAndVar'
-            // '/' . get_page_by_guid('your-guid')->post_name  => 'DefinedByGuid'
+            // path_from_guid('your-guid')  		=> 'DefinedByGuid',
+		    // path_from_guid('guid', '/append-me') => 'GuidPathPlusAppendedString'
 
             // Probably unchanging
             ''                                      => 'FrontPage',
@@ -26,6 +27,31 @@
 		return $jsonData;
 	}
 	add_filter('rez_build_all_data', 'add_routes_to_json');
+
+	// Convenience function - get relative path by GUID
+	function path_from_guid($guid, $after = ''){
+		return rez_remove_siteurl(get_page_by_guid($guid)) . $after;
+	}
+
+	// Gets the nth child of a page with a given GUID
+	function get_child_of_guid($guid, $nth_child = 0){
+		$parent = get_page_by_guid($guid);
+
+		$args = array(
+			'posts_per_page'   => 1,
+			'offset'           => $nth_child,
+			'orderby'          => 'menu_order',
+			'order'            => 'ASC',
+			'post_type'        => 'page',
+			'post_parent'      => $parent->ID,
+		);
+		return reset(get_posts($args));
+	}
+
+	// Gets the relative path of the nth child of a page with given GUID
+	function get_child_of_guid_path($guid, $nth_child = 0){
+		return rez_remove_siteurl(get_child_of_guid($guid, $nth_child));
+	}
 
 /*
  * Setup WordPress

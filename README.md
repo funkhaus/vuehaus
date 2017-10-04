@@ -27,7 +27,7 @@ In Vuepress, you'll be building individual pages with Vue instead of PHP templat
 Any page on a Vuepress site will use the `index.php` template, which contains some automatically generated header tags and a single div called `#app`. This is where the main Vue component lives, with its content controlled by the [Vue router](https://router.vuejs.org/en/).
 
 ### Router and Templates
-A Vuepress site's routing table is built at runtime by `functions.php`'s [`add_routes_to_json`](https://github.com/funkhaus/vuepress/blob/master/functions.php#L6-L27) function.
+A Vuepress site's routing table is built at runtime by `functions.php`'s [`add_routes_to_json`](https://github.com/funkhaus/vuepress/blob/master/functions.php#L6-L27) function. The table uses the Vue router, which in turn uses [path-to-regexp](https://github.com/pillarjs/path-to-regexp) to parse paths.
 
 ```php
 jsonData['routes'] = array(
@@ -35,8 +35,9 @@ jsonData['routes'] = array(
     ''                                  => 'FrontPage',
     '/path'                             => 'VueComponent',
     '/path/:var'                        => 'ComponentWithVar',
-    '/path/*/:var'                      => 'WildcardAndVar',
-    '/' . get_page_by_guid('your-guid')->post_name  => 'DefinedByGuid'
+    '/path/:optional*/:var'             => 'WildcardAndVar',
+    path_from_guid('your-guid')         => 'DefinedByGuid',
+    path_from_guid('guid', '/append-me') => 'GuidPathPlusAppendedString'
 );
 ```
 
@@ -62,12 +63,43 @@ If we set the About page's GUID to `about`, then rewrite the relevant line in `a
 
 ```php
 ...
-    // get_page_by_guid is a helper function built into Vuepress
-    '/' . get_page_by_guid('about')->post_name        => 'About'
+    // path_from_guid is a Vuepress function that retrieves a page's relative path from its GUID
+    path_from_guid('about')                         => 'About'
 ...
 ```
 
 This will guarantee that the path to this page will always render the About template, even if the user changes that path later on.
+
+### Advanced Routing
+Take a look at the [path-to-regexp documentation](https://github.com/pillarjs/path-to-regexp) for examples of routing using regex capabilities.
+
+The routing table in Vuepress automatically converts a string-string key-value pair to a Vue route object:
+
+```php
+array(
+    path_from_guid('my-guid') => 'MyComponentName'
+)
+```
+
+...turns to:
+
+```js
+const router = new VueRouter({
+    routes: [
+        { path: '/my-guid', component: 'MyComponentName.vue' }
+    ]
+})
+```
+
+You can take advantage of the Vue router's more advanced capabilities, like [redirect/alias](https://router.vuejs.org/en/essentials/redirect-and-alias.html), [naming](https://router.vuejs.org/en/essentials/named-routes.html), and more by setting the value to an object:
+
+```php
+array(
+    path_from_guid('my-guid') => array(
+
+    )
+)
+```
 
 ### Preventing deletion
 Any missing page in the `add_routes_to_json` function (for example, if `get_page_by_guid('about')` didn't find any pages) would break the given route; a Developer can lock pages to prevent this type of bug. Check the "Prevent non-dev deletion" box in the Developer Meta screen to prevent other users from placing that page in the Trash accidentally.

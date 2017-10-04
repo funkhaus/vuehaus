@@ -13,22 +13,31 @@ const templates = require.context('src/components/templates', true)
 const routeTable = []
 Object.keys(jsonData.routes).forEach(path => {
 
-    const cmpName = jsonData.routes[path]
+    let routeObject = jsonData.routes[path]
 
-    if ( cmpName == 'REDIRECT_HOME' ){
-        routeTable.push({ path, redirect: '/' })
-        return true
+    if( typeof routeObject === 'string' ){
+        routeObject = {
+            component: routeObject
+        }
     }
+
+    routeObject.path = path
+
+    routeObject.name = routeObject.name || routeObject.component
 
     // get specified component, fallback to default
     let component = templates(`./default.vue`)
-    if ( templates.keys().indexOf(`./${ cmpName }.vue`) > -1 ){
-        component = templates(`./${ cmpName }.vue`)
+    if ( templates.keys().indexOf(`./${ routeObject.component }.vue`) > -1 ){
+        component = templates(`./${ routeObject.component }.vue`)
     }
 
+    routeObject.component = component
+
     // push new route entry to table
-    routeTable.push({ component, path, name: cmpName })
+    routeTable.push(routeObject)
 })
+
+console.log(routeTable)
 
 const router = new VueRouter( {
     mode: 'history',
