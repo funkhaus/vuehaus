@@ -222,13 +222,13 @@ Once you've set up the routing for a Vuepress site and understand its state func
         ''                                  => 'FrontPage',
         path_from_guid('about')             => 'About',
         path_from_guid('employees)          => 'EmployeesGrid',
-        path_from_guid('about', '/:child')  => 'History',
+        path_from_guid('about', '/:child')  => 'AboutChildGeneric',
         path_from_guid('employees', '/:employee') => 'EmployeeDetail'
     );
     ```
 
 1. Create the necessary Vue templates. Example:
-    > We defined 'FrontPage', 'About', 'EmployeesGrid', 'History', and 'EmployeeDetail' above, so we'll be creating each of those as a .vue file in `src/components/templates/`.
+    > We defined 'FrontPage', 'About', 'EmployeesGrid', 'AboutChildGeneric', and 'EmployeeDetail' above, so we'll be creating each of those as a .vue file in `src/components/templates/`.
 
 1. `npm run dev` and start building in Vue!
 
