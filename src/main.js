@@ -1,7 +1,7 @@
 /* global jsonData */
 import './main.css'
 import transitionPageFadeCMP from 'src/components/transitions/PageFade.vue'
-import RspImageCMP from 'src/components/shared/ResponsiveImg.vue'
+import RspImageCMP from 'src/components/shared/ResponsiveImage.vue'
 import inViewCMP from 'src/components/shared/InView.vue'
 import App from './components/App.vue'
 import Vue from 'vue'

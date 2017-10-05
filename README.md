@@ -252,6 +252,29 @@ Once you've set up the routing for a Vuepress site and understand its state func
     <div class="svg-wrap" v-html="exampleSvg"></div>
     ```
 
+* __Images:__
+    Vuepress comes with a component called `responsive-image` that provides some built-in image handling, including fading in images as they load. You can pass an image object from Rest-Easy's attachment serializer and it will build itself automatically:
+
+    ```html
+    <!-- Build a responsive image component from the featured image of the first post in The Loop -->
+    <responsive-image :object="$store.state.loop[0].related.featured_attachment"/>
+    ```
+
+    You can also include any of the following attributes:
+
+    ```html
+    <responsive-image
+        src="source-url"
+        height="height in px"
+        width="width in px"
+        aspect="aspect ratio, as percent (ie '56' for 56%)"
+        size="Wordpress-defined size slug"
+        color="background color of pre-loaded space"
+        />
+    ```
+
+    You must include either an `object` or a `src` parameter on a `responsive-image` element; all other values are optional.
+
 --------
 
 __Vuepress__

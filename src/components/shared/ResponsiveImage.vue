@@ -16,7 +16,9 @@
         props: {
             object: {
                 type: Object,
-                default(){ return {} }
+                default(){
+                    return {}
+                }
             },
             src: String,
             height: [String, Number],
