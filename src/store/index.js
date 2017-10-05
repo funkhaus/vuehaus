@@ -13,7 +13,7 @@ export default new Vuex.Store( {
         loop: jsonData.loop,
         transitioning_in: false,
         transitioning_out: false,
-        loading: false
+        loaded: false
     },
     mutations: {
         'REPLACE_QUERYDATA': ( state, data ) => {
@@ -30,8 +30,8 @@ export default new Vuex.Store( {
             state.transitioning_out = transitioning
             return state
         },
-        'SET_LOADING': (state, loading) => {
-            state.loading = loading || false
+        'SET_LOADED': (state, loaded) => {
+            state.loaded = loaded || false
         }
     },
     actions: {
@@ -41,7 +41,7 @@ export default new Vuex.Store( {
 
             // no cache? set it
             if ( !cache[payload.path] ){
-                context.commit('SET_LOADING', true)
+                context.commit('SET_LOADED', false)
                 const headers = new Headers({ 'Authorization': `Basic ${ btoa('flywheel:funkhaus') }` })
                 cache[path] = fetch(`${path}?contentType=json`, { headers }).then(r => r.json())
             }
@@ -49,7 +49,12 @@ export default new Vuex.Store( {
             // wait for data, replace
             const data = await cache[path]
             context.commit( 'REPLACE_QUERYDATA', data )
-            context.commit( 'SET_LOADING', false )
+            context.commit( 'SET_LOADED', true )
+        }
+    },
+    getters: {
+        loading: state => {
+            return !state.loaded
         }
     }
 })

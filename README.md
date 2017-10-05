@@ -1,6 +1,22 @@
 ## What
 Vuepress is a boilerplate used to build smooth, responsive [Wordpress](https://wordpress.org/) templates with [Vue.js](https://vuejs.org/).
 
+## Table of Contents
+1. [Install](#install)
+1. [Reading List](#reading-list)
+1. [Building a Vuepress Site: Back-End](#building-a-vuepress-site-back-end)
+    1. [Router and Templates](#router-and-templates)
+    1. [The Developer Role and GUIDs](#the-developer-role-and-guids)
+    1. [Preventing Deletion](#preventing-deletion)
+    1. [Advanced Routing](#advanced-routing)
+    1. [Utility Functions](#utility-functions)
+1. [Vuex and State](#vuex-and-state)
+    1. [Mutations](#mutations)
+    1. [Actions](#actions)
+1. [Building a Vuepress Site: Front-End](#building-a-vuepress-site-front-end)
+
+
+
 ## Install
 1. `git clone https://github.com/funkhaus/vuepress my-theme`
 1. `cd my-theme`
@@ -56,7 +72,7 @@ jsonData['routes'] = array(
 
 That'd work just fine as long as the user never needed to change the URL to the About page - but what if they wanted to switch it to `our-team`?
 
-### The Developer role and GUIDs
+### The Developer Role and GUIDs
 Since URLs can easily change in the Wordpress backend, Vuepress includes a new WP role, Developer, that has access to a set of controls that other roles (even Administrator) can't see. One of these controls is for a page's "GUID" - an arbitrary value that can reliably identify a page.
 
 If we set the About page's GUID to `about`, then rewrite the relevant line in `add_routes_to_json` like the following:
@@ -69,6 +85,9 @@ If we set the About page's GUID to `about`, then rewrite the relevant line in `a
 ```
 
 This will guarantee that the path to this page will always render the About template, even if the user changes that path later on.
+
+### Preventing deletion
+Any missing page in the `add_routes_to_json` function (for example, if `get_page_by_guid('about')` didn't find any pages) would break the given route; a Developer can lock pages to prevent this type of bug. Check the "Prevent non-dev deletion" box in the Developer Meta screen to prevent other users from placing that page in the Trash accidentally.
 
 ### Advanced Routing
 Take a look at the [path-to-regexp documentation](https://github.com/pillarjs/path-to-regexp) for examples of routing using regex capabilities.
@@ -95,16 +114,36 @@ You can take advantage of the Vue router's more advanced capabilities, like [red
 
 ```php
 array(
-    path_from_guid('my-guid') => array(
+    path_from_guid('your-guid') => array(
+        // Redirect to a path - in this case, to the path of the first child
+        'redirect'		=> get_child_of_guid_path('work')
+    ),
 
+    path_from_guid('your-guid', '/:medium*')		=> array(
+        // Define a component and a name for the route
+        'component'		=> 'WorkGrid',
+        'name'			=> 'work-grid'
+    ),
+
+    path_from_guid('your-guid') => array(
+        // Redirect to a named route
+        'redirect'		=> array(
+            'name':     => 'work-grid'
+        )
     )
 )
 ```
 
-### Preventing deletion
-Any missing page in the `add_routes_to_json` function (for example, if `get_page_by_guid('about')` didn't find any pages) would break the given route; a Developer can lock pages to prevent this type of bug. Check the "Prevent non-dev deletion" box in the Developer Meta screen to prevent other users from placing that page in the Trash accidentally.
+This isn't the limit of the routing table's capabilities - anything the Vue router can do, you can build in the `add_routes_to_json` function.
 
-### Vuex & State
+### Utility Functions
+Vuepress defines a few utility functions to make building the routing table easier:
+
+* `get_child_of_guid($guid, $nth_child = 0)` - Get the post object of the nth child (zero-based, default `0`) of a page with the given GUID.
+* `get_child_of_guid_path($guid, $nth_child = 0, $after = '')` - Get the relative path of the nth child of a page with the given GUID. Adds `$after` to the retrieved path.
+* `path_from_guid($guid, $after = '')` - Get the relative path of a page with a given GUID. Adds `$after` to the retrieved path.
+
+## Vuex and State
 Vuepress uses [Vuex](https://vuex.vuejs.org/en/intro.html) to handle a site's state. The default store in `src/store/index.js` is set up like this:
 
 ```js
@@ -119,7 +158,7 @@ Vuepress uses [Vuex](https://vuex.vuejs.org/en/intro.html) to handle a site's st
 
 See the [Rest-Easy documentation](https://github.com/funkhaus/rest-easy) for more information on `jsonData` and its properties, as well as the [Vuex documentation](https://vuex.vuejs.org/en/intro.html) for Vuex terms like store, state, mutation, etc.
 
-#### Mutations
+### Mutations
 You can commit a mutation from any Vue component by using:
 
 ```js
@@ -131,8 +170,9 @@ Default Vuepress mutations:
 * `'REPLACE_QUERYDATA', { site, meta, loop }` - Replaces the `store`'s `site`, `meta`, and `loop` properties with the `site`, `meta`, and `loop` properties of the payload.
 * `'SET_TRANSITIONING_IN, true | false'` - Sets `state.transitioning_in` to the given value.
 * `'SET_TRANSITIONING_OUT, true | false'` - Sets `state.transitioning_out` to the given value.
+* `'SET_LOADED', true | false` - Sets `state.loaded` to the given value.
 
-#### Actions
+### Actions
 Where mutations are synchronous, actions are asynchronous:
 
 ```js
@@ -141,10 +181,18 @@ this.$store.dispatch('ACTION_NAME', payload)
 
 Default Vuepress actions:
 
-* `'LOAD_AND_REPLACE_QUERYDATA, { path: 'url string' }'` - Fetches the data from the the URL at the payload path. Caches in `src/services/cache.js`, which can be `import`ed into any other file. Commits the `REPLACE_QUERYDATA` mutation with the new data when that data is fetched and cached.
+* `'LOAD_AND_REPLACE_QUERYDATA, { path: 'url string' }'` - Runs the following process:
+    1. Sets `state.loaded` to `false`.
+    1. Checks `src/services/cache.js` (which is a global cache that can be `import`ed into any other file) for the given `path` key.
+        If none is found:
+        1. Commits `'SET_LOADED', false`
+        1. Fetches the data from the the URL at the payload path.
+        1. Saves the data to the cache.
+    1. Commits `'REPLACE_QUERYDATA'` with the data from the cache.
+    1. Commits `'SET_LOADED', true`
 
 ## Building a Vuepress Site: Front-End
-Once you've set up the routing for a Vuepress site, you can start working with Vue templates themselves.
+Once you've set up the routing for a Vuepress site and understand its state functions, you can start working with Vue templates themselves.
 
 ### Example workflow
 1. Plan and document the general structure of the site in your README.md. Example:

@@ -49,8 +49,8 @@
 	}
 
 	// Gets the relative path of the nth child of a page with given GUID
-	function get_child_of_guid_path($guid, $nth_child = 0){
-		return rez_remove_siteurl(get_child_of_guid($guid, $nth_child));
+	function get_child_of_guid_path($guid, $nth_child = 0, $after = ''){
+		return rez_remove_siteurl(get_child_of_guid($guid, $nth_child)) . $after;
 	}
 
 /*
