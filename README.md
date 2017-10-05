@@ -5,7 +5,7 @@ Vuepress is a boilerplate used to build smooth, responsive [Wordpress](https://w
 1. `git clone https://github.com/funkhaus/vuepress my-theme`
 1. `cd my-theme`
 1. `npm install`
-1. Install and activate [Rest-Easy](https://github.com/funkhaus/Rest-Easy)
+1. Install and activate [Rest-Easy](https://github.com/funkhaus/Rest-Easy) - [link](https://github.com/funkhaus/Rest-Easy/archive/master.zip) to direct download
 1. `npm run dev`
 
 ## Reading List
