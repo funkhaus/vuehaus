@@ -37,8 +37,6 @@ Object.keys(jsonData.routes).forEach(path => {
     routeTable.push(routeObject)
 })
 
-console.log(routeTable)
-
 const router = new VueRouter( {
     mode: 'history',
     routes: routeTable,

@@ -30,7 +30,7 @@
                     menu = this.$store.state.site.menus[0]
                 }
 
-                return menu.items
+                return menu ? menu.items : false
             }
         }
     }
