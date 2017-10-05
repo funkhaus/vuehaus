@@ -14,6 +14,8 @@ Vuepress is a boilerplate used to build smooth, responsive [Wordpress](https://w
     1. [Mutations](#mutations)
     1. [Actions](#actions)
 1. [Building a Vuepress Site: Front-End](#building-a-vuepress-site-front-end)
+    1. [Example Workflow](#example-workflow)
+    1. [Common Tasks](#common-tasks)
 
 
 
@@ -148,11 +150,15 @@ Vuepress uses [Vuex](https://vuex.vuejs.org/en/intro.html) to handle a site's st
 
 ```js
 {
+    // From Rest-Easy
     site: jsonData.site,
     meta: jsonData.meta,
     loop: jsonData.loop,
+
+    // Vuepress-specific
     transitioning_in: false,
-    transitioning_out: false
+    transitioning_out: false,
+    loaded: true
 }
 ```
 
@@ -196,63 +202,62 @@ Once you've set up the routing for a Vuepress site and understand its state func
 
 ### Example workflow
 1. Plan and document the general structure of the site in your README.md. Example:
-```
-* Front page
-* About
-    * Our History
-    * Our Employees
-        * Employee Bio
-        * ...
-```
-2. Figure out which pages are necessary to the structure of the site. Give those pages GUIDs and prevent non-Dev deletion. Example:
 
-> Front Page, About, and Our Employees all have child pages, so we'll give them GUIDs of 'front-page', 'about', and 'our-employees', respectively, as well as lock them.
+    ```
+    * Front page
+    * About
+        * Our History
+        * Our Employees
+            * Employee Bio
+            * ...
+    ```
+1. Figure out which pages are necessary to the structure of the site. Give those pages GUIDs and prevent non-Dev deletion. Example:
 
-3. Create conditions in `add_routes_to_json`:
-```
-$about_slug = get_page_by_guid('about')->post_name;
-$employees_slug = get_page_by_guid('our-employees')->post_name;
+    > Front Page, About, and Our Employees all have child pages, so we'll give them GUIDs of 'front-page', 'about', and 'employees', respectively, as well as lock them.
 
-array(
-    ''                                      => 'FrontPage',
-    '/' . $about_slug                       => 'About',
+1. Create conditions in `add_routes_to_json`:
 
-    // You can use wildcards
-    '/*/' . $employees_slug                 => 'EmployeesGrid',
+    ```
+    array(
+        ''                                  => 'FrontPage',
+        path_from_guid('about')             => 'About',
+        path_from_guid('employees)          => 'EmployeesGrid',
+        path_from_guid('about', '/:child')  => 'History',
+        path_from_guid('employees', '/:employee') => 'EmployeeDetail'
+    );
+    ```
 
-    // You can also use variable names with a colon
-    '/' . $about_slug . '/:child            => 'GenericAboutChild',
+1. Create the necessary Vue templates. Example:
+    > We defined 'FrontPage', 'About', 'EmployeesGrid', 'History', and 'EmployeeDetail' above, so we'll be creating each of those as a .vue file in `src/components/templates/`.
 
-    // And you can use both!
-    '/*/' . $employees_slug . '/:employee'  => 'EmployeeDetail'
-);
-```
-4. Create the necessary Vue templates. Example:
-```
-We defined 'FrontPage', 'About', 'GenericAboutChild', 'EmployeesGrid', and 'EmployeeDetail' above,
-so we'll be creating each of those as a .vue file in src/components/templates/.
-```
-5. `npm run dev` and start building in Vue!
+1. `npm run dev` and start building in Vue!
 
-## Development
-Vuepress handles Wordpress pages a little different than normal.
+### Common Tasks
+* __Using SVGs:__
+    In the `script` section of your template:
 
-When you request any Vuepress page using the header `CONTENT_TYPE = application/json` or the query `?content=json`, you'll get a JSON dump of the data for that particular page. (Go ahead, try it - add `?content=json` at the end of the URL on any Vuepress site and see what comes back.)
+    ```js
+    import svg from 'src/images/example.svg'
 
-Requesting a page without that header or query, though, runs the following process:
+    export default {
+        data(){
+            exampleSvg: svg
+        }
+    }
+    ```
 
-1. Every page on a Vuepress site uses `index.html`, which contains some boilerplate code and a single `#app` div for Vue.
-1. `functions.php` contains a function called `custom_scripts` that runs on every page and does two things:
-    * Loads the `static/bundle.js` file, containing the front-end JS
-    * Dumps the target page's JSON onto the page using `wp_localize_script`
+    And in the `template` section:
 
-Any page on Vuepress therefore has access to the full `bundle.js` script, containing all the Webpacked files from `src/`, as well as the initial data for the landing page, rendered using `wp_localize_script`. This is enough to access the entire site from that single page, as any subsequent page loads will simply access the `?content=json` version of a page and render it out with the `bundle.js` code.
+    ```html
+    <div class="svg-wrap" v-html="exampleSvg"></div>
+    ```
 
-## Notes
+--------
 
-TODO: Organize these notes
+__Vuepress__
 
-* **SVG Loading** - run like this: ```import arrowRightSVG from 'src/icons/arrow-right.svg'```
+http://funkhaus.us
 
-## Todo
-* Handle instant state changing/URL lag
+Version: 1.0
+
+* 1.0 - Initial release

@@ -13,7 +13,7 @@ export default new Vuex.Store( {
         loop: jsonData.loop,
         transitioning_in: false,
         transitioning_out: false,
-        loaded: false
+        loaded: true
     },
     mutations: {
         'REPLACE_QUERYDATA': ( state, data ) => {
