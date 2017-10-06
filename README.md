@@ -1,5 +1,5 @@
 ## What
-Vuepress is a boilerplate used to build smooth, responsive [Wordpress](https://wordpress.org/) templates with [Vue.js](https://vuejs.org/).
+Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://wordpress.org/) templates with [Vue.js](https://vuejs.org/).
 
 ## Table of Contents
 1. [Install](#install)
@@ -16,6 +16,7 @@ Vuepress is a boilerplate used to build smooth, responsive [Wordpress](https://w
 1. [Building a Vuepress Site: Front-End](#building-a-vuepress-site-front-end)
     1. [Example Workflow](#example-workflow)
     1. [Common Tasks](#common-tasks)
+1. [Recommended Reading](#recommended-reading)
 
 
 
@@ -59,7 +60,7 @@ jsonData['routes'] = array(
 );
 ```
 
-Building the routing table dynamically lets the Vue router treat the Wordpress database as the source of truth, ensuring pages route as expected.
+Building the routing table dynamically lets the Vue router treat the WordPress database as the source of truth, ensuring pages route as expected.
 
 For example, if you wanted to build a front page and an About page, you might set up the following in `add_routes_to_json`:
 
@@ -75,7 +76,7 @@ jsonData['routes'] = array(
 That'd work just fine as long as the user never needed to change the URL to the About page - but what if they wanted to switch it to `our-team`?
 
 ### The Developer Role and GUIDs
-Since URLs can easily change in the Wordpress backend, Vuepress includes a new WP role, Developer, that has access to a set of controls that other roles (even Administrator) can't see. One of these controls is for a page's "GUID" - an arbitrary value that can reliably identify a page.
+Since URLs can easily change in the WordPress backend, Vuepress includes a new WP role, Developer, that has access to a set of controls that other roles (even Administrator) can't see. One of these controls is for a page's "GUID" - an arbitrary value that can reliably identify a page.
 
 If we set the About page's GUID to `about`, then rewrite the relevant line in `add_routes_to_json` like the following:
 
@@ -268,12 +269,19 @@ Once you've set up the routing for a Vuepress site and understand its state func
         height="height in px"
         width="width in px"
         aspect="aspect ratio, as percent (ie '56' for 56%)"
-        size="Wordpress-defined size slug"
+        size="WordPress-defined size slug"
         color="background color of pre-loaded space"
         />
     ```
 
     You must include either an `object` or a `src` parameter on a `responsive-image` element; all other values are optional.
+
+## Recommended Reading
+Not Vuepress-specific reading material, but rather good practices and articles.
+
+1. [Maintainable CSS](https://maintainablecss.com/chapters/introduction/), a guide to writing readable and easily-maintained CSS
+1. [SVG Tips for Designers](https://www.sarasoueidan.com/blog/svg-tips-for-designers/)
+
 
 --------
 
