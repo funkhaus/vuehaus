@@ -234,6 +234,8 @@ Once you've set up the routing for a Vuepress site and understand its state func
 1. `npm run dev` and start building in Vue!
 
 ### Common Tasks
+* __Loading Fonts:__
+    Vuepress includes the Google/Typekit [Web Font Loader](https://github.com/typekit/webfontloader) in `index.php`. Follow the instructions on that repo to load fonts from Google, Typekit, or your own uploads.
 * __Using SVGs:__
     In the `script` section of your template:
 
