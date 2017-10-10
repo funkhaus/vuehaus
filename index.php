@@ -18,7 +18,6 @@
 
     <?php get_template_part('parts/og-tags'); ?>
     <?php get_template_part('parts/schema'); ?>
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
     <script>
     WebFontConfig = {
         google: {
