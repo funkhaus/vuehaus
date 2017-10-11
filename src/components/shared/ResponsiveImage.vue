@@ -10,7 +10,7 @@
 
 <script>
     import imagesLoaded from 'imagesLoaded'
-    import _get from 'lodash.get'
+    import _get from 'lodash/get'
 
     export default {
         props: {
