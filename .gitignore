@@ -3,8 +3,8 @@ logs
 *.log
 
 # build/bundle files
-static/build*
-static/bundle*
+# static/build*
+# static/bundle*
 
 # Runtime data
 pids
