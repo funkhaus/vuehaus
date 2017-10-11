@@ -5,6 +5,7 @@ logs
 # build/bundle files
 # static/build*
 # static/bundle*
+*.map
 
 # Runtime data
 pids
