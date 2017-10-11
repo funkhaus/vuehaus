@@ -4,11 +4,12 @@
         @mouseenter="$emit('mouseenter', $event)"
         @mouseleave="$emit('mouseleave', $event)">
         <slot></slot>
-        <span v-html="arrowRight"></span>
     </div>
 </template>
 
 <script>
+// TODO: Redo as directive? <element v-in-view>
+
 export default {
     name: 'in-view',
     data () {
@@ -20,6 +21,9 @@ export default {
     mounted () {
         this.setRect()
         this.setHeight()
+
+        // TODO: Import global object that watches all inView objects
+        // Global throttled resize + scroll listener
         window.addEventListener('resize', this.setRect)
         window.addEventListener('scroll', this.setHeight)
     },
@@ -33,8 +37,7 @@ export default {
             if ( this.top + this.height <= 0 && this.height ) return 'above-view'
             if ( this.top >= this.$root.winHeight ) return 'below-view'
             return 'in-view'
-        },
-        arrowRight () { return arrowRightSVG }
+        }
     },
     methods: {
         setRect () {
