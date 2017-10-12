@@ -300,6 +300,8 @@ Features to be implemented appear in
     * `action` (string) - Action to take:
         * `click` - Clicks on `selector`'s first match and wait for the result to load.
         * > `scroll` - Scrolls to `selector`'s first match or by `number` pixels.
+        * > `startScreencast` - Starts a screencast.
+        * > `stopScreencast` - Stops a screencast.
     * `goto` (string) - Goes to a path (relative to `baseUrl`)
     * `label` (string) - Label for the test. Also acts as the name of a screenshot taken on this step.
     * > `message` (string) - Custom message to output when running the test.
