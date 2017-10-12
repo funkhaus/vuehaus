@@ -1,0 +1,9 @@
+{
+    "baseUrl": "http://vuepress.dev",
+    "itinerary": [
+        { "action": "click", "selector": "li:nth-child(2) a" },
+        { "action": "screenshot", "label": "Home page, number 2" },
+        { "action": "goto", "path": "/" },
+        { "action": "screenshot", "label": "Home page, number 3" }
+    ]
+}

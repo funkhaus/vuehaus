@@ -17,6 +17,7 @@ Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://w
     1. [Example Workflow](#example-workflow)
     1. [Common Tasks](#common-tasks)
 1. [Testing](#testing)
+    1. [Test Configuration](#test-configuration)
 1. [Recommended Reading](#recommended-reading)
 
 
@@ -286,6 +287,25 @@ Vuepress comes with some commands to simplify testing your site.
 1. Navigate to `tests/index.js` and fill in the desired base URL, then additional pages
 1. `npm run test` - Screenshots all of the pages defined in `tests/index.js`. Outputs to `tests/output-${ timestamp }/`.
 1. `npm run cleanup` - Removes all test output directories.
+
+### Test Configuration
+You can edit the contents of `.testrc.json` to change the `npm run test` configuration.
+
+Features to be implemented appear in
+
+> blockquotes.
+
+* `baseUrl` (string) - Equivalent to WordPress's `get_site_url()`. Base path for all files.
+* `itinerary` (array of objects) - The tests to complete.
+    * `action` (string) - Action to take:
+        * `click` - Clicks on `selector`'s first match and wait for the result to load.
+        * > `scroll` - Scrolls to `selector`'s first match or by `number` pixels.
+    * `goto` (string) - Goes to a path (relative to `baseUrl`)
+    * `label` (string) - Label for the test. Also acts as the name of a screenshot taken on this step.
+    * > `message` (string) - Custom message to output when running the test.
+    * > `number` (number) - Number to apply to `action`.
+    * `path` (string) - Relative path to target in `goto`.
+    * `selector` (string) - Target of `action` or `test`.
 
 ## Recommended Reading
 Not Vuepress-specific reading material, but rather good practices and articles.
