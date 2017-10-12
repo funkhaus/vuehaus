@@ -16,6 +16,7 @@ Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://w
 1. [Building a Vuepress Site: Front-End](#building-a-vuepress-site-front-end)
     1. [Example Workflow](#example-workflow)
     1. [Common Tasks](#common-tasks)
+1. [Testing](#testing)
 1. [Recommended Reading](#recommended-reading)
 
 
@@ -277,6 +278,14 @@ Once you've set up the routing for a Vuepress site and understand its state func
     ```
 
     You must include either an `object` or a `src` parameter on a `responsive-image` element; all other values are optional.
+
+## Testing
+Vuepress comes with some commands to simplify testing your site.
+
+1. `npm i --only=dev` - Installs dev dependencies like [Puppeteer](https://github.com/GoogleChrome/puppeteer) and [Rimraf](https://www.npmjs.com/package/rimraf)
+1. Navigate to `tests/index.js` and fill in the desired base URL, then additional pages
+1. `npm run test` - Screenshots all of the pages defined in `tests/index.js`. Outputs to `tests/output-${ timestamp }/`.
+1. `npm run cleanup` - Removes all test output directories.
 
 ## Recommended Reading
 Not Vuepress-specific reading material, but rather good practices and articles.

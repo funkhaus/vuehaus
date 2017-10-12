@@ -13,3 +13,6 @@ pids
 *.seed
 
 node_modules
+
+# Ignore testing outputs, keep testing script
+tests/output*
