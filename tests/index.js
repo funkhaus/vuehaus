@@ -37,10 +37,12 @@ const puppeteer = require('puppeteer');
     for( let step of config.itinerary ){
         index++
 
+        let output = `Step ${ index } - `
+
         switch( step.action ){
 
         case 'click':
-            console.log(`Step ${ index } - clicking on '${ step.selector || 'a' }'...`)
+            output += `clicking on '${ step.selector || 'a' }'...`
             const target = await page.$eval(step.selector || 'a', el => {
                 return el.getAttribute('href')
             })
@@ -48,19 +50,30 @@ const puppeteer = require('puppeteer');
             await page.click(step.selector || 'a')
             break
 
-        case 'screenshot':
-            console.log(`Step ${ index } - screenshot of ${ currentPath }...`)
-            let screenshotName = `${ padStart(index, 2, '0') } - `
-            screenshotName += step.label || currentPath.replace('/', ' - ')
-            await page.screenshot({
-                path: outputDir + `/${ screenshotName }.png`
-            })
+        case 'evaluate':
+            // inject as element
+            output += `running function...result:\n`
+            const result = await page.evaluate(func => {
+                return Promise.resolve( eval(func) )
+            }, step.function)
+            output += result
+
+            if( step.expected ){
+                const matches = result == step.expected
+                output += `\nResult of ${ result } ${ matches ? 'matches' : 'does not match' } expected value of ${ step.expected }`
+                output += `${ step.label ? ' ' + step.label : '' }.`
+            }
             break
 
         case 'goto':
-            console.log(`Step ${ index } - navigating to ${ step.path }...`)
+            output += `navigating to ${ step.path }...`
             currentPath = step.path
             await page.goto(`${ baseUrl }/${ step.path }`)
+            break
+
+        case 'hover':
+            output += `hovering over '${ step.selector }'...`
+            await page.hover( step.selector )
             break
 
         case 'scroll':
@@ -73,7 +86,7 @@ const puppeteer = require('puppeteer');
                 }, [step.selector])
             }
 
-            await console.log(`Step ${ index } - scrolling ${ step.number ? 'by ' + step.number + 'px' : 'to \'' + step.selector + '\'' }...`)
+            output += `scrolling ${ step.number ? 'by ' + step.number + 'px' : 'to \'' + step.selector + '\'' }...`
             await page.evaluate(() => {
                 window.scrollBy(0, num)
             })
@@ -81,10 +94,21 @@ const puppeteer = require('puppeteer');
             break
         }
 
+        if( step.screenshot !== false ){
+            output += `screenshot of ${ currentPath }...`
+            let screenshotName = `${ padStart(index, 2, '0') } - `
+            screenshotName += step.label || currentPath.replace(/\//g, ' - ')
+            await page.screenshot({
+                path: outputDir + `/${ screenshotName }.png`
+            })
+        }
+
+        console.log(output)
+
         if( step.message ){
             console.log(step.message)
         }
-        if( step.waitEvent == 'load' ){
+        if( step.waitFor == 'load' ){
             await page.waitForNavigation()
         }
     }

@@ -300,17 +300,23 @@ Features to be implemented appear in
 * `itinerary` (array of objects) - The tests to complete.
     * `action` (string) - Action to take:
         * `click` - Clicks on `selector`'s first match and wait for the result to load.
+        * `evaluate` - Checks for the following keys and runs them:
+            * `function`
+            * `expected`
+        * `goto` (string) - Goes to a path (relative to `baseUrl`).
+        * `hover` (string) - Hovers over the element defined by `selector`.
         * `scroll` - Scrolls to `selector`'s first match or by `number` pixels.
         * > `startScreencast` - Starts a screencast.
         * > `stopScreencast` - Stops a screencast.
-    * `goto` (string) - Goes to a path (relative to `baseUrl`)
+    * `expected` (any) - Compare `evaluate`'s output to this value.
+    * `function` (string) - Runs a JS function in the context of the page and logs the result.
     * `label` (string) - Label for the test. Also acts as the name of a screenshot taken on this step.
     * `message` (string) - Custom message to output when running the test.
     * `number` (number) - Number to apply to `action`.
     * `path` (string) - Relative path to target in `goto`.
     * `selector` (string) - Target of `action` or `test`.
-    * `waitEvent` (string) - Waits for an event to continue. Useful when clicking on a link, for example.
-        * `load` - Waits for next page to load
+    * `waitFor` (string) - Waits for an event to continue. Useful when clicking on a link, for example.
+        * `load` - Waits for next page to load.
 
 ### Alternate Test Files
 You can create multiple test files and pick which one to write:
