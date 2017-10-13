@@ -1,25 +1,10 @@
 {
-    "baseUrl": "http://xkcd.com",
+    "baseUrl": "http://cnn.com",
     "screenshots": [
-        "/1901"
+        ""
     ],
     "dimensions": [
-        [ 1920, 1080 ],
         1920,
-        1200,
-        750
-    ],
-    "itinerary": [
-        { "action": "hover", "selector": "a", "label": "Hovering over first link" },
-        {
-            "action": "evaluate",
-            "function": "document.body.getBoundingClientRect().width",
-            "expected": 780,
-            "label": "(body width in px)",
-            "screenshot": false
-        },
-        { "action": "click", "selector": "li:nth-child(2) a", "waitFor": "load", "message": "Loading 'What If?' blog..." },
-        { "action": "scroll", "selector": ".illustration" },
-        { "action": "goto", "path": "/" }
+        300
     ]
 }
