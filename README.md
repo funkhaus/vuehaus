@@ -285,9 +285,9 @@ Once you've set up the routing for a Vuepress site and understand its state func
 Vuepress comes with some commands to simplify testing your site.
 
 1. `npm i --only=dev` - Installs dev dependencies like [Puppeteer](https://github.com/GoogleChrome/puppeteer) and [Rimraf](https://www.npmjs.com/package/rimraf)
-1. Navigate to `tests/index.js` and fill in the desired base URL, then additional pages
-1. `npm run test` - Screenshots all of the pages defined in `tests/index.js`. Outputs to `tests/output-${ timestamp }/`.
-1. `npm run cleanup` - Removes all test output directories.
+1. Navigate to `.testsrc.json` and fill in the desired base URL, then additional steps in the test
+1. `npm run test` - Runs all the steps in the selected test file. Outputs to `tests/output-${ timestamp }/`.
+1. (Optional) `npm run cleanup` - Removes all test output directories.
 
 ### Test Configuration
 You can edit the contents of `.testrc.json` to change the `npm run test` configuration.
