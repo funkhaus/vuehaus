@@ -54,6 +54,7 @@
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
+    "commander": "^2.11.0",
     "open": "0.0.5",
     "puppeteer": "^0.11.0",
     "rimraf": "^2.6.2"

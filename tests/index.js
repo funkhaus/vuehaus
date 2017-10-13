@@ -2,14 +2,16 @@
 const open = require('open')
 const fs = require('fs')
 const padStart = require('string.prototype.padstart')
+const commander = require('commander')
 
-const config = require('../.testrc.json')
+commander
+    .version('1.0.0')
+    .option('-c, --config [file]', 'Path to config JSON (relative from root directory) [.testrc.json]', '.testrc.json')
+    .parse(process.argv)
 
-// YOUR TEST URL HERE
+const config = require('../' + commander.config)
+
 const baseUrl = config.baseUrl
-
-// YOUR TEST PAGES HERE
-const screenshotPaths = config.screenshots
 
 console.log(`Testing '${ baseUrl }'...`)
 
@@ -34,6 +36,7 @@ const puppeteer = require('puppeteer');
 
     for( let step of config.itinerary ){
         index++
+
         switch( step.action ){
 
         case 'click':
@@ -48,7 +51,7 @@ const puppeteer = require('puppeteer');
         case 'screenshot':
             console.log(`Step ${ index } - screenshot of ${ currentPath }...`)
             let screenshotName = `${ padStart(index, 2, '0') } - `
-            screenshotName += step.label || currentPath
+            screenshotName += step.label || currentPath.replace('/', ' - ')
             await page.screenshot({
                 path: outputDir + `/${ screenshotName }.png`
             })
@@ -59,9 +62,31 @@ const puppeteer = require('puppeteer');
             currentPath = step.path
             await page.goto(`${ baseUrl }/${ step.path }`)
             break
+
+        case 'scroll':
+            let num
+            if( step.number ){
+                num = step.number
+            } else {
+                await page.evaluate(selector => {
+                    num = document.querySelector(selector).getBoundingClientRect().top
+                }, [step.selector])
+            }
+
+            await console.log(`Step ${ index } - scrolling ${ step.number ? 'by ' + step.number + 'px' : 'to \'' + step.selector + '\'' }...`)
+            await page.evaluate(() => {
+                window.scrollBy(0, num)
+            })
+
+            break
         }
-        //await page.goto(`${ baseUrl }/${ path }`)
-        //await page.screenshot({ path: outputDir + `/${ padStart(index++, 2, '0') } - ${ path.replace('/', ' - ') }.png` })
+
+        if( step.message ){
+            console.log(step.message)
+        }
+        if( step.waitEvent == 'load' ){
+            await page.waitForNavigation()
+        }
     }
 
     await browser.close()

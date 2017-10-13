@@ -1,9 +1,10 @@
 {
-    "baseUrl": "http://vuepress.dev",
+    "baseUrl": "http://xkcd.com",
     "itinerary": [
-        { "action": "click", "selector": "li:nth-child(2) a" },
-        { "action": "screenshot", "label": "Home page, number 2" },
+        { "action": "click", "selector": "li:nth-child(2) a", "waitEvent": "load", "message": "Loading link..." },
+        { "action": "scroll", "selector": ".illustration" },
+        { "action": "screenshot", "label": "First illustration on first 'What If?' post" },
         { "action": "goto", "path": "/" },
-        { "action": "screenshot", "label": "Home page, number 3" }
+        { "action": "screenshot" }
     ]
 }

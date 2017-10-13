@@ -18,6 +18,7 @@ Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://w
     1. [Common Tasks](#common-tasks)
 1. [Testing](#testing)
     1. [Test Configuration](#test-configuration)
+    1. [Alternate Test Files](#alternate-test-files)
 1. [Recommended Reading](#recommended-reading)
 
 
@@ -299,15 +300,25 @@ Features to be implemented appear in
 * `itinerary` (array of objects) - The tests to complete.
     * `action` (string) - Action to take:
         * `click` - Clicks on `selector`'s first match and wait for the result to load.
-        * > `scroll` - Scrolls to `selector`'s first match or by `number` pixels.
+        * `scroll` - Scrolls to `selector`'s first match or by `number` pixels.
         * > `startScreencast` - Starts a screencast.
         * > `stopScreencast` - Stops a screencast.
     * `goto` (string) - Goes to a path (relative to `baseUrl`)
     * `label` (string) - Label for the test. Also acts as the name of a screenshot taken on this step.
-    * > `message` (string) - Custom message to output when running the test.
-    * > `number` (number) - Number to apply to `action`.
+    * `message` (string) - Custom message to output when running the test.
+    * `number` (number) - Number to apply to `action`.
     * `path` (string) - Relative path to target in `goto`.
     * `selector` (string) - Target of `action` or `test`.
+    * `waitEvent` (string) - Waits for an event to continue. Useful when clicking on a link, for example.
+        * `load` - Waits for next page to load
+
+### Alternate Test Files
+You can create multiple test files and pick which one to write:
+
+```sh
+node tests --config your-file-name.json
+node tests -c your-file-name.json
+```
 
 ## Recommended Reading
 Not Vuepress-specific reading material, but rather good practices and articles.
