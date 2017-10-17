@@ -20,16 +20,16 @@
     <?php get_template_part('parts/schema'); ?>
     <script>
     WebFontConfig = {
-        google: {
-            families: []
-        },
-        typekit: {
-            id: ''
-        },
-        custom: {
-            families: [],
-            urls: ['<?php echo get_template_directory_uri(); ?>/static/fonts/fonts.css']
-        }
+//         google: {
+//             families: []
+//         },
+//         typekit: {
+//             id: ''
+//         },
+//         custom: {
+//             families: [],
+//             urls: ['<?php echo get_template_directory_uri(); ?>/static/fonts/fonts.css']
+//         }
     };
 
     (function(d) {
