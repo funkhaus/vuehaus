@@ -7,7 +7,7 @@ Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://w
 1. [Building a Vuepress Site: Back-End](#building-a-vuepress-site-back-end)
     1. [Router and Templates](#router-and-templates)
     1. [The Developer Role and Developer IDs](#the-developer-role-and-developer-ids)
-    1. [Preventing Deletion](#preventing-deletion)
+    1. [Developer Capabilities](#developer-capabilities)
     1. [Advanced Routing](#advanced-routing)
     1. [Utility Functions](#utility-functions)
 1. [Vuex and State](#vuex-and-state)
@@ -89,8 +89,15 @@ If we set the About page's Developer ID to `about`, then rewrite the relevant li
 
 This will guarantee that the path to this page will always render the About template, even if the user changes that path later on.
 
-### Preventing deletion
+### Developer Capabilities
+
+The Developer role in Vuepress has a few extra capabilities available:
+
+#### Preventing deletion
 Any missing page in the `add_routes_to_json` function (for example, if `get_page_by_dev_id('about')` didn't find any pages) would break the given route; a Developer can lock pages to prevent this type of bug. Check the "Prevent non-dev deletion" box in the Developer Meta screen to prevent other users from placing that page in the Trash accidentally.
+
+#### Hiding the rich editor
+Check the "Hide Rich Editor" box to prevent non-Developer users from using WordPress's rich editor. This can be helpful to maintain stricter controls over the template and class names in a page's content.
 
 ### Advanced Routing
 Take a look at the [path-to-regexp documentation](https://github.com/pillarjs/path-to-regexp) for examples of routing using regex capabilities.
