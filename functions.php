@@ -213,12 +213,12 @@
 	function disabled_rich_editor($allow_rich_editor) {
 		global $post;
 
-		if($post->post_name == 'contact') {
+		if($post->_custom_hide_richedit === 'on') {
 			return false;
 		}
-		return $allow_rich_editor;
+		return true;
 	}
-	//add_filter( 'user_can_richedit', 'disabled_rich_editor');
+	add_filter( 'user_can_richedit', 'disabled_rich_editor');
 
 
 /*
@@ -319,6 +319,14 @@
 				<br/>
 
 			</div>
+
+			<div class="custom-meta">
+				<label for="custom-richedit">Hide rich editor:</label>
+				<input id="custom-richedit" class="short" title="Hide rich editor" name="_custom_hide_richedit" type="checkbox" <?php if( $post->_custom_hide_richedit === 'on' ) echo 'checked'; ?>>
+				<br/>
+
+			</div>
+
 		<?php
 	}
 
@@ -428,13 +436,17 @@
 		if( !user_is_developer() ) return;
 
 		if( isset($_POST['_custom_lock']) ) {
-			$value = False;
-			if( $_POST['_custom_lock'] == 'on' ){
-				$value = True;
-			}
+			$value = $_POST['_custom_lock'] == 'on' ? 'on' : 0;
 			update_post_meta($post_id, '_custom_lock', $value);
 		} else {
-			update_post_meta($post_id, '_custom_lock', False);
+			update_post_meta($post_id, '_custom_lock', 0);
+		}
+
+		if( isset($_POST['_custom_hide_richedit']) ){
+			$value = $_POST['_custom_hide_richedit'] == 'on' ? 'on' : 0;
+			update_post_meta($post_id, '_custom_hide_richedit', $_POST['_custom_hide_richedit']);
+		} else {
+			update_post_meta($post_id, '_custom_hide_richedit', 0);
 		}
 
     }
