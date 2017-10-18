@@ -55,8 +55,8 @@ jsonData['routes'] = array(
     '/path'                             => 'VueComponent',
     '/path/:var'                        => 'ComponentWithVar',
     '/path/:optional*/:var'             => 'WildcardAndVar',
-    path_from_developer_id('dev-id')    => 'DefinedByDeveloperId',
-    path_from_developer_id('dev-id', '/append-me') => 'DevIdPathPlusAppendedString'
+    path_from_dev_id('dev-id')    => 'DefinedByDeveloperId',
+    path_from_dev_id('dev-id', '/append-me') => 'DevIdPathPlusAppendedString'
 );
 ```
 
@@ -82,15 +82,15 @@ If we set the About page's Developer ID to `about`, then rewrite the relevant li
 
 ```php
 ...
-    // path_from_developer_id is a Vuepress function that retrieves a page's relative path from its Developer ID
-    path_from_developer_id('about')                         => 'About'
+    // path_from_dev_id is a Vuepress function that retrieves a page's relative path from its Developer ID
+    path_from_dev_id('about')                         => 'About'
 ...
 ```
 
 This will guarantee that the path to this page will always render the About template, even if the user changes that path later on.
 
 ### Preventing deletion
-Any missing page in the `add_routes_to_json` function (for example, if `get_page_by_developer_id('about')` didn't find any pages) would break the given route; a Developer can lock pages to prevent this type of bug. Check the "Prevent non-dev deletion" box in the Developer Meta screen to prevent other users from placing that page in the Trash accidentally.
+Any missing page in the `add_routes_to_json` function (for example, if `get_page_by_dev_id('about')` didn't find any pages) would break the given route; a Developer can lock pages to prevent this type of bug. Check the "Prevent non-dev deletion" box in the Developer Meta screen to prevent other users from placing that page in the Trash accidentally.
 
 ### Advanced Routing
 Take a look at the [path-to-regexp documentation](https://github.com/pillarjs/path-to-regexp) for examples of routing using regex capabilities.
@@ -99,7 +99,7 @@ The routing table in Vuepress automatically converts a string-string key-value p
 
 ```php
 array(
-    path_from_developer_id('my-developer-id') => 'MyComponentName'
+    path_from_dev_id('my-developer-id') => 'MyComponentName'
 )
 ```
 
@@ -117,18 +117,18 @@ You can take advantage of the Vue router's more advanced capabilities, like [red
 
 ```php
 array(
-    path_from_developer_id('your-developer-id') => array(
+    path_from_dev_id('your-developer-id') => array(
         // Redirect to a path - in this case, to the path of the first child
         'redirect'		=> get_child_of_dev_id_path('work')
     ),
 
-    path_from_developer_id('your-developer0id', '/:medium*')		=> array(
+    path_from_dev_id('your-developer0id', '/:medium*')		=> array(
         // Define a component and a name for the route
         'component'		=> 'WorkGrid',
         'name'			=> 'work-grid'
     ),
 
-    path_from_developer_id('your-developer-id') => array(
+    path_from_dev_id('your-developer-id') => array(
         // Redirect to a named route
         'redirect'		=> array(
             'name':     => 'work-grid'
@@ -142,9 +142,9 @@ This isn't the limit of the routing table's capabilities - anything the Vue rout
 ### Utility Functions
 Vuepress defines a few utility functions to make building the routing table easier:
 
-* `get_child_of_dev_id($developer_id, $nth_child = 0)` - Get the post object of the nth child (zero-based, default `0`) of a page with the given Developer ID.
-* `get_child_of_dev_id_path($developer_id, $nth_child = 0, $after = '')` - Get the relative path of the nth child of a page with the given Developer ID. Adds `$after` to the retrieved path.
-* `path_from_dev_id($developer_id, $after = '')` - Get the relative path of a page with a given Developer ID. Adds `$after` to the retrieved path.
+* `get_child_of_dev_id($dev_id, $nth_child = 0)` - Get the post object of the nth child (zero-based, default `0`) of a page with the given Developer ID.
+* `get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = '')` - Get the relative path of the nth child of a page with the given Developer ID. Adds `$after` to the retrieved path.
+* `path_from_dev_id($dev_id, $after = '')` - Get the relative path of a page with a given Developer ID. Adds `$after` to the retrieved path.
 
 ## Vuex and State
 Vuepress uses [Vuex](https://vuex.vuejs.org/en/intro.html) to handle a site's state. The default store in `src/store/index.js` is set up like this:
@@ -221,10 +221,10 @@ Once you've set up the routing for a Vuepress site and understand its state func
     ```
     array(
         ''                                  => 'FrontPage',
-        path_from_developer_id('about')             => 'About',
-        path_from_developer_id('employees)          => 'EmployeesGrid',
-        path_from_developer_id('about', '/:child')  => 'AboutChildGeneric',
-        path_from_developer_id('employees', '/:employee') => 'EmployeeDetail'
+        path_from_dev_id('about')             => 'About',
+        path_from_dev_id('employees)          => 'EmployeesGrid',
+        path_from_dev_id('about', '/:child')  => 'AboutChildGeneric',
+        path_from_dev_id('employees', '/:employee') => 'EmployeeDetail'
     );
     ```
 
