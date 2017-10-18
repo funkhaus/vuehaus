@@ -15,8 +15,8 @@
             // '/path'                              => 'VueComponent',
             // '/path/:var'                         => 'ComponentWithVar'
             // '/path/*/:var'                       => 'WildcardAndVar'
-            // path_from_guid('your-guid')  		=> 'DefinedByGuid',
-		    // path_from_guid('guid', '/append-me') => 'GuidPathPlusAppendedString'
+            // path_from_dev_id('dev-id')  		=> 'DefinedByDevId',
+		    // path_from_dev_id('dev-id', '/append-me') => 'DevIdPathPlusAppendedString'
 
             // Probably unchanging
             ''                                      => 'FrontPage',
@@ -27,31 +27,6 @@
 		return $jsonData;
 	}
 	add_filter('rez_build_all_data', 'add_routes_to_json');
-
-	// Convenience function - get relative path by GUID
-	function path_from_guid($guid, $after = ''){
-		return rez_remove_siteurl(get_page_by_guid($guid)) . $after;
-	}
-
-	// Gets the nth child of a page with a given GUID
-	function get_child_of_guid($guid, $nth_child = 0){
-		$parent = get_page_by_guid($guid);
-
-		$args = array(
-			'posts_per_page'   => 1,
-			'offset'           => $nth_child,
-			'orderby'          => 'menu_order',
-			'order'            => 'ASC',
-			'post_type'        => 'page',
-			'post_parent'      => $parent->ID,
-		);
-		return reset(get_posts($args));
-	}
-
-	// Gets the relative path of the nth child of a page with given GUID
-	function get_child_of_guid_path($guid, $nth_child = 0, $after = ''){
-		return rez_remove_siteurl(get_child_of_guid($guid, $nth_child)) . $after;
-	}
 
 /*
  * Setup WordPress
@@ -332,8 +307,8 @@
 
 		?>
 			<div class="custom-meta">
-				<label for="custom-guid">Enter the GUID for this page:</label>
-				<input id="custom-guid" class="short" title="GUID" name="_custom_guid" type="text" value="<?php echo $post->_custom_guid; ?>">
+				<label for="custom-developer-id">Enter the Developer ID for this page:</label>
+				<input id="custom-developer-id" class="short" title="Developer ID" name="_custom_developer_id" type="text" value="<?php echo $post->_custom_developer_id; ?>">
 				<br/><br/>
 
 			</div>
@@ -442,8 +417,8 @@
         if( isset($_POST['_custom_video_url']) ) {
 	        update_post_meta($post_id, '_custom_video_url', $_POST['_custom_video_url']);
         }
-		if( isset($_POST['_custom_guid']) ) {
-			update_post_meta($post_id, '_custom_guid', $_POST['_custom_guid']);
+		if( isset($_POST['_custom_developer_id']) ) {
+			update_post_meta($post_id, '_custom_developer_id', $_POST['_custom_developer_id']);
 		}
         if( isset($_POST['_second_post_thumbnail']) ) {
 	        //update_post_meta($post_id, '_second_post_thumbnail', $_POST['_second_post_thumbnail']);
@@ -470,13 +445,38 @@
         return in_array( 'developer', $roles );
     }
 
-    // Gets page by a given GUID
-    function get_page_by_guid( $guid ){
+    // Gets page by a given dev ID
+    function get_page_by_dev_id( $dev_id ){
         $args = array(
             'posts_per_page'   => 1,
-            'meta_key'         => '_custom_guid',
-            'meta_value'       => $guid,
+            'meta_key'         => '_custom_developer_id',
+            'meta_value'       => $dev_id,
             'post_type'        => 'page',
         );
         return reset( get_posts($args) );
     }
+
+	// Convenience function - get relative path by dev ID
+	function path_from_dev_id($dev_id, $after = ''){
+		return rez_remove_siteurl(get_page_by_dev_id($dev_id)) . $after;
+	}
+
+	// Gets the nth child of a page with a given Developer ID
+	function get_child_of_dev_id($dev_id, $nth_child = 0){
+		$parent = get_page_by_dev_id($dev_id);
+
+		$args = array(
+			'posts_per_page'   => 1,
+			'offset'           => $nth_child,
+			'orderby'          => 'menu_order',
+			'order'            => 'ASC',
+			'post_type'        => 'page',
+			'post_parent'      => $parent->ID,
+		);
+		return reset(get_posts($args));
+	}
+
+	// Gets the relative path of the nth child of a page with given Developer ID
+	function get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = ''){
+		return rez_remove_siteurl(get_child_of_dev_id($dev_id, $nth_child)) . $after;
+	}
