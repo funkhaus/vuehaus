@@ -269,7 +269,7 @@
 		?>
         	<div class="custom-meta">
 				<label for="video-url">Enter the video URL for this page:</label>
-				<input id="video-url" class="short" title="This is needed for all video pages" name="_custom_video_url" type="text" value="<?php echo $post->_custom_video_url; ?>">
+				<input id="video-url" class="short" title="This is needed for all video pages" name="custom_video_url" type="text" value="<?php echo $post->custom_video_url; ?>">
 				<br/>
 
         	</div>
@@ -284,18 +284,12 @@
 			<div class="custom-meta">
 				<label for="custom-developer-id">Enter the Developer ID for this page:</label>
 				<input id="custom-developer-id" class="short" title="Developer ID" name="_custom_developer_id" type="text" value="<?php echo $post->_custom_developer_id; ?>">
-				<br/><br/>
+				<br/>
 
-			</div>
-
-			<div class="custom-meta">
 				<label for="custom-lock">Prevent non-dev deletion:</label>
 				<input id="custom-lock" class="short" title="Prevent deletion" name="_custom_lock" type="checkbox" <?php if( $post->_custom_lock ) echo 'checked'; ?>>
 				<br/>
 
-			</div>
-
-			<div class="custom-meta">
 				<label for="custom-richedit">Hide rich editor:</label>
 				<input id="custom-richedit" class="short" title="Hide rich editor" name="_custom_hide_richedit" type="checkbox" <?php if( $post->_custom_hide_richedit === 'on' ) echo 'checked'; ?>>
 				<br/>
@@ -397,8 +391,8 @@
             return $post_id;
         }
 
-        if( isset($_POST['_custom_video_url']) ) {
-	        update_post_meta($post_id, '_custom_video_url', $_POST['_custom_video_url']);
+        if( isset($_POST['custom_video_url']) ) {
+	        update_post_meta($post_id, 'custom_video_url', $_POST['custom_video_url']);
         }
 		if( isset($_POST['_custom_developer_id']) ) {
 			update_post_meta($post_id, '_custom_developer_id', $_POST['_custom_developer_id']);
