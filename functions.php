@@ -27,6 +27,7 @@
 		//set_post_thumbnail_size( 600, 400, true ); // Normal post thumbnails
 		//add_image_size( 'banner-thumb', 566, 250, true ); // Small thumbnail size
 	    add_image_size( 'social-preview', 600, 315, true ); // Square thumbnail used by sharethis and facebook
+		add_image_size( 'fullscreen', 1920, 1080, false ); // Fullscreen image size
 
 	    // Turn on menus
 		add_theme_support('menus');
