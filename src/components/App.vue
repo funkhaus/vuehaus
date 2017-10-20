@@ -1,5 +1,5 @@
 <template>
-    <div :class="['container', `breakpoint-${ breakpoint }`, { loading: $store.getters.loading }]">
+    <div :class="classes">
 
         <router-view></router-view>
 
@@ -10,6 +10,7 @@
     import throttle from 'lodash/throttle'
     import router from 'src/router'
     import store from 'src/store'
+    import _kebabCase from 'lodash/kebabCase'
 
     export default {
         el: '#app',
@@ -36,6 +37,14 @@
             }
         },
         computed: {
+            classes () {
+                return [
+                    'container',
+                    `breakpoint-${ this.breakpoint }`,
+                    { loading: this.$store.getters.loading },
+                    `route-${ _kebabCase(this.$route.name) }`
+                ]
+            },
             breakpoint () {
                 return this.winWidth >= 750 ? 'desktop' : 'mobile'
             }
