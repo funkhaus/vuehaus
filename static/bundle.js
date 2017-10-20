@@ -8833,7 +8833,7 @@ var _PageFade = __webpack_require__(159);
 
 var _PageFade2 = _interopRequireDefault(_PageFade);
 
-var _ResponsiveImage = __webpack_require__(155);
+var _ResponsiveImage = __webpack_require__(154);
 
 var _ResponsiveImage2 = _interopRequireDefault(_ResponsiveImage);
 
@@ -8853,9 +8853,9 @@ var _cache = __webpack_require__(35);
 
 var _cache2 = _interopRequireDefault(_cache);
 
-var _ModularMenu = __webpack_require__(154);
+var _WpMenu = __webpack_require__(155);
 
-var _ModularMenu2 = _interopRequireDefault(_ModularMenu);
+var _WpMenu2 = _interopRequireDefault(_WpMenu);
 
 var _MenuItem = __webpack_require__(153);
 
@@ -8868,7 +8868,7 @@ _vue2.default.component('transition-page-fade', _PageFade2.default); /* global j
 
 _vue2.default.component('responsive-image', _ResponsiveImage2.default);
 _vue2.default.component('in-view', _InView2.default);
-_vue2.default.component('modular-menu', _ModularMenu2.default);
+_vue2.default.component('wp-menu', _WpMenu2.default);
 _vue2.default.component('menu-item', _MenuItem2.default);
 
 // save initial page cache
@@ -9481,6 +9481,13 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _keys = __webpack_require__(60);
+
+var _keys2 = _interopRequireDefault(_keys);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 //
 //
 //
@@ -9525,61 +9532,15 @@ exports.default = {
         },
         isAncestor: function isAncestor() {
             return this.item.relativePath.length > 1 && !this.isActive && this.$route.path.includes(this.item.relativePath);
+        },
+        hasSubMenu: function hasSubMenu() {
+            return (0, _keys2.default)(this.item.children).length > 0;
         }
     }
 };
 
 /***/ }),
 /* 56 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-exports.default = {
-    props: {
-        slug: {
-            type: String,
-            default: 'main-menu'
-        }
-    },
-    computed: {
-        menuItems: function menuItems() {
-            var _this = this;
-
-            // find first menu that matches the given slug
-            var menu = this.$store.state.site.menus.find(function (singleMenu) {
-                return singleMenu.slug == _this.slug;
-            });
-
-            // fall back to first menu
-            if (menu === undefined) {
-                menu = this.$store.state.site.menus[0];
-            }
-
-            return menu ? menu.items : false;
-        }
-    }
-};
-
-/***/ }),
-/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9698,6 +9659,53 @@ exports.default = {
         },
         imageTag: function imageTag() {
             return (0, _get3.default)(this.object, 'sizes.' + this.size + '.html');
+        }
+    }
+};
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+exports.default = {
+    props: {
+        name: {
+            type: String,
+            default: 'Main Menu'
+        }
+    },
+    computed: {
+        menuItems: function menuItems() {
+            var _this = this;
+
+            // find first menu that matches the given slug
+            var menu = this.$store.state.site.menus.find(function (singleMenu) {
+                return singleMenu.name == _this.name;
+            });
+
+            // fall back to first menu
+            if (menu === undefined) {
+                menu = this.$store.state.site.menus[0];
+            }
+
+            return menu ? menu.items : false;
         }
     }
 };
@@ -10869,7 +10877,7 @@ exports = module.exports = __webpack_require__(30)();
 
 
 // module
-exports.push([module.i, "\nul[data-v-41044ce9] {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n}\n", "", {"version":3,"sources":["/Users/sander/Local Sites/vuepress-dev/app/public/wp-content/themes/vuepress/src/components/shared/ModularMenu.vue?0568ebb5"],"names":[],"mappings":";AAuCA;IACA,sBAAA;IACA,WAAA;IACA,UAAA;CACA","file":"ModularMenu.vue","sourcesContent":["<template>\n    <div :class=\"['menu', slug]\">\n        <ul class=\"menu-items\">\n            <menu-item\n                v-for=\"(item, i) in menuItems\"\n                :key=\"i\"\n                :item=\"item\"/>\n        </ul>\n    </div>\n</template>\n\n<script>\n\n    export default {\n        props: {\n            slug: {\n                type: String,\n                default: 'main-menu'\n            }\n        },\n        computed: {\n            menuItems () {\n                // find first menu that matches the given slug\n                let menu = this.$store.state.site.menus.find( singleMenu => {\n                    return singleMenu.slug == this.slug\n                } )\n\n                // fall back to first menu\n                if( menu === undefined ){\n                    menu = this.$store.state.site.menus[0]\n                }\n\n                return menu ? menu.items : false\n            }\n        }\n    }\n</script>\n\n<style scoped>\n    ul {\n        list-style-type: none;\n        padding: 0;\n        margin: 0;\n    }\n</style>\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.image-module {\n    position: relative;\n    width: 100%;\n}\n.image-sizer {\n    transition: opacity 0.6s ease;\n    position: relative;\n\n    background-repeat: no-repeat;\n    background-position: center;\n    background-size: cover;\n}\n.image-sizer img {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    opacity: 0;\n}\n.loading .image-sizer {\n    opacity: 0;\n}\n", "", {"version":3,"sources":["/Users/sander/Local Sites/vuepress-dev/app/public/wp-content/themes/vuepress/src/components/shared/ResponsiveImage.vue?1ac9b9e7"],"names":[],"mappings":";AA0GA;IACA,mBAAA;IACA,YAAA;CACA;AACA;IACA,8BAAA;IACA,mBAAA;;IAEA,6BAAA;IACA,4BAAA;IACA,uBAAA;CACA;AACA;IACA,mBAAA;IACA,YAAA;IACA,aAAA;IACA,kBAAA;IACA,WAAA;CACA;AAEA;IACA,WAAA;CACA","file":"ResponsiveImage.vue","sourcesContent":["<template>\n    <div\n        :class=\"['image-module', { loading }]\"\n        :style=\"outerStyles\"\n        @mouseenter=\"$emit('mouseenter', $event)\"\n        @mouseleave=\"$emit('mouseleave', $event)\">\n        <div class=\"image-sizer\" :style=\"sizerStyles\" v-html=\"imageTag\"></div>\n    </div>\n</template>\n\n<script>\n    import imagesLoaded from 'imagesLoaded'\n    import _get from 'lodash/get'\n\n    export default {\n        props: {\n            object: {\n                type: Object,\n                default(){\n                    return {}\n                }\n            },\n            src: String,\n            height: [String, Number],\n            width: [String, Number],\n            aspect: [String, Number],\n            size: {\n                type: String,\n                default: 'full'\n            },\n            color: {\n                type: String,\n                default: 'transparent'\n            }\n        },\n        data () {\n            return {\n                loading: true,\n                loadedImage: false,\n                imageWidth: 0,\n                imageHeight: 0\n            }\n        },\n        mounted () {\n            const img = new Image()\n            img.src = this.parsedSrc\n\n            // set up height/width if we have an object\n            if( this.object ){\n                this.imageWidth = _get(this.object, `sizes.${ this.size }.width`)\n                this.imageHeight = _get(this.object, `sizes.${ this.size }.height`)\n            }\n\n            imagesLoaded(img, () => {\n                this.loading = false\n\n                // save loaded image\n                this.loadedImage = img\n\n                // update stats\n                this.imageWidth = img.width\n                this.imageHeight = img.height\n            })\n        },\n        computed: {\n            parsedSrc(){\n                if( this.src ) return this.src\n\n                return _get(this.object, `sizes.${ this.size }.url`)\n            },\n            parsedHeight(){\n                // default to defined height\n                if( this.height ) return parseInt(this.height)\n\n                return this.imageHeight\n            },\n            parsedWidth(){\n                // default to defined width\n                if( this.width ) return parseInt(this.width)\n\n                return this.imageWidth\n            },\n            aspectPadding () {\n                const calculatedAspect = this.parsedHeight / this.parsedWidth * 100\n                return this.aspect || calculatedAspect || 56.25\n            },\n            outerStyles () {\n                return {\n                    'background-color': _get(this.object, 'primary_color', false) || this.color\n                }\n            },\n            sizerStyles () {\n                return {\n                    paddingBottom: `${this.aspectPadding}%`,\n                    backgroundImage: `url(${ this.parsedSrc })`\n                }\n            },\n            imageTag(){\n                return _get(this.object, `sizes.${ this.size }.html`)\n            }\n        }\n    }\n\n</script>\n\n<style>\n    .image-module {\n        position: relative;\n        width: 100%;\n    }\n    .image-sizer {\n        transition: opacity 0.6s ease;\n        position: relative;\n\n        background-repeat: no-repeat;\n        background-position: center;\n        background-size: cover;\n    }\n    .image-sizer img {\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        object-fit: cover;\n        opacity: 0;\n    }\n\n    .loading .image-sizer {\n        opacity: 0;\n    }\n</style>\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -10883,7 +10891,7 @@ exports = module.exports = __webpack_require__(30)();
 
 
 // module
-exports.push([module.i, "\n.image-module {\n    position: relative;\n    width: 100%;\n}\n.image-sizer {\n    transition: opacity 0.6s ease;\n    position: relative;\n\n    background-repeat: no-repeat;\n    background-position: center;\n    background-size: cover;\n}\n.image-sizer img {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    opacity: 0;\n}\n.loading .image-sizer {\n    opacity: 0;\n}\n", "", {"version":3,"sources":["/Users/sander/Local Sites/vuepress-dev/app/public/wp-content/themes/vuepress/src/components/shared/ResponsiveImage.vue?1ac9b9e7"],"names":[],"mappings":";AA0GA;IACA,mBAAA;IACA,YAAA;CACA;AACA;IACA,8BAAA;IACA,mBAAA;;IAEA,6BAAA;IACA,4BAAA;IACA,uBAAA;CACA;AACA;IACA,mBAAA;IACA,YAAA;IACA,aAAA;IACA,kBAAA;IACA,WAAA;CACA;AAEA;IACA,WAAA;CACA","file":"ResponsiveImage.vue","sourcesContent":["<template>\n    <div\n        :class=\"['image-module', { loading }]\"\n        :style=\"outerStyles\"\n        @mouseenter=\"$emit('mouseenter', $event)\"\n        @mouseleave=\"$emit('mouseleave', $event)\">\n        <div class=\"image-sizer\" :style=\"sizerStyles\" v-html=\"imageTag\"></div>\n    </div>\n</template>\n\n<script>\n    import imagesLoaded from 'imagesLoaded'\n    import _get from 'lodash/get'\n\n    export default {\n        props: {\n            object: {\n                type: Object,\n                default(){\n                    return {}\n                }\n            },\n            src: String,\n            height: [String, Number],\n            width: [String, Number],\n            aspect: [String, Number],\n            size: {\n                type: String,\n                default: 'full'\n            },\n            color: {\n                type: String,\n                default: 'transparent'\n            }\n        },\n        data () {\n            return {\n                loading: true,\n                loadedImage: false,\n                imageWidth: 0,\n                imageHeight: 0\n            }\n        },\n        mounted () {\n            const img = new Image()\n            img.src = this.parsedSrc\n\n            // set up height/width if we have an object\n            if( this.object ){\n                this.imageWidth = _get(this.object, `sizes.${ this.size }.width`)\n                this.imageHeight = _get(this.object, `sizes.${ this.size }.height`)\n            }\n\n            imagesLoaded(img, () => {\n                this.loading = false\n\n                // save loaded image\n                this.loadedImage = img\n\n                // update stats\n                this.imageWidth = img.width\n                this.imageHeight = img.height\n            })\n        },\n        computed: {\n            parsedSrc(){\n                if( this.src ) return this.src\n\n                return _get(this.object, `sizes.${ this.size }.url`)\n            },\n            parsedHeight(){\n                // default to defined height\n                if( this.height ) return parseInt(this.height)\n\n                return this.imageHeight\n            },\n            parsedWidth(){\n                // default to defined width\n                if( this.width ) return parseInt(this.width)\n\n                return this.imageWidth\n            },\n            aspectPadding () {\n                const calculatedAspect = this.parsedHeight / this.parsedWidth * 100\n                return this.aspect || calculatedAspect || 56.25\n            },\n            outerStyles () {\n                return {\n                    'background-color': _get(this.object, 'primary_color', false) || this.color\n                }\n            },\n            sizerStyles () {\n                return {\n                    paddingBottom: `${this.aspectPadding}%`,\n                    backgroundImage: `url(${ this.parsedSrc })`\n                }\n            },\n            imageTag(){\n                return _get(this.object, `sizes.${ this.size }.html`)\n            }\n        }\n    }\n\n</script>\n\n<style>\n    .image-module {\n        position: relative;\n        width: 100%;\n    }\n    .image-sizer {\n        transition: opacity 0.6s ease;\n        position: relative;\n\n        background-repeat: no-repeat;\n        background-position: center;\n        background-size: cover;\n    }\n    .image-sizer img {\n        position: absolute;\n        width: 100%;\n        height: 100%;\n        object-fit: cover;\n        opacity: 0;\n    }\n\n    .loading .image-sizer {\n        opacity: 0;\n    }\n</style>\n"],"sourceRoot":""}]);
+exports.push([module.i, "\nul[data-v-7e199bb0] {\n    list-style-type: none;\n    padding: 0;\n    margin: 0;\n}\n", "", {"version":3,"sources":["/Users/sander/Local Sites/vuepress-dev/app/public/wp-content/themes/vuepress/src/components/shared/WpMenu.vue?4f6a5438"],"names":[],"mappings":";AAqCA;IACA,sBAAA;IACA,WAAA;IACA,UAAA;CACA","file":"WpMenu.vue","sourcesContent":["<template>\n    <ul :class=\"['wp-menu']\">\n        <menu-item\n            v-for=\"(item, i) in menuItems\"\n            :key=\"i\"\n            :item=\"item\"/>\n    </ul>\n</template>\n\n<script>\n\n    export default {\n        props: {\n            name: {\n                type: String,\n                default: 'Main Menu'\n            }\n        },\n        computed: {\n            menuItems () {\n                // find first menu that matches the given slug\n                let menu = this.$store.state.site.menus.find( singleMenu => {\n                    return singleMenu.name == this.name\n                } )\n\n                // fall back to first menu\n                if( menu === undefined ){\n                    menu = this.$store.state.site.menus[0]\n                }\n\n                return menu ? menu.items : false\n            }\n        }\n    }\n</script>\n\n<style scoped>\n    ul {\n        list-style-type: none;\n        padding: 0;\n        margin: 0;\n    }\n</style>\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -18744,44 +18752,6 @@ var Component = __webpack_require__(2)(
   /* template */
   __webpack_require__(163),
   /* scopeId */
-  "data-v-41044ce9",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/sander/Local Sites/vuepress-dev/app/public/wp-content/themes/vuepress/src/components/shared/ModularMenu.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] ModularMenu.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-41044ce9", Component.options)
-  } else {
-    hotAPI.reload("data-v-41044ce9", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 155 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(172)
-
-var Component = __webpack_require__(2)(
-  /* script */
-  __webpack_require__(57),
-  /* template */
-  __webpack_require__(164),
-  /* scopeId */
   null,
   /* cssModules */
   null
@@ -18800,6 +18770,44 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-41e5e267", Component.options)
   } else {
     hotAPI.reload("data-v-41e5e267", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 155 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(172)
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(57),
+  /* template */
+  __webpack_require__(165),
+  /* scopeId */
+  "data-v-7e199bb0",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/sander/Local Sites/vuepress-dev/app/public/wp-content/themes/vuepress/src/components/shared/WpMenu.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] WpMenu.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7e199bb0", Component.options)
+  } else {
+    hotAPI.reload("data-v-7e199bb0", Component.options)
   }
 })()}
 
@@ -18882,7 +18890,7 @@ var Component = __webpack_require__(2)(
   /* script */
   null,
   /* template */
-  __webpack_require__(165),
+  __webpack_require__(164),
   /* scopeId */
   null,
   /* cssModules */
@@ -18981,9 +18989,9 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('modular-menu', {
+  return _c('wp-menu', {
     attrs: {
-      "slug": "main-menu"
+      "name": "Main Menu"
     }
   })
 },staticRenderFns: []}
@@ -18997,32 +19005,6 @@ if (false) {
 
 /***/ }),
 /* 163 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    class: ['menu', _vm.slug]
-  }, [_c('ul', {
-    staticClass: "menu-items"
-  }, _vm._l((_vm.menuItems), function(item, i) {
-    return _c('menu-item', {
-      key: i,
-      attrs: {
-        "item": item
-      }
-    })
-  }))])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-41044ce9", module.exports)
-  }
-}
-
-/***/ }),
-/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -19056,7 +19038,7 @@ if (false) {
 }
 
 /***/ }),
-/* 165 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -19067,6 +19049,30 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-4684199e", module.exports)
+  }
+}
+
+/***/ }),
+/* 165 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ul', {
+    class: ['wp-menu']
+  }, _vm._l((_vm.menuItems), function(item, i) {
+    return _c('menu-item', {
+      key: i,
+      attrs: {
+        "item": item
+      }
+    })
+  }))
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7e199bb0", module.exports)
   }
 }
 
@@ -19129,9 +19135,13 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('li', {
-    class: {
-      active: _vm.isActive, 'in-active-tree': _vm.isAncestor
-    }
+    class: ['menu-item', {
+      active: _vm.isActive
+    }, {
+      'in-active-tree': _vm.isAncestor
+    }, {
+      'has-sub-menu': _vm.hasSubMenu
+    }]
   }, [(_vm.item.is_external) ? _c('a', {
     attrs: {
       "href": _vm.item.permalink,
@@ -19141,7 +19151,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "to": _vm.item.relativePath
     }
-  }, [_vm._v("\n        " + _vm._s(_vm.item.title) + "\n    ")]), (_vm.item.children) ? _c('ul', _vm._l((_vm.item.children), function(child, index) {
+  }, [_vm._v("\n        " + _vm._s(_vm.item.title) + "\n    ")]), (_vm.hasSubMenu) ? _c('ul', _vm._l((_vm.item.children), function(child, index) {
     return _c('menu-item', {
       key: index,
       attrs: {
@@ -21708,13 +21718,13 @@ var content = __webpack_require__(98);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(33)("a78c54e6", content, false);
+var update = __webpack_require__(33)("bf6281f2", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js?sourceMap!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-41044ce9\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ModularMenu.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js?sourceMap!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-41044ce9\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ModularMenu.vue");
+   module.hot.accept("!!../../../node_modules/css-loader/index.js?sourceMap!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-41e5e267\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ResponsiveImage.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js?sourceMap!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-41e5e267\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ResponsiveImage.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -21734,13 +21744,13 @@ var content = __webpack_require__(99);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(33)("bf6281f2", content, false);
+var update = __webpack_require__(33)("92631706", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js?sourceMap!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-41e5e267\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ResponsiveImage.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js?sourceMap!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-41e5e267\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ResponsiveImage.vue");
+   module.hot.accept("!!../../../node_modules/css-loader/index.js?sourceMap!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7e199bb0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./WpMenu.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js?sourceMap!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7e199bb0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./WpMenu.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

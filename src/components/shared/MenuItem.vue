@@ -1,5 +1,5 @@
 <template>
-    <li :class="{ active: isActive, 'in-active-tree': isAncestor }">
+    <li :class="[ 'menu-item', { active: isActive }, { 'in-active-tree': isAncestor }, { 'has-sub-menu': hasSubMenu } ]">
 
         <a
             v-if="item.is_external"
@@ -14,7 +14,7 @@
             {{ item.title }}
         </router-link>
 
-        <ul v-if="item.children">
+        <ul v-if="hasSubMenu">
             <menu-item
                 v-for="(child, index) in item.children"
                 :key="index"
@@ -44,6 +44,9 @@ export default {
             return this.item.relativePath.length > 1
                 && !this.isActive
                 && this.$route.path.includes( this.item.relativePath )
+        },
+        hasSubMenu(){
+            return Object.keys(this.item.children).length > 0
         }
     }
 }

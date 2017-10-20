@@ -1,28 +1,26 @@
 <template>
-    <div :class="['menu', slug]">
-        <ul class="menu-items">
-            <menu-item
-                v-for="(item, i) in menuItems"
-                :key="i"
-                :item="item"/>
-        </ul>
-    </div>
+    <ul :class="['wp-menu']">
+        <menu-item
+            v-for="(item, i) in menuItems"
+            :key="i"
+            :item="item"/>
+    </ul>
 </template>
 
 <script>
 
     export default {
         props: {
-            slug: {
+            name: {
                 type: String,
-                default: 'main-menu'
+                default: 'Main Menu'
             }
         },
         computed: {
             menuItems () {
                 // find first menu that matches the given slug
                 let menu = this.$store.state.site.menus.find( singleMenu => {
-                    return singleMenu.slug == this.slug
+                    return singleMenu.name == this.name
                 } )
 
                 // fall back to first menu

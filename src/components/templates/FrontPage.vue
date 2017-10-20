@@ -1,6 +1,6 @@
 <template>
 
     <!-- Front page -->
-    <modular-menu slug="main-menu"/>
+    <wp-menu name="Main Menu"/>
 
 </template>
