@@ -462,3 +462,23 @@
 	function get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = ''){
 		return rez_remove_siteurl(get_child_of_dev_id($dev_id, $nth_child)) . $after;
 	}
+
+	// Makes sure Developer role can sort Nested Pages automatically
+	function give_developer_ordering_permissions(){
+
+		if( is_plugin_active('wp-nested-pages/nestedpages.php') ){
+
+			$allowed_to_sort = get_option('nestedpages_allowsorting');
+
+			if( !$allowed_to_sort ){
+				$allowed_to_sort = array();
+			}
+
+			if( !in_array('developer', $allowed_to_sort) ){
+				$allowed_to_sort[] = 'developer';
+				update_option('nestedpages_allowsorting', $allowed_to_sort);
+			}
+		}
+
+	}
+	add_action('admin_init', 'give_developer_ordering_permissions', 1);
