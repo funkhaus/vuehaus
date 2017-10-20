@@ -1,13 +1,21 @@
 <?php
     // Custom Rest-Easy filters here
 
-    // Example: Serialize video meta
-    function add_video_meta($data){
-        $data['preview_video'] = get_post_meta($data['id'], 'custom_preview_url', true);
-        $data['featured_video'] = wp_oembed_get(get_post_meta($data['id'], 'custom_video_url', true));
-        return $data;
+    // Get the iFrame embed code
+    function custom_video_embed($input){
+
+        if( isset($input['meta']['custom_video_url']) ) {
+            $args = array(
+                'width' => 1280
+            );
+            $embed = wp_oembed_get($input['meta']['custom_video_url'], $args);
+
+            $input['meta']['custom_video_url_embed'] = $embed;
+        }
+
+        return $input;
     }
-    add_filter('rez_serialize_post', 'add_video_meta');
+    add_filter('rez_serialize_post', 'custom_video_embed');
 
     // Example: Serialize page siblings
     function add_page_siblings($related){
