@@ -19,8 +19,8 @@
 
             // Probably unchanging
             ''                                      => 'FrontPage',
-            '/' . $category_base                    => 'archive',
-            '/:slug'                                => 'default'
+            '/' . $category_base                    => 'Archive',
+            '/:slug'                                => 'Default'
         );
 
 		return $jsonData;

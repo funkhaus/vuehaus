@@ -9893,7 +9893,7 @@ var routeTable = [];
     routeObject.name = routeObject.name || routeObject.component;
 
     // get specified component, fallback to default
-    var component = templates('./default.vue');
+    var component = templates('./Default.vue');
     if (templates.keys().indexOf('./' + routeObject.component + '.vue') > -1) {
         component = templates('./' + routeObject.component + '.vue');
     }
