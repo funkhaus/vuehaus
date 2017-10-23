@@ -41,8 +41,9 @@ export default {
             return this.$route.path == this.item.relativePath
         },
         isParent(){
-            // remove last directory from current route
+            // remove trailing slash
             const strippedSlash = this.$route.path.replace(/\/$/g, '')
+            // remove last directory from current route
             const parentRoute = strippedSlash.replace(/\/[^\/]*$/g, '')
             return parentRoute == this.item.relativePath
         },
@@ -52,13 +53,17 @@ export default {
         hasSubMenu(){
             return Object.keys(this.item.children).length > 0
         },
+        isHome(){
+            return this.item.relativePath == '/'
+        },
         classes(){
             return [
                 'menu-item',
                 { 'menu-item-has-children': this.hasSubMenu },
                 { 'current-menu-item': this.isActive },
                 { 'current-menu-parent': this.isParent },
-                { 'current-menu-ancestor': this.isAncestor }
+                { 'current-menu-ancestor': this.isAncestor },
+                { 'menu-item-home': this.isHome }
             ]
         }
     }

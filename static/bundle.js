@@ -9595,8 +9595,11 @@ exports.default = {
         hasSubMenu: function hasSubMenu() {
             return (0, _keys2.default)(this.item.children).length > 0;
         },
+        isHome: function isHome() {
+            return this.item.relativePath == '/';
+        },
         classes: function classes() {
-            return ['menu-item', { 'menu-item-has-children': this.hasSubMenu }, { 'current-menu-item': this.isActive }, { 'current-menu-parent': this.isParent }, { 'current-menu-ancestor': this.isAncestor }];
+            return ['menu-item', { 'menu-item-has-children': this.hasSubMenu }, { 'current-menu-item': this.isActive }, { 'current-menu-parent': this.isParent }, { 'current-menu-ancestor': this.isAncestor }, { 'menu-item-home': this.isHome }];
         }
     }
 };
