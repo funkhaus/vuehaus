@@ -1,5 +1,5 @@
 <template>
-    <li :class="[ 'menu-item', { active: isActive }, { 'in-active-tree': isAncestor }, { 'has-sub-menu': hasSubMenu } ]">
+    <li :class="classes">
 
         <a
             v-if="item.is_external"
@@ -38,15 +38,28 @@ export default {
     },
     computed: {
         isActive(){
-            return this.$route.path.replace(/\/*$/, '') == this.item.relativePath
+            return this.$route.path == this.item.relativePath
+        },
+        isParent(){
+            // remove last directory from current route
+            const strippedSlash = this.$route.path.replace(/\/$/g, '')
+            const parentRoute = strippedSlash.replace(/\/[^\/]*$/g, '')
+            return parentRoute == this.item.relativePath
         },
         isAncestor(){
-            return this.item.relativePath.length > 1
-                && !this.isActive
-                && this.$route.path.includes( this.item.relativePath )
+            return ( !this.isActive && this.$route.path.includes( this.item.relativePath ) ) || this.isParent || this.item.relativePath == '/'
         },
         hasSubMenu(){
             return Object.keys(this.item.children).length > 0
+        },
+        classes(){
+            return [
+                'menu-item',
+                { 'menu-item-has-children': this.hasSubMenu },
+                { 'current-menu-item': this.isActive },
+                { 'current-menu-parent': this.isParent },
+                { 'current-menu-ancestor': this.isAncestor }
+            ]
         }
     }
 }

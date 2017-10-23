@@ -9581,13 +9581,22 @@ exports.default = {
     },
     computed: {
         isActive: function isActive() {
-            return this.$route.path.replace(/\/*$/, '') == this.item.relativePath;
+            return this.$route.path == this.item.relativePath;
+        },
+        isParent: function isParent() {
+            // remove last directory from current route
+            var strippedSlash = this.$route.path.replace(/\/$/g, '');
+            var parentRoute = strippedSlash.replace(/\/[^\/]*$/g, '');
+            return parentRoute == this.item.relativePath;
         },
         isAncestor: function isAncestor() {
-            return this.item.relativePath.length > 1 && !this.isActive && this.$route.path.includes(this.item.relativePath);
+            return !this.isActive && this.$route.path.includes(this.item.relativePath) || this.isParent || this.item.relativePath == '/';
         },
         hasSubMenu: function hasSubMenu() {
             return (0, _keys2.default)(this.item.children).length > 0;
+        },
+        classes: function classes() {
+            return ['menu-item', { 'menu-item-has-children': this.hasSubMenu }, { 'current-menu-item': this.isActive }, { 'current-menu-parent': this.isParent }, { 'current-menu-ancestor': this.isAncestor }];
         }
     }
 };
@@ -19406,7 +19415,11 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c("div")
+  return _c('wp-menu', {
+    attrs: {
+      "name": "Main Menu"
+    }
+  })
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -19506,7 +19519,11 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c("div")
+  return _c('wp-menu', {
+    attrs: {
+      "name": "Main Menu"
+    }
+  })
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -19548,13 +19565,7 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('li', {
-    class: ['menu-item', {
-      active: _vm.isActive
-    }, {
-      'in-active-tree': _vm.isAncestor
-    }, {
-      'has-sub-menu': _vm.hasSubMenu
-    }]
+    class: _vm.classes
   }, [(_vm.item.is_external) ? _c('a', {
     attrs: {
       "href": _vm.item.permalink,

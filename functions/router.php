@@ -20,7 +20,7 @@
             // Probably unchanging
             ''                                      => 'FrontPage',
             '/' . $category_base                    => 'Archive',
-            '/:slug'                                => 'Default'
+            '*'                                		=> 'Default'
         );
 
 		return $jsonData;
