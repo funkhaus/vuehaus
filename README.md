@@ -251,7 +251,7 @@ this.$root.$on('throttled.resize', () => {
 })
 this.$root.$on('throttled.scroll', () => {
     // your throttled scroll event here...
-    // default - 1 per 10ms
+    // default: 1 per 10ms
 })
 ```
 
