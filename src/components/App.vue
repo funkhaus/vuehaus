@@ -24,16 +24,20 @@
             }
         },
         mounted () {
-            window.addEventListener('resize', throttle(this.setWinSize, 30))
-            window.addEventListener('scroll', throttle(this.setWinScroll, 10))
+            window.addEventListener('resize', throttle(this.onResize, 30))
+            window.addEventListener('scroll', throttle(this.onScroll, 10))
         },
         methods: {
-            setWinSize () {
+            onResize () {
                 this.winWidth = window.innerWidth
                 this.winHeight = window.innerHeight
+
+                this.$emit('throttled.resize')
             },
-            setWinScroll () {
+            onScroll () {
                 this.sTop = window.pageYOffset || document.documentElement.scrollTop
+
+                this.$emit('throttled.scroll')
             }
         },
         computed: {

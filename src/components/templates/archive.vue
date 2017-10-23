@@ -1,5 +1,0 @@
-<template>
-
-    <!-- Archive -->
-    
-</template>

@@ -15,6 +15,7 @@ Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://w
     1. [Actions](#actions)
 1. [Building a Vuepress Site: Front-End](#building-a-vuepress-site-front-end)
     1. [Example Workflow](#example-workflow)
+    1. [Vuepress Events](#vuepress-events)
     1. [Common Tasks](#common-tasks)
 1. [Recommended Reading](#recommended-reading)
 
@@ -240,6 +241,22 @@ Once you've set up the routing for a Vuepress site and understand its state func
 
 1. `npm run dev` and start building in Vue!
 
+### Vuepress Events
+Throttled resize and scroll events are available to any child of the App component:
+
+```js
+this.$root.$on('throttled.resize', () => {
+    // your throttled resize event here...
+    // default: 1 per 10ms
+})
+this.$root.$on('throttled.scroll', () => {
+    // your throttled scroll event here...
+    // default - 1 per 10ms
+})
+```
+
+Both events are fired after the `$root` element saves updated window dimensions/scroll positions for resize/scroll events.
+
 ### Common Tasks
 * __Loading Fonts:__
     Vuepress includes the Google/Typekit [Web Font Loader](https://github.com/typekit/webfontloader) in `index.php`. Follow the instructions on that repo to load fonts from Google, Typekit, or your own uploads.
@@ -298,7 +315,7 @@ __Vuepress__
 
 http://funkhaus.us
 
-Version: 1.0
+Version: 1.1
 
 * 1.1 - Switched `_custom_guid` to `_custom_developer_id`
 * 1.0 - Initial release

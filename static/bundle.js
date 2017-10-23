@@ -9434,17 +9434,21 @@ exports.default = {
         };
     },
     mounted: function mounted() {
-        window.addEventListener('resize', (0, _throttle2.default)(this.setWinSize, 30));
-        window.addEventListener('scroll', (0, _throttle2.default)(this.setWinScroll, 10));
+        window.addEventListener('resize', (0, _throttle2.default)(this.onResize, 30));
+        window.addEventListener('scroll', (0, _throttle2.default)(this.onScroll, 10));
     },
 
     methods: {
-        setWinSize: function setWinSize() {
+        onResize: function onResize() {
             this.winWidth = window.innerWidth;
             this.winHeight = window.innerHeight;
+
+            this.$emit('throttled.resize');
         },
-        setWinScroll: function setWinScroll() {
+        onScroll: function onScroll() {
             this.sTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            this.$emit('throttled.scroll');
         }
     },
     computed: {
@@ -19260,74 +19264,8 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 167 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(2)(
-  /* script */
-  null,
-  /* template */
-  __webpack_require__(171),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/sander/Local Sites/vuepress-dev/app/public/wp-content/themes/vuepress/src/components/templates/archive.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] archive.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3597d532", Component.options)
-  } else {
-    hotAPI.reload("data-v-3597d532", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 168 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(2)(
-  /* script */
-  null,
-  /* template */
-  __webpack_require__(174),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/sander/Local Sites/vuepress-dev/app/public/wp-content/themes/vuepress/src/components/templates/default.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] default.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4684199e", Component.options)
-  } else {
-    hotAPI.reload("data-v-4684199e", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
+/* 167 */,
+/* 168 */,
 /* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19379,21 +19317,7 @@ if (false) {
 }
 
 /***/ }),
-/* 171 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c("div")
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-3597d532", module.exports)
-  }
-}
-
-/***/ }),
+/* 171 */,
 /* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19447,21 +19371,7 @@ if (false) {
 }
 
 /***/ }),
-/* 174 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c("div")
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-4684199e", module.exports)
-  }
-}
-
-/***/ }),
+/* 174 */,
 /* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23020,9 +22930,7 @@ var index_esm = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./FrontPage.vue": 166,
-	"./archive.vue": 167,
-	"./default.vue": 168
+	"./FrontPage.vue": 166
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
