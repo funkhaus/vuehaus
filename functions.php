@@ -2,6 +2,7 @@
 
 	include_once get_template_directory() . '/functions/router.php';
 	include_once get_template_directory() . '/functions/rest-easy-filters.php';
+	include_once get_template_directory() . '/functions/vuepress-plugins.php';
 
 /*
  * Setup WordPress

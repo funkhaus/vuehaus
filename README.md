@@ -315,8 +315,9 @@ __Vuepress__
 
 http://funkhaus.us
 
-Version: 1.11
+Version: 1.1.2
 
+* 1.1.2 - Added [TGM Plugin Activation](http://tgmpluginactivation.com/) to require plugins. Switching to x.x.x version numbering.
 * 1.11 - Switched `_custom_developer_id` to `custom_developer_id`
 * 1.1 - Switched `_custom_guid` to `_custom_developer_id`
 * 1.0 - Initial release
