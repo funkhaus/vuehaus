@@ -10,6 +10,7 @@ Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://w
     1. [Developer Capabilities](#developer-capabilities)
     1. [Advanced Routing](#advanced-routing)
     1. [Utility Functions](#utility-functions)
+    1. [Upgrading Plugins](#upgrading-plugins)
 1. [Vuex and State](#vuex-and-state)
     1. [Mutations](#mutations)
     1. [Actions](#actions)
@@ -25,7 +26,7 @@ Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://w
 1. `git clone https://github.com/funkhaus/vuepress my-theme`
 1. `cd my-theme`
 1. `npm install`
-1. Install and activate [Rest-Easy](https://github.com/funkhaus/Rest-Easy) - direct download link [here](https://github.com/funkhaus/Rest-Easy/archive/master.zip)
+1. Go to the WordPress back-end, activate, the Vuepress theme, and follow the instructions to install [Rest-Easy](https://github.com/funkhaus/Rest-Easy).
 1. `npm run dev`
 
 ## Reading List
@@ -40,7 +41,7 @@ To get the most out of Vuepress, you can continue with:
 1. [Vuex](https://vuex.vuejs.org/en/intro.html)
 
 ## Building a Vuepress Site: Back-End
-Vuepress requires the [Rest-Easy](https://github.com/funkhaus/Rest-Easy) plugin to work correctly, so make sure you have that installed before getting started.
+Vuepress requires the [Rest-Easy](https://github.com/funkhaus/Rest-Easy) plugin to work correctly, so make sure you have that installed before getting started. Vuepress ships with [TGM Plugin Activation](http://tgmpluginactivation.com/) to make Rest-Easy installation simpler.
 
 In Vuepress, you'll be building individual pages with Vue instead of PHP templates. This can take some getting used to, but ultimately allows for all of the flexibility and power of Vue right from the start.
 
@@ -153,6 +154,9 @@ Vuepress defines a few utility functions to make building the routing table easi
 * `get_child_of_dev_id($dev_id, $nth_child = 0)` - Get the post object of the nth child (zero-based, default `0`) of a page with the given Developer ID.
 * `get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = '')` - Get the relative path of the nth child of a page with the given Developer ID. Adds `$after` to the retrieved path.
 * `path_from_dev_id($dev_id, $after = '')` - Get the relative path of a page with a given Developer ID. Adds `$after` to the retrieved path.
+
+### Upgrading Plugins
+If you need to upgrade your version of [Rest-Easy](https://github.com/funkhaus/Rest-Easy), change the `$latest_rest_easy` variable in `functions/vuepress-plugins.php` to match the latest Rest Easy version. You'll be prompted to upgrade the next time you load any page on the WordPress backend.
 
 ## Vuex and State
 Vuepress uses [Vuex](https://vuex.vuejs.org/en/intro.html) to handle a site's state. The default store in `src/store/index.js` is set up like this:
