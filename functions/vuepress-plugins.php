@@ -4,6 +4,9 @@
 
     function vuepress_register_required_plugins() {
 
+        // Change this value to install a new version of Rest-Easy
+        $latest_rest_easy = '1.34';
+
         $config = array(
             'id'           => 'vuepress',              // Unique ID for hashing notices for multiple instances of TGMPA.
             'default_path' => '',                      // Default absolute path to bundled plugins.
@@ -21,7 +24,8 @@
             array(
                 'name'      => 'Rest-Easy',
                 'slug'      => 'rest-easy',
-                'source'    => 'https://github.com/funkhaus/Rest-Easy/archive/master.zip'
+                'source'    => 'https://github.com/funkhaus/Rest-Easy/archive/master.zip',
+                'version'   => $latest_rest_easy
             ),
             array(
                 'name'      => 'Nested Pages',
