@@ -315,7 +315,8 @@ __Vuepress__
 
 http://funkhaus.us
 
-Version: 1.1
+Version: 1.11
 
+* 1.11 - Switched `_custom_developer_id` to `custom_developer_id`
 * 1.1 - Switched `_custom_guid` to `_custom_developer_id`
 * 1.0 - Initial release

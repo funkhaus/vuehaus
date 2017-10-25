@@ -284,7 +284,7 @@
 		?>
 			<div class="custom-meta">
 				<label for="custom-developer-id">Enter the Developer ID for this page:</label>
-				<input id="custom-developer-id" class="short" title="Developer ID" name="_custom_developer_id" type="text" value="<?php echo $post->_custom_developer_id; ?>">
+				<input id="custom-developer-id" class="short" title="Developer ID" name="custom_developer_id" type="text" value="<?php echo $post->custom_developer_id; ?>">
 				<br/>
 
 				<label for="custom-lock">Prevent non-dev deletion:</label>
@@ -318,7 +318,7 @@
     function custom_second_featured_image($post){
 
         // Meta key (need to update the save_metabox function below to reflect this too!)
-        $meta_key = '_second_post_thumbnail';
+        $meta_key = 'second_post_thumbnail';
 
         // Get WordPress' media upload URL
         $upload_link = esc_url( get_upload_iframe_src( 'image', $post->ID ) );
@@ -366,7 +366,7 @@
  */
     function get_the_second_post_thumbnail( $post = null, $size = 'post-thumbnail', $attr = '' ) {
         $post = get_post($post);
-        $image = $post->_second_post_thumbnail;
+        $image = $post->second_post_thumbnail;
         $classes = 'attachment-second-post-thumbnail size-full wp-second-post-image';
         if ( $attr == '' ) {
             // Create $attr array if none exists yet
@@ -395,11 +395,11 @@
         if( isset($_POST['custom_video_url']) ) {
 	        update_post_meta($post_id, 'custom_video_url', $_POST['custom_video_url']);
         }
-		if( isset($_POST['_custom_developer_id']) ) {
-			update_post_meta($post_id, '_custom_developer_id', $_POST['_custom_developer_id']);
+		if( isset($_POST['custom_developer_id']) ) {
+			update_post_meta($post_id, 'custom_developer_id', $_POST['custom_developer_id']);
 		}
-        if( isset($_POST['_second_post_thumbnail']) ) {
-	        //update_post_meta($post_id, '_second_post_thumbnail', $_POST['_second_post_thumbnail']);
+        if( isset($_POST['second_post_thumbnail']) ) {
+	        //update_post_meta($post_id, 'second_post_thumbnail', $_POST['second_post_thumbnail']);
         }
 
 		// these values will only be updated if the current user is a Developer
@@ -431,7 +431,7 @@
     function get_page_by_dev_id( $dev_id ){
         $args = array(
             'posts_per_page'   => 1,
-            'meta_key'         => '_custom_developer_id',
+            'meta_key'         => 'custom_developer_id',
             'meta_value'       => $dev_id,
             'post_type'        => 'page',
         );

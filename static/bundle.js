@@ -9584,8 +9584,9 @@ exports.default = {
             return this.$route.path == this.item.relativePath;
         },
         isParent: function isParent() {
-            // remove last directory from current route
+            // remove trailing slash
             var strippedSlash = this.$route.path.replace(/\/$/g, '');
+            // remove last directory from current route
             var parentRoute = strippedSlash.replace(/\/[^\/]*$/g, '');
             return parentRoute == this.item.relativePath;
         },
