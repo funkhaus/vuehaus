@@ -18,6 +18,9 @@ Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://w
     1. [Example Workflow](#example-workflow)
     1. [Vuepress Events](#vuepress-events)
     1. [Common Tasks](#common-tasks)
+1. [Testing](#testing)
+    1. [Test Configuration](#test-configuration)
+    1. [Alternate Test Files](#alternate-test-files)
 1. [Recommended Reading](#recommended-reading)
 
 
@@ -307,6 +310,51 @@ Both events are fired after the `$root` element saves updated window dimensions/
     ```
 
     You must include either an `object` or a `src` parameter on a `responsive-image` element; all other values are optional.
+
+## Testing
+Vuepress comes with some commands to simplify testing your site.
+
+1. `npm i --only=dev` - Installs dev dependencies like [Puppeteer](https://github.com/GoogleChrome/puppeteer) and [Rimraf](https://www.npmjs.com/package/rimraf)
+1. Navigate to `.testsrc.json` and fill in the desired base URL, then additional steps in the test
+1. `npm run test` - Runs all the steps in the selected test file. Outputs to `tests/output-${ timestamp }/`.
+1. (Optional) `npm run cleanup` - Removes all test output directories.
+
+### Test Configuration
+You can edit the contents of `.testrc.json` to change the `npm run test` configuration.
+
+Features to be implemented appear in
+
+> blockquotes.
+
+* `baseUrl` (string) - Equivalent to WordPress's `get_site_url()`. Base path for all files.
+* `itinerary` (array of objects) - The tests to complete.
+    * `action` (string) - Action to take:
+        * `click` - Clicks on `selector`'s first match and wait for the result to load.
+        * `evaluate` - Checks for the following keys and runs them:
+            * `function`
+            * `expected`
+        * `goto` (string) - Goes to a path (relative to `baseUrl`).
+        * `hover` (string) - Hovers over the element defined by `selector`.
+        * `scroll` - Scrolls to `selector`'s first match or by `number` pixels.
+        * > `startScreencast` - Starts a screencast.
+        * > `stopScreencast` - Stops a screencast.
+    * `expected` (any) - Compare `evaluate`'s output to this value.
+    * `function` (string) - Runs a JS function in the context of the page and logs the result.
+    * `label` (string) - Label for the test. Also acts as the name of a screenshot taken on this step.
+    * `message` (string) - Custom message to output when running the test.
+    * `number` (number) - Number to apply to `action`.
+    * `path` (string) - Relative path to target in `goto`.
+    * `selector` (string) - Target of `action` or `test`.
+    * `waitFor` (string) - Waits for an event to continue. Useful when clicking on a link, for example.
+        * `load` - Waits for next page to load.
+
+### Alternate Test Files
+You can create multiple test files and pick which one to write:
+
+```sh
+node tests --config your-file-name.json
+node tests -c your-file-name.json
+```
 
 ## Recommended Reading
 Not Vuepress-specific reading material, but rather good practices and articles.
