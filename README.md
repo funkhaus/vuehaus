@@ -228,7 +228,7 @@ Once you've set up the routing for a Vuepress site and understand its state func
 
     > Front Page, About, and Our Employees all have child pages, so we'll give them Developer IDs of 'front-page', 'about', and 'employees', respectively, as well as lock them.
 
-1. Create conditions in `add_routes_to_json`:
+1. Create conditions in `functions/router.php`'s `add_routes_to_json` function:
 
     ```
     array(
