@@ -1,3 +1,4 @@
+/* eslint-disable */
 var funkhausAdmin = {
 
     init: function() {
@@ -5,18 +6,18 @@ var funkhausAdmin = {
         funkhausAdmin.autoRefresh();
         //funkhausAdmin.secondFeaturedImageUploader();
     },
-    
+
     navMenuTweaks: function(){
-		
+
 		// Show the URL of menu items when hovering over wp_nav_menu box
-		var url;		
+		var url;
 		jQuery('#nav-menu-meta').on('mouseenter', 'label.menu-item-title', function(){
 				// On mouse in
 				url = jQuery(this).siblings('input.menu-item-url').val();
 				jQuery(this).attr('title', url);
 			}
 		);
-				    
+
     },
 
 	autoRefresh: function(){
@@ -30,7 +31,7 @@ var funkhausAdmin = {
 
 	saveDraft: function(){
 		var $count = 0;
-		
+
 		// Save Draft post after 500ms
 		function loopCount(){
 	    	if ( !jQuery('#save-action input[type="submit"]').is(':disabled') ) {
@@ -44,7 +45,7 @@ var funkhausAdmin = {
 		}
 		loopCount();
 	},
-	
+
 	secondFeaturedImageUploader: function(){
         // Cache vars to stay in scope
         var frame;
@@ -56,9 +57,9 @@ var funkhausAdmin = {
 
         // ADD IMAGE LINK
         $addImgLink.on( 'click', function(e){
-        
+
             e.preventDefault();
-            
+
             // If the media frame already exists, reopen it.
             if ( frame ) {
                 frame.open();
@@ -115,11 +116,11 @@ var funkhausAdmin = {
             // Delete the image id from the hidden input
             $imgIdInput.val('');
 
-        });    	
+        });
 	}
-	
+
 
 };
 jQuery(document).ready(function(){
-	funkhausAdmin.init();	
+	funkhausAdmin.init();
 });

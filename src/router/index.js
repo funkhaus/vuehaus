@@ -26,7 +26,7 @@ Object.keys(jsonData.routes).forEach(path => {
     routeObject.name = routeObject.name || routeObject.component
 
     // get specified component, fallback to default
-    let component = templates(`./default.vue`)
+    let component = templates(`./Default.vue`)
     if ( templates.keys().indexOf(`./${ routeObject.component }.vue`) > -1 ){
         component = templates(`./${ routeObject.component }.vue`)
     }

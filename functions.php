@@ -1,57 +1,8 @@
 <?php
 
-/*
- * Add vue.js router to rest-easy data
- */
-	function add_routes_to_json($jsonData){
-
-        // Get the name of the category base. Default to "categories"
-        $category_base = get_option('category_base');
-
-        // build out router table to be used with Vue
-        $jsonData['routes'] = array(
-
-            // Per-site
-            // '/path'                              => 'VueComponent',
-            // '/path/:var'                         => 'ComponentWithVar'
-            // '/path/*/:var'                       => 'WildcardAndVar'
-            // path_from_guid('your-guid')  		=> 'DefinedByGuid',
-		    // path_from_guid('guid', '/append-me') => 'GuidPathPlusAppendedString'
-
-            // Probably unchanging
-            ''                                      => 'FrontPage',
-            '/' . $category_base                    => 'archive',
-            '/:slug'                                => 'default'
-        );
-
-		return $jsonData;
-	}
-	add_filter('rez_build_all_data', 'add_routes_to_json');
-
-	// Convenience function - get relative path by GUID
-	function path_from_guid($guid, $after = ''){
-		return rez_remove_siteurl(get_page_by_guid($guid)) . $after;
-	}
-
-	// Gets the nth child of a page with a given GUID
-	function get_child_of_guid($guid, $nth_child = 0){
-		$parent = get_page_by_guid($guid);
-
-		$args = array(
-			'posts_per_page'   => 1,
-			'offset'           => $nth_child,
-			'orderby'          => 'menu_order',
-			'order'            => 'ASC',
-			'post_type'        => 'page',
-			'post_parent'      => $parent->ID,
-		);
-		return reset(get_posts($args));
-	}
-
-	// Gets the relative path of the nth child of a page with given GUID
-	function get_child_of_guid_path($guid, $nth_child = 0, $after = ''){
-		return rez_remove_siteurl(get_child_of_guid($guid, $nth_child)) . $after;
-	}
+	include_once get_template_directory() . '/functions/router.php';
+	include_once get_template_directory() . '/functions/rest-easy-filters.php';
+	include_once get_template_directory() . '/functions/vuepress-plugins.php';
 
 /*
  * Setup WordPress
@@ -77,6 +28,7 @@
 		//set_post_thumbnail_size( 600, 400, true ); // Normal post thumbnails
 		//add_image_size( 'banner-thumb', 566, 250, true ); // Small thumbnail size
 	    add_image_size( 'social-preview', 600, 315, true ); // Square thumbnail used by sharethis and facebook
+		add_image_size( 'fullscreen', 1920, 1080, false ); // Fullscreen image size
 
 	    // Turn on menus
 		add_theme_support('menus');
@@ -238,12 +190,12 @@
 	function disabled_rich_editor($allow_rich_editor) {
 		global $post;
 
-		if($post->post_name == 'contact') {
+		if($post->_custom_hide_richedit === 'on') {
 			return false;
 		}
-		return $allow_rich_editor;
+		return true;
 	}
-	//add_filter( 'user_can_richedit', 'disabled_rich_editor');
+	add_filter( 'user_can_richedit', 'disabled_rich_editor');
 
 
 /*
@@ -319,7 +271,7 @@
 		?>
         	<div class="custom-meta">
 				<label for="video-url">Enter the video URL for this page:</label>
-				<input id="video-url" class="short" title="This is needed for all video pages" name="_custom_video_url" type="text" value="<?php echo $post->_custom_video_url; ?>">
+				<input id="video-url" class="short" title="This is needed for all video pages" name="custom_video_url" type="text" value="<?php echo $post->custom_video_url; ?>">
 				<br/>
 
         	</div>
@@ -332,18 +284,20 @@
 
 		?>
 			<div class="custom-meta">
-				<label for="custom-guid">Enter the GUID for this page:</label>
-				<input id="custom-guid" class="short" title="GUID" name="_custom_guid" type="text" value="<?php echo $post->_custom_guid; ?>">
-				<br/><br/>
+				<label for="custom-developer-id">Enter the Developer ID for this page:</label>
+				<input id="custom-developer-id" class="short" title="Developer ID" name="custom_developer_id" type="text" value="<?php echo $post->custom_developer_id; ?>">
+				<br/>
 
-			</div>
-
-			<div class="custom-meta">
 				<label for="custom-lock">Prevent non-dev deletion:</label>
 				<input id="custom-lock" class="short" title="Prevent deletion" name="_custom_lock" type="checkbox" <?php if( $post->_custom_lock ) echo 'checked'; ?>>
 				<br/>
 
+				<label for="custom-richedit">Hide rich editor:</label>
+				<input id="custom-richedit" class="short" title="Hide rich editor" name="_custom_hide_richedit" type="checkbox" <?php if( $post->_custom_hide_richedit === 'on' ) echo 'checked'; ?>>
+				<br/>
+
 			</div>
+
 		<?php
 	}
 
@@ -365,7 +319,7 @@
     function custom_second_featured_image($post){
 
         // Meta key (need to update the save_metabox function below to reflect this too!)
-        $meta_key = '_second_post_thumbnail';
+        $meta_key = 'second_post_thumbnail';
 
         // Get WordPress' media upload URL
         $upload_link = esc_url( get_upload_iframe_src( 'image', $post->ID ) );
@@ -413,7 +367,7 @@
  */
     function get_the_second_post_thumbnail( $post = null, $size = 'post-thumbnail', $attr = '' ) {
         $post = get_post($post);
-        $image = $post->_second_post_thumbnail;
+        $image = $post->second_post_thumbnail;
         $classes = 'attachment-second-post-thumbnail size-full wp-second-post-image';
         if ( $attr == '' ) {
             // Create $attr array if none exists yet
@@ -439,27 +393,31 @@
             return $post_id;
         }
 
-        if( isset($_POST['_custom_video_url']) ) {
-	        update_post_meta($post_id, '_custom_video_url', $_POST['_custom_video_url']);
+        if( isset($_POST['custom_video_url']) ) {
+	        update_post_meta($post_id, 'custom_video_url', $_POST['custom_video_url']);
         }
-		if( isset($_POST['_custom_guid']) ) {
-			update_post_meta($post_id, '_custom_guid', $_POST['_custom_guid']);
+		if( isset($_POST['custom_developer_id']) ) {
+			update_post_meta($post_id, 'custom_developer_id', $_POST['custom_developer_id']);
 		}
-        if( isset($_POST['_second_post_thumbnail']) ) {
-	        //update_post_meta($post_id, '_second_post_thumbnail', $_POST['_second_post_thumbnail']);
+        if( isset($_POST['second_post_thumbnail']) ) {
+	        //update_post_meta($post_id, 'second_post_thumbnail', $_POST['second_post_thumbnail']);
         }
 
 		// these values will only be updated if the current user is a Developer
 		if( !user_is_developer() ) return;
 
 		if( isset($_POST['_custom_lock']) ) {
-			$value = False;
-			if( $_POST['_custom_lock'] == 'on' ){
-				$value = True;
-			}
+			$value = $_POST['_custom_lock'] == 'on' ? 'on' : 0;
 			update_post_meta($post_id, '_custom_lock', $value);
 		} else {
-			update_post_meta($post_id, '_custom_lock', False);
+			update_post_meta($post_id, '_custom_lock', 0);
+		}
+
+		if( isset($_POST['_custom_hide_richedit']) ){
+			$value = $_POST['_custom_hide_richedit'] == 'on' ? 'on' : 0;
+			update_post_meta($post_id, '_custom_hide_richedit', $_POST['_custom_hide_richedit']);
+		} else {
+			update_post_meta($post_id, '_custom_hide_richedit', 0);
 		}
 
     }
@@ -470,13 +428,58 @@
         return in_array( 'developer', $roles );
     }
 
-    // Gets page by a given GUID
-    function get_page_by_guid( $guid ){
+    // Gets page by a given dev ID
+    function get_page_by_dev_id( $dev_id ){
         $args = array(
             'posts_per_page'   => 1,
-            'meta_key'         => '_custom_guid',
-            'meta_value'       => $guid,
+            'meta_key'         => 'custom_developer_id',
+            'meta_value'       => $dev_id,
             'post_type'        => 'page',
         );
         return reset( get_posts($args) );
     }
+
+	// Convenience function - get relative path by dev ID
+	function path_from_dev_id($dev_id, $after = ''){
+		return rez_remove_siteurl(get_page_by_dev_id($dev_id)) . $after;
+	}
+
+	// Gets the nth child of a page with a given Developer ID
+	function get_child_of_dev_id($dev_id, $nth_child = 0){
+		$parent = get_page_by_dev_id($dev_id);
+
+		$args = array(
+			'posts_per_page'   => 1,
+			'offset'           => $nth_child,
+			'orderby'          => 'menu_order',
+			'order'            => 'ASC',
+			'post_type'        => 'page',
+			'post_parent'      => $parent->ID,
+		);
+		return reset(get_posts($args));
+	}
+
+	// Gets the relative path of the nth child of a page with given Developer ID
+	function get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = ''){
+		return rez_remove_siteurl(get_child_of_dev_id($dev_id, $nth_child)) . $after;
+	}
+
+	// Makes sure Developer role can sort Nested Pages automatically
+	function give_developer_ordering_permissions(){
+
+		if( is_plugin_active('wp-nested-pages/nestedpages.php') ){
+
+			$allowed_to_sort = get_option('nestedpages_allowsorting');
+
+			if( !$allowed_to_sort ){
+				$allowed_to_sort = array();
+			}
+
+			if( !in_array('developer', $allowed_to_sort) ){
+				$allowed_to_sort[] = 'developer';
+				update_option('nestedpages_allowsorting', $allowed_to_sort);
+			}
+		}
+
+	}
+	add_action('admin_init', 'give_developer_ordering_permissions', 1);

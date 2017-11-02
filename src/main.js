@@ -6,14 +6,14 @@ import inViewCMP from 'src/components/shared/InView.vue'
 import App from './components/App.vue'
 import Vue from 'vue'
 import cache from 'src/services/cache'
-import modularMenuCMP from 'src/components/shared/ModularMenu.vue'
+import wpMenuCMP from 'src/components/shared/WpMenu.vue'
 import menuItemCMP from 'src/components/shared/MenuItem.vue'
 
 // register global components
 Vue.component('transition-page-fade', transitionPageFadeCMP)
 Vue.component('responsive-image', RspImageCMP)
 Vue.component('in-view', inViewCMP)
-Vue.component('modular-menu', modularMenuCMP)
+Vue.component('wp-menu', wpMenuCMP)
 Vue.component('menu-item', menuItemCMP)
 
 // save initial page cache

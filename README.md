@@ -6,15 +6,17 @@ Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://w
 1. [Reading List](#reading-list)
 1. [Building a Vuepress Site: Back-End](#building-a-vuepress-site-back-end)
     1. [Router and Templates](#router-and-templates)
-    1. [The Developer Role and GUIDs](#the-developer-role-and-guids)
-    1. [Preventing Deletion](#preventing-deletion)
+    1. [The Developer Role and Developer IDs](#the-developer-role-and-developer-ids)
+    1. [Developer Capabilities](#developer-capabilities)
     1. [Advanced Routing](#advanced-routing)
     1. [Utility Functions](#utility-functions)
+    1. [Upgrading Plugins](#upgrading-plugins)
 1. [Vuex and State](#vuex-and-state)
     1. [Mutations](#mutations)
     1. [Actions](#actions)
 1. [Building a Vuepress Site: Front-End](#building-a-vuepress-site-front-end)
     1. [Example Workflow](#example-workflow)
+    1. [Vuepress Events](#vuepress-events)
     1. [Common Tasks](#common-tasks)
 1. [Testing](#testing)
     1. [Test Configuration](#test-configuration)
@@ -27,7 +29,7 @@ Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://w
 1. `git clone https://github.com/funkhaus/vuepress my-theme`
 1. `cd my-theme`
 1. `npm install`
-1. Install and activate [Rest-Easy](https://github.com/funkhaus/Rest-Easy) - direct download link [here](https://github.com/funkhaus/Rest-Easy/archive/master.zip)
+1. Go to the WordPress back-end, activate, the Vuepress theme, and follow the instructions to install [Rest-Easy](https://github.com/funkhaus/Rest-Easy).
 1. `npm run dev`
 
 ## Reading List
@@ -42,7 +44,7 @@ To get the most out of Vuepress, you can continue with:
 1. [Vuex](https://vuex.vuejs.org/en/intro.html)
 
 ## Building a Vuepress Site: Back-End
-Vuepress requires the [Rest-Easy](https://github.com/funkhaus/Rest-Easy) plugin to work correctly, so make sure you have that installed before getting started.
+Vuepress requires the [Rest-Easy](https://github.com/funkhaus/Rest-Easy) plugin to work correctly, so make sure you have that installed before getting started. Vuepress ships with [TGM Plugin Activation](http://tgmpluginactivation.com/) to make Rest-Easy installation simpler.
 
 In Vuepress, you'll be building individual pages with Vue instead of PHP templates. This can take some getting used to, but ultimately allows for all of the flexibility and power of Vue right from the start.
 
@@ -58,8 +60,8 @@ jsonData['routes'] = array(
     '/path'                             => 'VueComponent',
     '/path/:var'                        => 'ComponentWithVar',
     '/path/:optional*/:var'             => 'WildcardAndVar',
-    path_from_guid('your-guid')         => 'DefinedByGuid',
-    path_from_guid('guid', '/append-me') => 'GuidPathPlusAppendedString'
+    path_from_dev_id('dev-id')    => 'DefinedByDeveloperId',
+    path_from_dev_id('dev-id', '/append-me') => 'DevIdPathPlusAppendedString'
 );
 ```
 
@@ -78,22 +80,31 @@ jsonData['routes'] = array(
 
 That'd work just fine as long as the user never needed to change the URL to the About page - but what if they wanted to switch it to `our-team`?
 
-### The Developer Role and GUIDs
-Since URLs can easily change in the WordPress backend, Vuepress includes a new WP role, Developer, that has access to a set of controls that other roles (even Administrator) can't see. One of these controls is for a page's "GUID" - an arbitrary value that can reliably identify a page.
+### The Developer Role and Developer IDs
+Since URLs can easily change in the WordPress backend, Vuepress includes a new WP role, Developer, that has access to a set of controls that other roles (even Administrator) can't see. One of these controls is for a page's "Developer ID" - an arbitrary value that can reliably identify a page.
 
-If we set the About page's GUID to `about`, then rewrite the relevant line in `add_routes_to_json` like the following:
+The Developer ID is accessible via a post object's `custom_developer_id` property - for example, `$post->custom_developer_id`.
+
+If we set the About page's Developer ID to `about`, then rewrite the relevant line in `add_routes_to_json` like the following:
 
 ```php
 ...
-    // path_from_guid is a Vuepress function that retrieves a page's relative path from its GUID
-    path_from_guid('about')                         => 'About'
+    // path_from_dev_id is a Vuepress function that retrieves a page's relative path from its Developer ID
+    path_from_dev_id('about')                         => 'About'
 ...
 ```
 
 This will guarantee that the path to this page will always render the About template, even if the user changes that path later on.
 
-### Preventing deletion
-Any missing page in the `add_routes_to_json` function (for example, if `get_page_by_guid('about')` didn't find any pages) would break the given route; a Developer can lock pages to prevent this type of bug. Check the "Prevent non-dev deletion" box in the Developer Meta screen to prevent other users from placing that page in the Trash accidentally.
+### Developer Capabilities
+
+The Developer role in Vuepress has a few extra capabilities available:
+
+#### Preventing deletion
+Any missing page in the `add_routes_to_json` function (for example, if `get_page_by_dev_id('about')` didn't find any pages) would break the given route; a Developer can lock pages to prevent this type of bug. Check the "Prevent non-dev deletion" box in the Developer Meta screen to prevent other users from placing that page in the Trash accidentally.
+
+#### Hiding the rich editor
+Check the "Hide Rich Editor" box to prevent non-Developer users from using WordPress's rich editor. This can be helpful to maintain stricter controls over the template and class names in a page's content.
 
 ### Advanced Routing
 Take a look at the [path-to-regexp documentation](https://github.com/pillarjs/path-to-regexp) for examples of routing using regex capabilities.
@@ -102,7 +113,7 @@ The routing table in Vuepress automatically converts a string-string key-value p
 
 ```php
 array(
-    path_from_guid('my-guid') => 'MyComponentName'
+    path_from_dev_id('my-developer-id') => 'MyComponentName'
 )
 ```
 
@@ -111,7 +122,7 @@ array(
 ```js
 const router = new VueRouter({
     routes: [
-        { path: '/my-guid', component: 'MyComponentName.vue' }
+        { path: '/my-developer-id', component: 'MyComponentName.vue' }
     ]
 })
 ```
@@ -120,18 +131,18 @@ You can take advantage of the Vue router's more advanced capabilities, like [red
 
 ```php
 array(
-    path_from_guid('your-guid') => array(
+    path_from_dev_id('your-developer-id') => array(
         // Redirect to a path - in this case, to the path of the first child
-        'redirect'		=> get_child_of_guid_path('work')
+        'redirect'		=> get_child_of_dev_id_path('work')
     ),
 
-    path_from_guid('your-guid', '/:medium*')		=> array(
+    path_from_dev_id('your-developer0id', '/:medium*')		=> array(
         // Define a component and a name for the route
         'component'		=> 'WorkGrid',
         'name'			=> 'work-grid'
     ),
 
-    path_from_guid('your-guid') => array(
+    path_from_dev_id('your-developer-id') => array(
         // Redirect to a named route
         'redirect'		=> array(
             'name':     => 'work-grid'
@@ -145,9 +156,12 @@ This isn't the limit of the routing table's capabilities - anything the Vue rout
 ### Utility Functions
 Vuepress defines a few utility functions to make building the routing table easier:
 
-* `get_child_of_guid($guid, $nth_child = 0)` - Get the post object of the nth child (zero-based, default `0`) of a page with the given GUID.
-* `get_child_of_guid_path($guid, $nth_child = 0, $after = '')` - Get the relative path of the nth child of a page with the given GUID. Adds `$after` to the retrieved path.
-* `path_from_guid($guid, $after = '')` - Get the relative path of a page with a given GUID. Adds `$after` to the retrieved path.
+* `get_child_of_dev_id($dev_id, $nth_child = 0)` - Get the post object of the nth child (zero-based, default `0`) of a page with the given Developer ID.
+* `get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = '')` - Get the relative path of the nth child of a page with the given Developer ID. Adds `$after` to the retrieved path.
+* `path_from_dev_id($dev_id, $after = '')` - Get the relative path of a page with a given Developer ID. Adds `$after` to the retrieved path.
+
+### Upgrading Plugins
+If you need to upgrade your version of [Rest-Easy](https://github.com/funkhaus/Rest-Easy), change the `$latest_rest_easy` variable in `functions/vuepress-plugins.php` to match the latest Rest Easy version. You'll be prompted to upgrade the next time you load any page on the WordPress backend.
 
 ## Vuex and State
 Vuepress uses [Vuex](https://vuex.vuejs.org/en/intro.html) to handle a site's state. The default store in `src/store/index.js` is set up like this:
@@ -215,19 +229,19 @@ Once you've set up the routing for a Vuepress site and understand its state func
             * Employee Bio
             * ...
     ```
-1. Figure out which pages are necessary to the structure of the site. Give those pages GUIDs and prevent non-Dev deletion. Example:
+1. Figure out which pages are necessary to the structure of the site. Give those pages Developer IDs and prevent non-Dev deletion. Example:
 
-    > Front Page, About, and Our Employees all have child pages, so we'll give them GUIDs of 'front-page', 'about', and 'employees', respectively, as well as lock them.
+    > Front Page, About, and Our Employees all have child pages, so we'll give them Developer IDs of 'front-page', 'about', and 'employees', respectively, as well as lock them.
 
-1. Create conditions in `add_routes_to_json`:
+1. Create conditions in `functions/router.php`'s `add_routes_to_json` function:
 
     ```
     array(
         ''                                  => 'FrontPage',
-        path_from_guid('about')             => 'About',
-        path_from_guid('employees)          => 'EmployeesGrid',
-        path_from_guid('about', '/:child')  => 'AboutChildGeneric',
-        path_from_guid('employees', '/:employee') => 'EmployeeDetail'
+        path_from_dev_id('about')             => 'About',
+        path_from_dev_id('employees)          => 'EmployeesGrid',
+        path_from_dev_id('about', '/:child')  => 'AboutChildGeneric',
+        path_from_dev_id('employees', '/:employee') => 'EmployeeDetail'
     );
     ```
 
@@ -235,6 +249,22 @@ Once you've set up the routing for a Vuepress site and understand its state func
     > We defined 'FrontPage', 'About', 'EmployeesGrid', 'AboutChildGeneric', and 'EmployeeDetail' above, so we'll be creating each of those as a .vue file in `src/components/templates/`.
 
 1. `npm run dev` and start building in Vue!
+
+### Vuepress Events
+Throttled resize and scroll events are available to any child of the App component:
+
+```js
+this.$root.$on('throttled.resize', () => {
+    // your throttled resize event here...
+    // default: 1 per 10ms
+})
+this.$root.$on('throttled.scroll', () => {
+    // your throttled scroll event here...
+    // default: 1 per 10ms
+})
+```
+
+Both events are fired after the `$root` element saves updated window dimensions/scroll positions for resize/scroll events.
 
 ### Common Tasks
 * __Loading Fonts:__
@@ -339,6 +369,9 @@ __Vuepress__
 
 http://funkhaus.us
 
-Version: 1.0
+Version: 1.1.2
 
+* 1.1.2 - Added [TGM Plugin Activation](http://tgmpluginactivation.com/) to require plugins. Switching to x.x.x version numbering.
+* 1.11 - Switched `_custom_developer_id` to `custom_developer_id`
+* 1.1 - Switched `_custom_guid` to `_custom_developer_id`
 * 1.0 - Initial release
