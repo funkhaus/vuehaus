@@ -41,11 +41,9 @@ const puppeteer = require('puppeteer');
         fs.mkdirSync(dir)
 
         const width = dimension[0]
-        const height = dimension[1]
+        const height = dimension[1] || 1080
 
-        if( height !== 0 ){
-            await page.setViewport({ width, height })
-        }
+        await page.setViewport({ width, height })
 
         let index = 1
 
@@ -56,14 +54,18 @@ const puppeteer = require('puppeteer');
         for( let path of screenshots ){
             await page.goto(baseUrl + '/' + path)
 
-            if( height === 0 ){
-                let tempHeight = await page.evaluate(() => document.body.scrollHeight)
-                console.log(tempHeight)
-                await page.setViewport({ width, height: tempHeight })
+            // Scroll down the page and take screenshots along the way
+            let currentScroll = 0
+            let maxScroll = await page.evaluate(() => document.body.scrollHeight)
+            while( currentScroll < maxScroll ) {
+                await page.screenshot({ path: dir + `/${ i++ } - ${ path.replace(/\//g, '-') }.png` })
+                await page.evaluate(() => {
+                    window.scrollBy(0, window.innerHeight)
+                })
+                currentScroll += height
             }
 
-            await page.screenshot({ path: dir + `/${ i++ } - ${ path.replace(/\//g, '-') }.png` })
-            console.log(`Took screenshot of '/${ path }'...`)
+            console.log(`Took screenshot(s) of '/${ path }'...`)
         }
 
         // Run itinerary
