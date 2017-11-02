@@ -80,6 +80,8 @@ That'd work just fine as long as the user never needed to change the URL to the 
 ### The Developer Role and Developer IDs
 Since URLs can easily change in the WordPress backend, Vuepress includes a new WP role, Developer, that has access to a set of controls that other roles (even Administrator) can't see. One of these controls is for a page's "Developer ID" - an arbitrary value that can reliably identify a page.
 
+The Developer ID is accessible via a post object's `custom_developer_id` property - for example, `$post->custom_developer_id`.
+
 If we set the About page's Developer ID to `about`, then rewrite the relevant line in `add_routes_to_json` like the following:
 
 ```php

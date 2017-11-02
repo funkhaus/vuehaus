@@ -40,3 +40,11 @@
         return $related;
     }
     add_filter('rez_gather_related', 'add_page_siblings');
+
+    // Include Developer ID
+    function add_developer_id($input){
+        $target = get_post($input['id']);
+        $input['developerId'] = $target->custom_developer_id;
+        return $input;
+    }
+    add_filter('rez_serialize_post', 'add_developer_id');
