@@ -53,7 +53,7 @@ const config = {
                 loader: 'svg-inline-loader?removeSVGTagAttrs=false'
             },
             {
-                test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+                test: /\.(png|woff|woff2|eot|ttf)$/,
                 loader: 'url-loader',
                 options: {
                     limit: 10000,
