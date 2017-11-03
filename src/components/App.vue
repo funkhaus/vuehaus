@@ -1,5 +1,6 @@
 <template>
     <div :class="classes">
+        <wp-menu name="Main Menu"/>
 
         <router-view></router-view>
 

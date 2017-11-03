@@ -1,6 +1,15 @@
 <template>
 
-    <!-- Front page -->
-    <wp-menu name="Main Menu"/>
+    <main class="content archive"></main>
 
 </template>
+
+<script>
+    export default {
+
+    }
+</script>
+
+<style>
+
+</style>
