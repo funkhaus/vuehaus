@@ -1,6 +1,9 @@
 <template>
     <div :class="classes">
-        <wp-menu name="Main Menu"/>
+        <header>
+            <wp-menu name="Main Menu"/>
+            <svg-image src="logo.svg"/>
+        </header>
 
         <router-view></router-view>
 
