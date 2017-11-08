@@ -290,7 +290,7 @@ Both events are fired after the `$root` element saves updated window dimensions/
 
     ```html
     <!-- Build a responsive image component from the featured image of the first post in The Loop -->
-    <responsive-image :object="$store.state.loop[0].related.featured_attachment"/>
+    <responsive-image :object="$store.state.loop[0].featured_attachment"/>
     ```
 
     You can also include any of the following attributes:
