@@ -80,7 +80,7 @@ Vuepress includes the Google/Typekit [Web Font Loader](https://github.com/typeki
     ```
 1. In the location where you want to use the SVG:
     ```html
-    <div class="svg-wrap" v-html="exampleSvg"></div>
+    <div v-html="exampleSvg"></div>
     ```
     That's it!
 
