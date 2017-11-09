@@ -1,8 +1,15 @@
 ## What
 Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://wordpress.org/) templates with [Vue.js](https://vuejs.org/).
 
+For a quick start, look at the [Example Workflow](#example-workflow). For a more in-depth introduction, head to the [Reading List](#reading-list) and continue from there.
+
 ## Table of Contents
 1. [Install](#install)
+1. [Common Tasks](#common-tasks)
+    1. [Getting Information from The Loop](#getting-information-from-the-loop)
+    1. [Loading Fonts](#loading-fonts)
+    1. [Using SVGs](#using-svgs)
+    1. [Images](#images)
 1. [Reading List](#reading-list)
 1. [Building a Vuepress Site: Back-End](#building-a-vuepress-site-back-end)
     1. [Router and Templates](#router-and-templates)
@@ -17,7 +24,6 @@ Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://w
 1. [Building a Vuepress Site: Front-End](#building-a-vuepress-site-front-end)
     1. [Example Workflow](#example-workflow)
     1. [Vuepress Events](#vuepress-events)
-    1. [Common Tasks](#common-tasks)
 1. [Recommended Reading](#recommended-reading)
 
 
@@ -28,6 +34,78 @@ Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://w
 1. `npm install`
 1. Go to the WordPress back-end, activate, the Vuepress theme, and follow the instructions to install [Rest-Easy](https://github.com/funkhaus/Rest-Easy).
 1. `npm run dev`
+
+## Common Tasks
+
+### Getting Information from The Loop
+Paste these anywhere in your `<script>` tags to use them in your own templates. This assumes you've included
+
+ ```js
+ import _get from 'lodash/get'
+ ```
+
+ All results from The Loop:
+ ```js
+ _get( this.$store, 'state.loop' )
+ ```
+
+The first result from The Loop:
+
+```js
+_get( this.$store, 'state.loop[0]' )
+```
+
+The featured image from the first result in The Loop:
+
+```js
+_get( this.$store, 'state.loop[0].featured_attachment' )
+```
+
+### Loading Fonts
+Vuepress includes the Google/Typekit [Web Font Loader](https://github.com/typekit/webfontloader) in `index.php`. Follow the instructions on that repo to load fonts from Google, Typekit, or your own uploads.
+
+### Using SVGs
+1. Place the .svg file in `src/images/`.
+1. In the `script` section of the template where you want to use the SVG, add:
+    ```js
+    import exampleSvg from 'src/images/example.svg'
+
+    export default {
+        data(){
+            return {
+                exampleSvg
+            }
+        }
+    }
+    ```
+1. In the location where you want to use the SVG:
+    ```html
+    <div class="svg-wrap" v-html="exampleSvg"></div>
+    ```
+    That's it!
+
+### Images
+Vuepress comes with a component called `responsive-image` that provides some built-in image handling, including fading in images as they load. You can pass an image object from Rest-Easy's attachment serializer and it will build itself automatically:
+
+```html
+<!-- Build a responsive image component from the featured image of the first post in The Loop -->
+<responsive-image :object="$store.state.loop[0].featured_attachment"/>
+```
+
+You can also include any of the following attributes:
+
+```html
+<responsive-image
+    src="source-url"
+    height="height in px"
+    width="width in px"
+    aspect="aspect ratio, as percent (ie '56' for 56%)"
+    size="WordPress-defined size slug"
+    color="background color of pre-loaded space"
+    />
+```
+
+You must include either an `object` or a `src` parameter on a `responsive-image` element; all other values are optional.
 
 ## Reading List
 To get started with Vuepress, you should already know or familiarize yourself with:
@@ -230,11 +308,11 @@ Once you've set up the routing for a Vuepress site and understand its state func
 
     > Front Page, About, and Our Employees all have child pages, so we'll give them Developer IDs of 'front-page', 'about', and 'employees', respectively, as well as lock them.
 
-1. Create conditions in `functions/router.php`'s `add_routes_to_json` function:
+1. Create routing conditions in `functions/router.php`'s `add_routes_to_json` function:
 
     ```
     array(
-        ''                                  => 'FrontPage',
+        ''                                    => 'FrontPage',
         path_from_dev_id('about')             => 'About',
         path_from_dev_id('employees)          => 'EmployeesGrid',
         path_from_dev_id('about', '/:child')  => 'AboutChildGeneric',
@@ -262,51 +340,6 @@ this.$root.$on('throttled.scroll', () => {
 ```
 
 Both events are fired after the `$root` element saves updated window dimensions/scroll positions for resize/scroll events.
-
-### Common Tasks
-* __Loading Fonts:__
-    Vuepress includes the Google/Typekit [Web Font Loader](https://github.com/typekit/webfontloader) in `index.php`. Follow the instructions on that repo to load fonts from Google, Typekit, or your own uploads.
-* __Using SVGs:__
-    In the `script` section of your template:
-
-    ```js
-    import svg from 'src/images/example.svg'
-
-    export default {
-        data(){
-            exampleSvg: svg
-        }
-    }
-    ```
-
-    And in the `template` section:
-
-    ```html
-    <div class="svg-wrap" v-html="exampleSvg"></div>
-    ```
-
-* __Images:__
-    Vuepress comes with a component called `responsive-image` that provides some built-in image handling, including fading in images as they load. You can pass an image object from Rest-Easy's attachment serializer and it will build itself automatically:
-
-    ```html
-    <!-- Build a responsive image component from the featured image of the first post in The Loop -->
-    <responsive-image :object="$store.state.loop[0].featured_attachment"/>
-    ```
-
-    You can also include any of the following attributes:
-
-    ```html
-    <responsive-image
-        src="source-url"
-        height="height in px"
-        width="width in px"
-        aspect="aspect ratio, as percent (ie '56' for 56%)"
-        size="WordPress-defined size slug"
-        color="background color of pre-loaded space"
-        />
-    ```
-
-    You must include either an `object` or a `src` parameter on a `responsive-image` element; all other values are optional.
 
 ## Recommended Reading
 Not Vuepress-specific reading material, but rather good practices and articles.
