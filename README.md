@@ -61,6 +61,12 @@ The featured image from the first result in The Loop:
 _get( this.$store, 'state.loop[0].featured_attachment' )
 ```
 
+The children of the first result of The Loop:
+
+```js
+_get(this.$store, 'state.loop[0].related.children')
+```
+
 ### Loading Fonts
 Vuepress includes the Google/Typekit [Web Font Loader](https://github.com/typekit/webfontloader) in `index.php`. Follow the instructions on that repo to load fonts from Google, Typekit, or your own uploads.
 
