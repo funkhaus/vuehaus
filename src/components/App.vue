@@ -59,3 +59,10 @@
         }
     }
 </script>
+
+<style lang="scss">
+
+    // import base styles
+    @import 'src/styles/base';
+
+</style>

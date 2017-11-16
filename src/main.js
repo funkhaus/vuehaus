@@ -1,6 +1,4 @@
 /* global jsonData */
-import './main.css'
-
 import App from './components/App.vue'
 import Vue from 'vue'
 import cache from 'src/services/cache'
