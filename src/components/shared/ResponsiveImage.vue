@@ -31,6 +31,10 @@
             color: {
                 type: String,
                 default: 'transparent'
+            },
+            'respect-max': {
+                type: Boolean,
+                default: false
             }
         },
         data () {
@@ -86,7 +90,9 @@
             },
             outerStyles () {
                 return {
-                    'background-color': _get(this.object, 'primary_color', false) || this.color
+                    'background-color': _get(this.object, 'primary_color', false) || this.color,
+                    'max-width': this.respectMax ? `${ this.parsedWidth }px` : 'initial',
+                    'max-height': this.respectMax ? `${ this.parsedHeight }px` : 'initial'
                 }
             },
             sizerStyles () {
