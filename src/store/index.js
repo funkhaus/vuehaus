@@ -13,7 +13,8 @@ export default new Vuex.Store( {
         loop: jsonData.loop,
         transitioning_in: false,
         transitioning_out: false,
-        loaded: true
+        loaded: true,
+        menuOpened: false
     },
     mutations: {
         'REPLACE_QUERYDATA': ( state, data ) => {
@@ -32,7 +33,14 @@ export default new Vuex.Store( {
         },
         'SET_LOADED': (state, loaded) => {
             state.loaded = loaded || false
+        },
+        'OPEN_MENU': state => {
+            state.menuOpened = true
+        },
+        'CLOSE_MENU': state => {
+            state.menuOpened = false
         }
+
     },
     actions: {
         'LOAD_AND_REPLACE_QUERYDATA': async ( context, payload ) => {

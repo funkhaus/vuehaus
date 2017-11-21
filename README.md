@@ -276,6 +276,8 @@ Default Vuepress mutations:
 * `'SET_TRANSITIONING_IN, true | false'` - Sets `state.transitioning_in` to the given value.
 * `'SET_TRANSITIONING_OUT, true | false'` - Sets `state.transitioning_out` to the given value.
 * `'SET_LOADED', true | false` - Sets `state.loaded` to the given value.
+* `'OPEN_MENU'` - Sets `state.menuOpened` to `true`.
+* `'CLOSE_MENU'` - Sets `state.menuOpened` to `false`.
 
 ### Actions
 Where mutations are synchronous, actions are asynchronous:
