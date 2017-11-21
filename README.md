@@ -132,7 +132,7 @@ In Vuepress, you'll be building individual pages with Vue instead of PHP templat
 Any page on a Vuepress site will use the `index.php` template, which contains some automatically generated header tags and a single div called `#app`. This is where the main Vue component lives, with its content controlled by the [Vue router](https://router.vuejs.org/en/).
 
 ### Router and Templates
-A Vuepress site's routing table is built at runtime by `functions.php`'s [`add_routes_to_json`](https://github.com/funkhaus/vuepress/blob/master/functions.php#L6-L27) function. The table uses the Vue router, which in turn uses [path-to-regexp](https://github.com/pillarjs/path-to-regexp) to parse paths.
+A Vuepress site's routing table is built at runtime by `functions/router.php`'s `add_routes_to_json`] function. The table uses the Vue router, which in turn uses [path-to-regexp](https://github.com/pillarjs/path-to-regexp) to parse paths.
 
 ```php
 jsonData['routes'] = array(

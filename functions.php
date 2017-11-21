@@ -1,8 +1,7 @@
 <?php
 
-	include_once get_template_directory() . '/functions/router.php';
-	include_once get_template_directory() . '/functions/rest-easy-filters.php';
-	include_once get_template_directory() . '/functions/vuepress-plugins.php';
+	// Import Vuepress-specific functions
+	include_once get_template_directory() . '/functions/vuepress.php';
 
 /*
  * Setup WordPress
@@ -48,30 +47,9 @@
     }
     add_action('wp_enqueue_scripts', 'custom_scripts', 10);
 
-	// Add Developer role
-    function custom_theme_switch(){
-        global $wp_roles;
-        if ( ! isset( $wp_roles ) ){
-            $wp_roles = new WP_Roles();
-        }
-
-        $admin_role = $wp_roles->get_role('administrator');
-
-        add_role(
-            'developer',
-            __('Developer'),
-            $admin_role->capabilities
-        );
-
-        // set initial user to Developer
-        $user = new WP_User(1);
-        $user->set_role('developer');
-	}
-	add_action('after_switch_theme', 'custom_theme_switch');
-
 
 /*
- * Generate timestamp based on latest edits.
+ * Convenience function to generate timestamp based on latest edits. Used to automate cache updating
  */
     function custom_latest_timestamp() {
 
@@ -138,40 +116,6 @@
 	add_filter('the_excerpt_rss', 'rss_post_thumbnail');
 
 /*
- * Custom conditional function. Used to get the parent and all it's child.
- */
-    function is_tree($tree_id, $target_post = null) {
-
-        // get full post object
-        $target_post = get_post($target_post);
-
-        // get all post ancestors
-        $ancestors = get_ancestors($target_post->ID, $target_post->post_type);
-
-        // if ID is target post OR in target post tree, return true
-        return ( ($target_post->ID == $tree_id) or in_array($tree_id, $ancestors) );
-    }
-
-/*
- * Custom conditional function. Used to test if current page has children.
- */
-    function has_children($target_post = null) {
-
-        // get full post object
-        $target_post = get_post($target_post);
-
-        // Check if the post/page has a child
-        $args = array(
-        	'post_parent' 		=> $target_post->ID,
-        	'post_type'			=> $target_post->post_type,
-        	'posts_per_page'	=> 1
-        );
-        $children = get_posts($args);
-
-        return !empty($children);
-    }
-
-/*
  * Allow subscriber to see Private posts/pages
  */
 	function add_theme_caps() {
@@ -183,19 +127,6 @@
 		$role->add_cap('read_private_pages');
 	}
 	//add_action( 'switch_theme', 'add_theme_caps');
-
-/*
- * Disable Rich Editor on certain pages
- */
-	function disabled_rich_editor($allow_rich_editor) {
-		global $post;
-
-		if($post->_custom_hide_richedit === 'on') {
-			return false;
-		}
-		return true;
-	}
-	add_filter( 'user_can_richedit', 'disabled_rich_editor');
 
 
 /*
@@ -215,41 +146,6 @@
     }
     add_filter('upload_mimes', 'add_mime_types');
 
-
-/*
- * Enqueue Custom Gallery
- */
-	function custom_gallery($atts) {
-		if ( !is_admin() ) {
-			include('parts/gallery.php');
-		}
-		return $output;
-	}
-	//add_shortcode('gallery', 'custom_gallery');
-
-/*
- * Return the URL to a given attachment, while respecting size
- */
-    function get_custom_attachment_url($attachment_id = false, $size = 'post-thumbnail') {
-        if( !$attachment_id ) {
-            global $post;
-            $attachment_id = get_post_thumbnail_id($post->ID);
-        }
-        $attachment_data = wp_get_attachment_image_src( $attachment_id, $size);
-        if( isset($attachment_data[0]) ) {
-            return $attachment_data[0];
-        }
-        return '';
-    }
-
-/*
- * Return the URL to a given post's featured image, respecting size
- */
-    function get_featured_image_url($target_post = null, $size = 'post-thumbnail') {
-        $attachment_id = get_post_thumbnail_id($target_post);
-        return get_custom_attachment_url($attachment_id, $size);
-    }
-
 /*
  * Add custom metabox to the new/edit page
  */
@@ -257,11 +153,6 @@
 
 		// add_meta_box('custom_media_meta', 'Media Meta', 'custom_media_meta', 'page', 'normal', 'low');
 		// add_meta_box('custom_second_featured_image', 'Second Featured Image', 'custom_second_featured_image', 'page', 'side', 'low');
-
-		// only render the following for users with Developer role
-		if( !user_is_developer() ) return;
-
-		add_meta_box('custom_dev_meta', 'Developer Meta', 'custom_dev_meta', 'page', 'normal', 'low');
     }
 	add_action('add_meta_boxes', 'custom_add_metaboxes', 10, 2);
 
@@ -278,41 +169,6 @@
 
 		<?php
 	}
-
-	// Build dev meta box (only for users with Developer role)
-	function custom_dev_meta($post) {
-
-		?>
-			<div class="custom-meta">
-				<label for="custom-developer-id">Enter the Developer ID for this page:</label>
-				<input id="custom-developer-id" class="short" title="Developer ID" name="custom_developer_id" type="text" value="<?php echo $post->custom_developer_id; ?>">
-				<br/>
-
-				<label for="custom-lock">Prevent non-dev deletion:</label>
-				<input id="custom-lock" class="short" title="Prevent deletion" name="_custom_lock" type="checkbox" <?php if( $post->_custom_lock ) echo 'checked'; ?>>
-				<br/>
-
-				<label for="custom-richedit">Hide rich editor:</label>
-				<input id="custom-richedit" class="short" title="Hide rich editor" name="_custom_hide_richedit" type="checkbox" <?php if( $post->_custom_hide_richedit === 'on' ) echo 'checked'; ?>>
-				<br/>
-
-			</div>
-
-		<?php
-	}
-
-	// Prevent non-dev from deleting locked pages/posts
-	function check_custom_post_lock( $target_post ){
-		$target_post = get_post($target_post);
-
-		if( !user_is_developer() and $target_post->_custom_lock ){
-			echo 'Only a user with the Developer role can delete this page.<br/><br/>';
-			echo '<a href="javascript:history.back()">Back</a>';
-			exit;
-		}
-	}
-	add_action('wp_trash_post', 'check_custom_post_lock', 10, 1);
-	add_action('before_delete_post', 'check_custom_post_lock', 10, 1);
 
     // Second featured image uploader (requires changes to admin.js too).
     // @see: https://codex.wordpress.org/Javascript_Reference/wp.media
@@ -362,29 +218,9 @@
         <?php
     }
 
-/*
- * Get second post thumbnail (mimic functionality of get_the_post_thumbnail)
- */
-    function get_the_second_post_thumbnail( $post = null, $size = 'post-thumbnail', $attr = '' ) {
-        $post = get_post($post);
-        $image = $post->second_post_thumbnail;
-        $classes = 'attachment-second-post-thumbnail size-full wp-second-post-image';
-        if ( $attr == '' ) {
-            // Create $attr array if none exists yet
-            $attr = array('class' => $classes);
-        } else if ( !empty($attr['class']) ){
-            // Append to $attr['class'] if it exists
-            $attr['class'] .= ' ' . $classes;
-        } else if ( gettype($attr) == 'array' ) {
-            // Append to $attr array if ['class'] doesn't exist yet
-            $attr['class'] = $classes;
-        }
-        return wp_get_attachment_image( $image, $size, false, $attr );
-    }
-
 
 /*
- * Save the metabox vaule
+ * Save the metabox values
  */
     function custom_save_metabox($post_id){
 
@@ -396,90 +232,9 @@
         if( isset($_POST['custom_video_url']) ) {
 	        update_post_meta($post_id, 'custom_video_url', $_POST['custom_video_url']);
         }
-		if( isset($_POST['custom_developer_id']) ) {
-			update_post_meta($post_id, 'custom_developer_id', $_POST['custom_developer_id']);
-		}
         if( isset($_POST['second_post_thumbnail']) ) {
 	        //update_post_meta($post_id, 'second_post_thumbnail', $_POST['second_post_thumbnail']);
         }
 
-		// these values will only be updated if the current user is a Developer
-		if( !user_is_developer() ) return;
-
-		if( isset($_POST['_custom_lock']) ) {
-			$value = $_POST['_custom_lock'] == 'on' ? 'on' : 0;
-			update_post_meta($post_id, '_custom_lock', $value);
-		} else {
-			update_post_meta($post_id, '_custom_lock', 0);
-		}
-
-		if( isset($_POST['_custom_hide_richedit']) ){
-			$value = $_POST['_custom_hide_richedit'] == 'on' ? 'on' : 0;
-			update_post_meta($post_id, '_custom_hide_richedit', $_POST['_custom_hide_richedit']);
-		} else {
-			update_post_meta($post_id, '_custom_hide_richedit', 0);
-		}
-
     }
     add_action('save_post', 'custom_save_metabox');
-
-    function user_is_developer(){
-        $roles = wp_get_current_user()->roles;
-        return in_array( 'developer', $roles );
-    }
-
-    // Gets page by a given dev ID
-    function get_page_by_dev_id( $dev_id ){
-        $args = array(
-            'posts_per_page'   => 1,
-            'meta_key'         => 'custom_developer_id',
-            'meta_value'       => $dev_id,
-            'post_type'        => 'page',
-        );
-        return reset( get_posts($args) );
-    }
-
-	// Convenience function - get relative path by dev ID
-	function path_from_dev_id($dev_id, $after = ''){
-		return rez_remove_siteurl(get_page_by_dev_id($dev_id)) . $after;
-	}
-
-	// Gets the nth child of a page with a given Developer ID
-	function get_child_of_dev_id($dev_id, $nth_child = 0){
-		$parent = get_page_by_dev_id($dev_id);
-
-		$args = array(
-			'posts_per_page'   => 1,
-			'offset'           => $nth_child,
-			'orderby'          => 'menu_order',
-			'order'            => 'ASC',
-			'post_type'        => 'page',
-			'post_parent'      => $parent->ID,
-		);
-		return reset(get_posts($args));
-	}
-
-	// Gets the relative path of the nth child of a page with given Developer ID
-	function get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = ''){
-		return rez_remove_siteurl(get_child_of_dev_id($dev_id, $nth_child)) . $after;
-	}
-
-	// Makes sure Developer role can sort Nested Pages automatically
-	function give_developer_ordering_permissions(){
-
-		if( is_plugin_active('wp-nested-pages/nestedpages.php') ){
-
-			$allowed_to_sort = get_option('nestedpages_allowsorting');
-
-			if( !$allowed_to_sort ){
-				$allowed_to_sort = array();
-			}
-
-			if( !in_array('developer', $allowed_to_sort) ){
-				$allowed_to_sort[] = 'developer';
-				update_option('nestedpages_allowsorting', $allowed_to_sort);
-			}
-		}
-
-	}
-	add_action('admin_init', 'give_developer_ordering_permissions', 1);
