@@ -32,7 +32,11 @@ const config = {
                 loader: 'vue-loader',
                 options: {
                     loaders: {
-                        'scss': 'vue-style-loader!css-loader!sass-loader'
+                        'scss': isProd ? ExtractTextPlugin.extract({
+                            use: 'css-loader?minimize!sass-loader?minimize',
+                            fallback: 'vue-style-loader'
+                        })
+                        : 'vue-style-loader!css-loader!sass-loader'
                     },
                     extractCSS: isProd,
                     preserveWhitespace: false,
