@@ -4,8 +4,9 @@
   "description": "Build smooth, responsive Wordpress sites with Vue.",
   "main": "index.js",
   "scripts": {
-    "dev": "rm static/bundle.css; NODE_PATH=. webpack --progress --colors --watch",
-    "build": "NODE_PATH=. NODE_ENV=production webpack --progress --hide-modules"
+    "dev": "npm run clean && NODE_PATH=. webpack --progress --colors --watch",
+    "build": "npm run clean && NODE_PATH=. NODE_ENV=production webpack --progress --hide-modules",
+    "clean": "rm static/bundle.* || true"
   },
   "author": "Funkhaus",
   "license": "ISC",
