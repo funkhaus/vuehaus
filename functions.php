@@ -42,11 +42,20 @@
  * Enqueue Custom Scripts
  */
     function custom_scripts() {
-		wp_register_script('bundle', get_template_directory_uri() . '/static/bundle.js', array(), custom_latest_timestamp());
-		wp_enqueue_script('bundle', null, array(), false, true);
+		$has_bundle = file_exists(get_template_directory() . '/static/bundle.js');
+		$has_dev_bundle = file_exists(get_template_directory() . '/static/bundle.dev.js');
+
+		// if WP_DEBUG is on, prefer dev bundle but fallback to prod
+		// do the opposite when WP_DEBUG is off.
+		$bundle_path = $has_bundle ? '/static/bundle.js' : '/static/bundle.dev.js';
+		if ( WP_DEBUG ){
+			$bundle_path = $has_dev_bundle ? '/static/bundle.dev.js' : '/static/bundle.js';
+		}
+
+		// enqueue proper bundle
+		wp_enqueue_script('bundle', get_template_directory_uri() . $bundle_path, array(), custom_latest_timestamp(), true);
     }
     add_action('wp_enqueue_scripts', 'custom_scripts', 10);
-
 
 /*
  * Convenience function to generate timestamp based on latest edits. Used to automate cache updating

@@ -8,6 +8,9 @@ const isProd = process.env.NODE_ENV === 'production'
 const devPlugins = [
     new webpack.EnvironmentPlugin({
         NODE_ENV: 'development'
+    }),
+    new ExtractTextPlugin({
+        filename: 'bundle.css'
     })
 ]
 const prodPlugins = devPlugins.concat([
@@ -23,7 +26,7 @@ const config = {
     entry: ['whatwg-fetch', './src/main'],
     output: {
         path: resolve( 'static' ),
-        filename: 'bundle.js'
+        filename: isProd ? 'bundle.js' : 'bundle.dev.js'
     },
     module: {
         rules: [
@@ -32,14 +35,13 @@ const config = {
                 loader: 'vue-loader',
                 options: {
                     loaders: {
-                        'scss': isProd ? ExtractTextPlugin.extract({
-                            use: 'css-loader?minimize!sass-loader?minimize',
+                        'scss': ExtractTextPlugin.extract({
+                            use: isProd ? 'css-loader?minimize!sass-loader?minimize' : 'css-loader!sass-loader',
                             fallback: 'vue-style-loader'
                         })
-                        : 'vue-style-loader!css-loader!sass-loader'
                     },
-                    extractCSS: isProd,
-                    preserveWhitespace: false,
+                    extractCSS: true,
+                    preserveWhitespace: !isProd,
                     postcss: [
                         require('autoprefixer')({
                             browsers: ['last 5 versions']
@@ -66,12 +68,10 @@ const config = {
             },
             {
                 test: /\.css$/,
-                use: isProd
-                    ? ExtractTextPlugin.extract({
-                        use: 'css-loader?minimize',
-                        fallback: 'vue-style-loader'
-                    })
-                    : ['vue-style-loader', 'css-loader']
+                use: ExtractTextPlugin.extract({
+                    use: isProd ? 'css-loader?minimize' : 'css-loader',
+                    fallback: 'vue-style-loader'
+                })
             }
         ]
     },
@@ -83,7 +83,7 @@ const config = {
         ]
     },
     performance: {
-        maxEntrypointSize: 300000,
+        maxEntrypointSize: 700000,
         hints: isProd ? 'warning' : false
     },
     plugins: isProd ? prodPlugins : devPlugins
