@@ -52,19 +52,19 @@ Paste these anywhere in your `<script>` tags to use them in your own templates. 
 The first result from The Loop:
 
 ```js
-this.$store.getters.firstLoopItem
+this.$store.getters.post
 ```
 
 The featured image from the first result in The Loop:
 
 ```js
-_get( this.$store.getters.firstLoopItem, 'featured_attachment' )
+_get( this.$store.getters.post, 'featured_attachment' )
 ```
 
 The children of the first result of The Loop:
 
 ```js
-_get(this.$store.getters.firstLoopItem, 'related.children')
+_get(this.$store.getters.post, 'related.children')
 ```
 
 ### Loading Fonts

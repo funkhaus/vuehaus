@@ -8526,7 +8526,8 @@ exports.default = new _vuex2.default.Store({
         loading: function loading(state) {
             return !state.loaded;
         },
-        firstLoopItem: function firstLoopItem(state) {
+        post: function post(state) {
+            // This is a "post" in the sense of a WordPress post - the first result of the Loop
             return (0, _get3.default)(state.loop, '[0]', {});
         }
     }

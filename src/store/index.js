@@ -65,7 +65,8 @@ export default new Vuex.Store( {
         loading: state => {
             return !state.loaded
         },
-        firstLoopItem: state => {
+        post: state => {
+            // This is a "post" in the sense of a WordPress post - the first result of the Loop
             return _get(state.loop, '[0]', {})
         }
     }
