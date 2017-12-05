@@ -15,7 +15,7 @@ import cache from 'src/utils/cache'
 // Vue.component('responsive-image', RspImageCMP)
 // Vue.component('in-view', inViewCMP)
 Vue.component('wp-menu', require('fh-components/wp-menu').default)
-Vue.component('wp-menu-item', require('fh-components/wp-menu-item').default)
+Vue.component('menu-item', require('fh-components/wp-menu-item').default)
 Vue.component('svg-image', require('src/components/SvgImage.vue').default)
 
 // save initial page cache - dumped onto page as `jsonData` by Rest-Easy
