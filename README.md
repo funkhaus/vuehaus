@@ -68,7 +68,7 @@ _get(this.$store, 'state.loop[0].related.children')
 ```
 
 ### Loading Fonts
-Vuepress includes the Google/Typekit [Web Font Loader](https://github.com/typekit/webfontloader) in `index.php`. Follow the instructions on that repo to load fonts from Google, Typekit, or your own uploads.
+Vuepress includes the Google/Typekit [Web Font Loader](https://github.com/typekit/webfontloader) in `parts/font-loader.php`. Follow the instructions on that repo to load fonts from Google, Typekit, or your own uploads.
 
 ### Using SVGs
 1. Place the .svg file in `src/images/`.
