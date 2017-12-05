@@ -2,6 +2,7 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 import cache from 'src/services/cache'
+import _get from 'lodash/get'
 
 // add vuex
 Vue.use( Vuex )
@@ -63,6 +64,9 @@ export default new Vuex.Store( {
     getters: {
         loading: state => {
             return !state.loaded
+        },
+        firstLoopItem: state => {
+            return _get(state.loop, '[0]', {})
         }
     }
 })
