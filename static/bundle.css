@@ -1,9 +1,1 @@
-
-body {
-  background-color: #ffffff;
-  margin: 0;
-  -webkit-font-smoothing: antialiased !important;
-  text-rendering: optimizeLegibility !important;
-}
-
-/*# sourceMappingURL=bundle.css.map*/
+body{background-color:#fff;margin:0;-webkit-font-smoothing:antialiased!important;text-rendering:optimizeLegibility!important}

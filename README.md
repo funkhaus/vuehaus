@@ -71,10 +71,10 @@ _get(this.$store.getters.post, 'related.children')
 Vuepress includes the Google/Typekit [Web Font Loader](https://github.com/typekit/webfontloader) in `parts/font-loader.php`. Follow the instructions on that repo to load fonts from Google, Typekit, or your own uploads.
 
 ### Using SVGs
-1. Place the .svg file in `src/images/`.
+1. Place the .svg file in `src/svgs/`.
 1. In the `script` section of the template where you want to use the SVG, add:
     ```js
-    import exampleSvg from 'src/images/example.svg'
+    import exampleSvg from 'src/svgs/example.svg'
 
     export default {
         data(){
@@ -245,7 +245,7 @@ Vuepress defines a few utility functions to make building the routing table easi
 If you need to upgrade your version of [Rest-Easy](https://github.com/funkhaus/Rest-Easy), change the `$latest_rest_easy` variable in `functions/vuepress-plugins.php` to match the latest Rest Easy version. You'll be prompted to upgrade the next time you load any page on the WordPress backend.
 
 ## Vuex and State
-Vuepress uses [Vuex](https://vuex.vuejs.org/en/intro.html) to handle a site's state. The default store in `src/store/index.js` is set up like this:
+Vuepress uses [Vuex](https://vuex.vuejs.org/en/intro.html) to handle a site's state. The default store in `src/utils/store.js` is set up like this:
 
 ```js
 {
@@ -290,7 +290,7 @@ Default Vuepress actions:
 
 * `'LOAD_AND_REPLACE_QUERYDATA, { path: 'url string' }'` - Runs the following process:
     1. Sets `state.loaded` to `false`.
-    1. Checks `src/services/cache.js` (which is a global cache that can be `import`ed into any other file) for the given `path` key.
+    1. Checks `src/utils/cache.js` (which is a global cache that can be `import`ed into any other file) for the given `path` key.
         If none is found:
         1. Commits `'SET_LOADED', false`
         1. Fetches the data from the the URL at the payload path.
@@ -329,7 +329,7 @@ Once you've set up the routing for a Vuepress site and understand its state func
     ```
 
 1. Create the necessary Vue templates. Example:
-    > We defined 'FrontPage', 'About', 'EmployeesGrid', 'AboutChildGeneric', and 'EmployeeDetail' above, so we'll be creating each of those as a .vue file in `src/components/templates/`.
+    > We defined 'FrontPage', 'About', 'EmployeesGrid', 'AboutChildGeneric', and 'EmployeeDetail' above, so we'll be creating each of those as a .vue file in `src/views/`.
 
 1. `npm run dev` and start building in Vue!
 
@@ -362,8 +362,9 @@ __Vuepress__
 
 http://funkhaus.us
 
-Version: 1.1.3
+Version: 1.1.4
 
+* 1.1.4 - Restructuring according to [this issue](https://github.com/funkhaus/vuepress/issues/34)
 * 1.1.3 - Split Vuepress functionality into `/functions` directory
 * 1.1.2 - Added [TGM Plugin Activation](http://tgmpluginactivation.com/) to require plugins. Switching to x.x.x version numbering.
 * 1.11 - Switched `_custom_developer_id` to `custom_developer_id`

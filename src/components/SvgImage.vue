@@ -11,7 +11,7 @@
         computed: {
             svg(){
                 if( this.src ) {
-                    return require(`src/icons/${ this.src }`)
+                    return require(`src/svgs/${ this.src }`)
                 }
 
                 return ''

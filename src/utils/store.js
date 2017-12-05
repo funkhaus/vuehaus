@@ -1,7 +1,7 @@
 /* global jsonData */
 import Vuex from 'vuex'
 import Vue from 'vue'
-import cache from 'src/services/cache'
+import cache from 'src/utils/cache'
 import _get from 'lodash/get'
 
 // add vuex

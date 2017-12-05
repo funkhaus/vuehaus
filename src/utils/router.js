@@ -1,13 +1,13 @@
 /* global jsonData */
 
 import VueRouter from 'vue-router'
-import store from 'src/store'
+import store from 'src/utils/store'
 import Vue from 'vue'
 
 Vue.use( VueRouter )
 
 // load all templates in folder
-const templates = require.context('src/components/templates', true)
+const templates = require.context('src/views', true)
 
 // build routing table
 const routeTable = []

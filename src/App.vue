@@ -1,20 +1,18 @@
 <template>
     <div :class="classes">
-        <header>
-            <wp-menu name="Main Menu"/>
-            <svg-image src="logo.svg"/>
-        </header>
+        <site-header/>
 
-        <router-view></router-view>
+        <router-view/>
 
     </div>
 </template>
 
 <script>
     import throttle from 'lodash/throttle'
-    import router from 'src/router'
-    import store from 'src/store'
+    import router from 'src/utils/router'
+    import store from 'src/utils/store'
     import _kebabCase from 'lodash/kebabCase'
+    import SiteHeader from 'src/components/SiteHeader.vue'
 
     export default {
         el: '#app',
@@ -26,6 +24,9 @@
                 winWidth: window.innerWidth,
                 sTop: 0
             }
+        },
+        components: {
+            'site-header': SiteHeader
         },
         mounted () {
             window.addEventListener('resize', throttle(this.onResize, 30))
