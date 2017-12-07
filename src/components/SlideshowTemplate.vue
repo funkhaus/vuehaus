@@ -1,5 +1,5 @@
 <template>
-    <div tabindex="1" class="fh-slideshow" @keydown.right="triggerNext" @keydown.left="triggerPrev">
+    <div class="fh-slideshow" @keydown.right="triggerNext" @keydown.left="triggerPrev" tabindex="1">
 
         <transition :name="`fh-slide-${ direction }`">
             <div class="slide"
@@ -7,15 +7,19 @@
                 v-for="(slide, i) in slides"
                 :key="i"
             >
-                <responsive-image color="#f1f1f1" :fill-space="true" :object="slide" />
+                <responsive-image :fill-space="true" :object="slide" />
             </div>
         </transition>
 
-        <svg-image class="nav next" src="arrow-right.svg" @click.native="triggerNext" />
-        <svg-image class="nav prev" src="arrow-left.svg" @click.native="triggerPrev" />
+        <svg-image v-if="slides.length > 1" class="nav next" src="arrow-right.svg" @click.native="triggerNext" />
+        <svg-image v-if="slides.length > 1" class="nav prev" src="arrow-left.svg" @click.native="triggerPrev" />
 
-        <div class="pagination">
-            <div v-for="(s, i) in slides" :class="['pagination-item', { active: activeSlide == i }]"></div>
+        <div v-if="slides.length > 1" class="pagination">
+            <div
+                v-for="(s, i) in slides"
+                :class="['pagination-item', { active: activeSlide == i }]"
+            >
+            </div>
         </div>
 
     </div>
@@ -37,6 +41,14 @@
             running: {
                 type: Boolean,
                 default: true
+            },
+            infinite: {
+                type: Boolean,
+                default: true
+            },
+            items: {
+                type: Array,
+                default: () => []
             }
         },
         data () {
@@ -54,8 +66,9 @@
         },
         watch: {
             activeSlide (to, from) {
-                if ( to > from ) this.direction = 'left'
-                else this.direction = 'right'
+                if ( this.infinite ) return
+                if ( to > from ) return this.direction = 'left'
+                this.direction = 'right'
             }
         },
         methods: {
@@ -64,6 +77,7 @@
                 // restart timer
                 this.stopTimer()
                 this.startTimer()
+                this.direction = 'left'
 
                 // set next or first
                 this.activeSlide++
@@ -75,6 +89,7 @@
                 // restart timer
                 this.stopTimer()
                 this.startTimer()
+                this.direction = 'right'
 
                 // set prev or last
                 this.activeSlide--
@@ -94,8 +109,9 @@
         },
         computed: {
             slides () {
-                const slides = _get(this.$store.getters, 'post.attachedMedia', [])
-                return [...slides, ...slides]
+                // prefer "items" prop, default to attached media
+                const slides = _get(this, '$store.getters.post.attachedMedia', [])
+                return this.items.length ? this.items : slides
             }
         }
     }
@@ -106,7 +122,8 @@
     .fh-slideshow {
         position: relative;
         overflow: hidden;
-        height: 500px;
+        max-height: 80vh;
+        height: 56vw;
 
         &:focus {
             outline: none;
@@ -169,6 +186,5 @@
     .fh-slide-right-enter {
         transform: translateX(-100%);
     }
-
 
 </style>

@@ -1,17 +1,11 @@
 <template>
 
-    <main class="content home">
-        <slideshow-template />
-    </main>
+    <main class="content home"></main>
 
 </template>
 
 <script>
-    export default {
-        components: {
-            'slideshow-template': require('src/components/SlideshowTemplate.vue')
-        }
-    }
+    export default {}
 </script>
 
 <style>
