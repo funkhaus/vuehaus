@@ -11,6 +11,9 @@ const devPlugins = [
     }),
     new ExtractTextPlugin({
         filename: 'bundle.css'
+    }),
+    new webpack.ProvidePlugin({
+        _get: ['lodash', 'get']
     })
 ]
 const prodPlugins = devPlugins.concat([
