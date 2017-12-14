@@ -10,6 +10,6 @@
     }
 </script>
 
-<style>
-
+<style lang="scss">
+    @import 'src/styles/vars';
 </style>
