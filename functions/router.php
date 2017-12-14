@@ -6,6 +6,9 @@
 
         // Get the name of the category base. Default to "categories"
         $category_base = get_option('category_base');
+		if( empty($category_base) ){
+			$category_base = 'category';
+		}
 
         // build out router table to be used with Vue
         $jsonData['routes'] = array(
