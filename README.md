@@ -10,6 +10,7 @@ For a quick start, look at the [Example Workflow](#example-workflow). For a more
     1. [Loading Fonts](#loading-fonts)
     1. [Using SVGs](#using-svgs)
     1. [Images](#images)
+    1. [Shared Styles](#shared-styles)
 1. [Reading List](#reading-list)
 1. [Building a Vuepress Site: Back-End](#building-a-vuepress-site-back-end)
     1. [Router and Templates](#router-and-templates)
@@ -112,6 +113,19 @@ You can also include any of the following attributes:
 ```
 
 You must include either an `object` or a `src` parameter on a `responsive-image` element; all other values are optional.
+
+### Shared Styles
+Vuepress supports SCSS out of the box, and comes with a style vars file in `src/styles/_vars.scss` and the base styling for the entire site in `src/styles/_base.scss`.
+
+You can import the vars file in any Vue template like this:
+
+```vue
+<style lang="scss">
+    @import 'src/styles/vars';
+
+    // Now you have access to the $vars!
+</style>
+```
 
 ## Reading List
 To get started with Vuepress, you should already know or familiarize yourself with:
