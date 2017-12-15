@@ -51,7 +51,9 @@
                     'container',
                     `breakpoint-${ this.breakpoint }`,
                     { loading: this.$store.getters.loading },
-                    `route-${ _kebabCase(this.$route.name) }`
+                    `route-${ _kebabCase(this.$route.name) }`,
+                    { 'is-touch': this.$store.state.site.isMobile },
+                    { 'not-touch': !this.$store.state.site.isMobile }
                 ]
             },
             breakpoint () {

@@ -9480,7 +9480,7 @@ exports.default = {
     },
     computed: {
         classes: function classes() {
-            return ['container', 'breakpoint-' + this.breakpoint, { loading: this.$store.getters.loading }, 'route-' + (0, _kebabCase3.default)(this.$route.name)];
+            return ['container', 'breakpoint-' + this.breakpoint, { loading: this.$store.getters.loading }, 'route-' + (0, _kebabCase3.default)(this.$route.name), { 'is-touch': this.$store.state.site.isMobile }, { 'not-touch': !this.$store.state.site.isMobile }];
         },
         breakpoint: function breakpoint() {
             return this.winWidth >= 750 ? 'desktop' : 'mobile';
