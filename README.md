@@ -127,6 +127,21 @@ You can import the vars file in any Vue template like this:
 </style>
 ```
 
+Vuepress also comes with a few suggested breakpoints in that same vars file - you can use them in a media query like this:
+
+```sass
+@media #{ $lt-phone } {
+   // your styling
+}
+```
+
+The default breakpoints (with `lt` for "less than" and `gt` for "greater than") are:
+
+* **`gt-cinema`** - `only screen and (min-width: 1800px)`
+* **`lt-desktop`** - `only screen and (max-width: 1100px)`
+* **`lt-phone`** - `only screen and (max-width: 750px)`
+* **`lt-phone-landscape`** - `only screen and (max-width: 750px) and (orientation: landscape)`
+
 ## Reading List
 To get started with Vuepress, you should already know or familiarize yourself with:
 1. [WordPress](https://wordpress.org/)
