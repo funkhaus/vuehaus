@@ -6,6 +6,7 @@ import cache from 'src/utils/cache'
 // register global components
 // Vue.component('a-div', require('fh-components/a-div').default)
 // Vue.component('flex-text', require('fh-components/flex-text').default)
+Vue.component('hamburger-button', require('fh-components/hamburger-button').default)
 Vue.component('responsive-image', require('fh-components/responsive-image').default)
 // Vue.component('video-player', require('fh-components/video-player').default)
 // Vue.component('wp-content', require('fh-components/wp-content').default)
