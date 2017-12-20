@@ -71,6 +71,24 @@ _get(this.$store.getters.post, 'related.children')
 ### Loading Fonts
 Vuepress includes the Google/Typekit [Web Font Loader](https://github.com/typekit/webfontloader) in `parts/font-loader.php`. Follow the instructions on that repo to load fonts from Google, Typekit, or your own uploads.
 
+```js
+// font loader example
+WebFontConfig = {
+        google: {
+            // your google fonts families here
+            families: []
+        },
+        typekit: {
+            id: ''
+        },
+        custom: {
+            // your custom font families here
+            families: [],
+            urls: ['<?php echo get_template_directory_uri(); ?>/static/fonts/fonts.css']
+        }
+};
+```
+
 ### Using SVGs
 1. Place the .svg file in `src/svgs/`.
 1. In the `script` section of the template where you want to use the SVG, add:
