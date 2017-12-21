@@ -13,6 +13,7 @@ Vue.component('responsive-image', require('fh-components/responsive-image').defa
 Vue.component('wp-menu', require('fh-components/wp-menu').default)
 Vue.component('menu-item', require('fh-components/wp-menu-item').default)
 Vue.component('svg-image', require('src/components/SvgImage.vue'))
+// Vue.component('transition-fade', require('fh-components/transition-fade').default)
 
 // Register directives
 // import fullHeight from 'fh-components/v-full-height'
