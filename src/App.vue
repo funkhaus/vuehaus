@@ -13,6 +13,7 @@
     import store from 'src/utils/store'
     import _kebabCase from 'lodash/kebabCase'
     import SiteHeader from 'src/components/SiteHeader.vue'
+    import CacheCrawler from 'src/utils/cache-crawler'
 
     export default {
         el: '#app',
@@ -31,6 +32,11 @@
         mounted () {
             window.addEventListener('resize', throttle(this.onResize, 30))
             window.addEventListener('scroll', throttle(this.onScroll, 10))
+
+            // start cache crawler after page has fully loaded
+            window.onload = function(){
+                CacheCrawler.onNewPage()
+            }
         },
         methods: {
             onResize () {

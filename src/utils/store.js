@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import Vue from 'vue'
 import cache from 'src/utils/cache'
 import _get from 'lodash/get'
+import CacheCrawler from 'src/utils/cache-crawler'
 
 // add vuex
 Vue.use( Vuex )
@@ -22,6 +23,10 @@ export default new Vuex.Store( {
             state.site = data.site
             state.meta = data.meta
             state.loop = data.loop
+            
+            // reboot cache-crawler
+            CacheCrawler.onNewPage()
+
             return state
         },
         'SET_TRANSITIONING_IN': (state, transitioning) => {
