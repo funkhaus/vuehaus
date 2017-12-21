@@ -1,0 +1,18 @@
+{
+    "settings": {
+        "host": "your sftp host",
+        "port": "your port",
+        "username": "username",
+        "password": "password"
+    },
+    "queue": [
+        "functions/**/*.*",
+        "parts/**/*.*",
+        "static/**/*.*",
+        "functions.php",
+        "index.php",
+        "style.css",
+        "screenshot.jpg"
+    ],
+    "target": "/absolute/path/to/deploy/target"
+}
