@@ -35,6 +35,8 @@ For a quick start, look at the [Example Workflow](#example-workflow). For a more
 1. `npm install`
 1. Go to the WordPress back-end, activate, the Vuepress theme, and follow the instructions to install [Rest-Easy](https://github.com/funkhaus/Rest-Easy).
 1. `npm run dev`
+1. To build: `npm run build`
+1. To build and deploy to server (using `.deployrc` for [fh-deploy](https://github.com/funkhaus/fh-deploy) configuration): `npm run deploy`
 
 ## Common Tasks
 
