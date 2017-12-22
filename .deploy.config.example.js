@@ -1,18 +1,18 @@
-{
-    "settings": {
+module.exports = {
+    settings: {
         "host": "your sftp host",
         "port": "your port",
         "username": "username",
         "password": "password"
     },
-    "queue": [
+    queue: [
         "functions/**/*.*",
         "parts/**/*.*",
         "static/**/*.*",
         "functions.php",
         "index.php",
         "style.css",
-        "screenshot.jpg"
+        "screenshot.png"
     ],
-    "target": "/absolute/path/to/deploy/target"
+    target: "/absolute/path/to/deploy/target"
 }

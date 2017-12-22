@@ -14,4 +14,5 @@ pids
 
 node_modules
 .DS_Store
-.deployrc
+.deploy.config.js
+.deployrc.json
