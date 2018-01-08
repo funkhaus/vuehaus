@@ -83,7 +83,11 @@ const config = {
             path.resolve( __dirname, 'app' ),
             resolve( './' ),
             'node_modules'
-        ]
+        ],
+        alias: {
+            // Uncomment this if you need to use wp-content
+            // 'vue$': 'vue/dist/vue.esm.js'
+        }
     },
     performance: {
         maxEntrypointSize: 700000,

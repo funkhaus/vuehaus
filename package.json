@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "npm run clean && webpack --watch",
-    "build": "npm run clean && webpack -p && NODE_ENV=production webpack -p",
+    "build": "npm run clean && NODE_ENV=production && webpack -p",
     "clean": "rm static/bundle.* || true",
     "install": "node bin/vp-install",
     "deploy": "npm run build && fh-deploy"

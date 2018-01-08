@@ -8,3 +8,5 @@
     include_once get_template_directory() . '/functions/vuepress-plugins.php';
     // Handles Developer role
     include_once get_template_directory() . '/functions/developer-role.php';
+    // Misc WordPress functions
+    include_once get_template_directory() . '/functions/wp-functions.php';
