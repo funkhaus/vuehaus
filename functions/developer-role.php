@@ -137,6 +137,17 @@
         return rez_remove_siteurl(get_permalink($retrieved_page)) . $after;
     }
 
+    // Convenience function - get slug by dev ID
+    function slug_from_dev_id($dev_id){
+        $retrieved_page = get_page_by_dev_id($dev_id);
+
+        if( !$retrieved_page ){
+            return '';
+        }
+
+        return $retrieved_page->post_name;
+    }
+
     // Gets the nth child of a page with a given Developer ID
     function get_child_of_dev_id($dev_id, $nth_child = 0){
         $parent = get_page_by_dev_id($dev_id);
