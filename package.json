@@ -3,6 +3,10 @@
   "version": "1.1.4",
   "description": "Build smooth, responsive Wordpress sites with Vue.",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/funkhaus/vuepress.git"
+  },
   "scripts": {
     "dev": "npm run clean && webpack --watch",
     "build": "npm run clean && webpack -p && NODE_ENV=production webpack -p",
