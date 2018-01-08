@@ -16,14 +16,15 @@ export default new Vuex.Store( {
         transitioning_in: false,
         transitioning_out: false,
         loaded: true,
-        menuOpened: false
+        menuOpened: false,
+        referral: undefined
     },
     mutations: {
         'REPLACE_QUERYDATA': ( state, data ) => {
             state.site = data.site
             state.meta = data.meta
             state.loop = data.loop
-            
+
             // reboot cache-crawler
             CacheCrawler.onNewPage()
 
@@ -45,6 +46,9 @@ export default new Vuex.Store( {
         },
         'CLOSE_MENU': state => {
             state.menuOpened = false
+        },
+        'UPDATE_REFERRAL_ROUTE': (state, referral) => {
+            state.referral = referral
         }
 
     },
@@ -73,6 +77,9 @@ export default new Vuex.Store( {
         post: state => {
             // This is a "post" in the sense of a WordPress post - the first result of the Loop
             return _get(state.loop, '[0]', {})
+        },
+        referralPath: state => {
+            return _get(state.referral, 'fullPath', '')
         }
     }
 })

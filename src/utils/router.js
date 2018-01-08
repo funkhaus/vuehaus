@@ -53,6 +53,9 @@ router.beforeEach(( to, from, next ) => {
     if( to.path !== from.path ){
         store.dispatch( 'LOAD_AND_REPLACE_QUERYDATA', { path: to.path } )
     }
+    if( from.name !== null ) {
+        store.commit('UPDATE_REFERRAL_ROUTE', from)
+    }
     next()
 })
 

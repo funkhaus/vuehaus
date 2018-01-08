@@ -22,6 +22,7 @@ For a quick start, look at the [Example Workflow](#example-workflow). For a more
 1. [Vuex and State](#vuex-and-state)
     1. [Mutations](#mutations)
     1. [Actions](#actions)
+    1. [Getters](#getters)
 1. [Building a Vuepress Site: Front-End](#building-a-vuepress-site-front-end)
     1. [Example Workflow](#example-workflow)
     1. [Vuepress Events](#vuepress-events)
@@ -327,6 +328,7 @@ Default Vuepress mutations:
 * `'SET_LOADED', true | false` - Sets `state.loaded` to the given value.
 * `'OPEN_MENU'` - Sets `state.menuOpened` to `true`.
 * `'CLOSE_MENU'` - Sets `state.menuOpened` to `false`.
+* `'UPDATE_REFERRAL_ROUTE'` - Sets `state.referral` to given referral object.
 
 ### Actions
 Where mutations are synchronous, actions are asynchronous:
@@ -346,6 +348,17 @@ Default Vuepress actions:
         1. Saves the data to the cache.
     1. Commits `'REPLACE_QUERYDATA'` with the data from the cache.
     1. Commits `'SET_LOADED', true`
+
+### Getters
+Getters are shortcuts to dynamic state properties:
+
+`$store.state.getters.desiredGetter`
+
+Default Vuepress getters include:
+
+* `loading` - Returns the opposite of `$store.state.loaded`.
+* `post` - Returns either the first post in `$store.state.loop` or, if none, an empty object.
+* `referralPath` - Returns either the `fullPath` of the current value of `$store.state.referral` or, if none, an empty string.
 
 ## Building a Vuepress Site: Front-End
 Once you've set up the routing for a Vuepress site and understand its state functions, you can start working with Vue templates themselves.
