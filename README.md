@@ -26,6 +26,7 @@ For a quick start, look at the [Example Workflow](#example-workflow). For a more
 1. [Building a Vuepress Site: Front-End](#building-a-vuepress-site-front-end)
     1. [Example Workflow](#example-workflow)
     1. [Vuepress Events](#vuepress-events)
+    1. [Partials](#partials)
 1. [Recommended Reading](#recommended-reading)
 
 
@@ -410,6 +411,45 @@ this.$root.$on('throttled.scroll', () => {
 ```
 
 Both events are fired after the `$root` element saves updated window dimensions/scroll positions for resize/scroll events.
+
+### Partials
+Vuepress comes with a few SCSS [partials](http://sass-lang.com/guide) to make writing CSS easier. In a Vue template file:
+
+```
+<style lang="scss">
+
+    @import 'src/styles/desired-partial';
+
+</style>
+```
+
+Default partials include:
+
+* `base` - Style applied in `App.vue`, affecting every page on the site.
+* `transitions` - Common transitions applied in `App.vue`, affecting every page on the site. Includes:
+    * `fade`
+    * `slide-left`
+    * `slide-right`
+
+    Usable with:
+
+    `<transition name="transition-name"><your-code-here/></transition>`
+* `vars` - Variables to use across the site. Import in any given template to make global CSS changes much easier to manage. Defaults include:
+    * `$white: #ffffff;`
+    * `$black: #000000;`
+    * `$font-family: 'Helvetica';`
+    * `$desktop-padding: 50px;`
+    * `$mobile-padding: 20px;`
+    * `$header-height: 80px;`
+
+    The following are breakpoints that can be used with:
+
+    `@media #{$size} { /* your rules here */ }`
+    * `$gt-cinema: "only screen and (min-width: 1800px)";`
+    * `$lt-desktop: "only screen and (max-width: 1100px)";`
+    * `$lt-phone: "only screen and (max-width: 750px)";`
+    * `$lt-phone-landscape: "only screen and (max-width: 750px) and (orientation: landscape)";`
+
 
 ## Recommended Reading
 Not Vuepress-specific reading material, but rather good practices and articles.

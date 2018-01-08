@@ -71,7 +71,8 @@
 
 <style lang="scss">
 
-    // import base styles
+    // import base styles and transitions
     @import 'src/styles/base';
+    @import 'src/styles/transitions';
 
 </style>
