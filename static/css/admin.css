@@ -14,6 +14,7 @@
         background-position: center center;
         background-repeat: no-repeat;
         background-size: 26px auto;
+        background-color: #ffffff;
     }
     #wpwrap #wpadminbar #wp-admin-bar-wp-logo > .ab-item span {
         visibility: hidden;
@@ -28,12 +29,17 @@
         text-align: right;
     }
     .custom-meta input {
-        width: 500px;
+        width: calc(100% - 320px);
+        max-width: 800px;
         height: 25px;
         vertical-align: middle;
     }
-    .custom-meta .short {
-        width: 200px;
+    .custom-meta .for-textarea {
+        vertical-align: top;
+    }
+    .custom-meta textarea {
+        width: calc(100% - 320px);
+        max-width: 800px;
     }
     .custom-meta input[type="checkbox"],
     .custom-meta input[type="radio"] {
@@ -51,14 +57,10 @@
         margin-bottom: 1px;
     }
 
-    #menu-comments {
-        display: none;
-    }
-
 /*
  * Turn off menus
  */
-/*
+    /*
     #menu-posts {
         display: none;
     }
@@ -86,4 +88,7 @@
     #menu-settings {
         display: none;
     }
-*/
+    */
+    #menu-comments {
+        display: none;
+    }
