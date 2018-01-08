@@ -128,7 +128,13 @@
 
     // Convenience function - get relative path by dev ID
     function path_from_dev_id($dev_id, $after = ''){
-        return rez_remove_siteurl(get_page_by_dev_id($dev_id)) . $after;
+        $retrieved_page = get_page_by_dev_id($dev_id);
+
+        if( !$retrieved_page ){
+            return '#404';
+        }
+
+        return rez_remove_siteurl(get_permalink($retrieved_page)) . $after;
     }
 
     // Gets the nth child of a page with a given Developer ID
@@ -148,7 +154,8 @@
 
     // Gets the relative path of the nth child of a page with given Developer ID
     function get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = ''){
-        return rez_remove_siteurl(get_child_of_dev_id($dev_id, $nth_child)) . $after;
+        $permalink = get_permalink(get_child_of_dev_id($dev_id, $nth_child));
+        return rez_remove_siteurl($permalink) . $after;
     }
 
     // Makes sure Developer role can sort Nested Pages automatically

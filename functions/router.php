@@ -18,7 +18,29 @@
             // '/path/:var'                         => 'ComponentWithVar'
             // '/path/*/:var'                       => 'WildcardAndVar'
             // path_from_dev_id('dev-id')  		=> 'DefinedByDevId',
-		    // path_from_dev_id('dev-id', '/append-me') => 'DevIdPathPlusAppendedString'
+		    // path_from_dev_id('dev-id', '/append-me') => 'DevIdPathPlusAppendedString',
+
+			/*
+			// Common Funkhaus setups
+			// Directors - redirect to first child
+			path_from_dev_id('directors') => array(
+				'redirect'	=>  get_child_of_dev_id_path('directors')
+			),
+			// Director detail
+			path_from_dev_id('directors', '/:director')					=> 'DirectorDetail',
+			// Reel grid
+			path_from_dev_id('directors', '/:director/:reel')			=> 'ReelGrid',
+			// Video detail
+			path_from_dev_id('directors', '/:director/:reel/:video')	=> 'VideoDetail',
+			// About
+			path_from_dev_id('about')	=> 'About',
+			// Contact
+			path_from_dev_id('contact')	=> 'Contact',
+			// Contact region - redirect to parent
+			path_from_dev_id('contact', '/:region')	=> array(
+				'redirect'	=> path_from_dev_id('contact')
+			),
+			*/
 
             // Probably unchanging
             ''                                      => 'FrontPage',
