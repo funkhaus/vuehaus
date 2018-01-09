@@ -1,8 +1,14 @@
 <?php
-    // Custom Rest-Easy filters here
+/**
+ *  Custom Rest-Easy filters go in this file
+ */
 
-    // Get the iFrame embed code
-    function custom_video_embed($input){
+ /**
+  *  Get the iFrame embed code
+  *
+  * @param array $input The post currently being processed by Rest-Easy
+  */
+  function custom_video_embed($input){
 
         if( isset($input['meta']['custom_video_url']) ) {
             $args = array(
@@ -17,7 +23,11 @@
     }
     add_filter('rez_serialize_post', 'custom_video_embed');
 
-    // Example: Serialize page siblings
+/**
+ *  Serialize page siblings
+ *
+ * @param array $input The post currently being processed by Rest-Easy
+ */
     function add_page_siblings($related){
         $target = get_post($related['id']);
         $args = array(
@@ -41,7 +51,11 @@
     }
     add_filter('rez_gather_related', 'add_page_siblings');
 
-    // Include Developer ID
+/**
+ *  Serialize the Developer ID
+ *
+ * @param array $input The post currently being processed by Rest-Easy
+ */
     function add_developer_id($input){
         $target = get_post($input['id']);
         $input['developerId'] = $target->custom_developer_id;
