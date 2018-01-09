@@ -36,7 +36,7 @@
     "eslint-plugin-standard": "^3.0.1",
     "eslint-plugin-vue": "^2.0.1",
     "extract-text-webpack-plugin": "^2.1.0",
-    "fh-components": "^1.2.18",
+    "fh-components": "^1.2.20",
     "fh-deploy": "^1.0.2",
     "file-loader": "^0.9.0",
     "fs-extra": "^5.0.0",

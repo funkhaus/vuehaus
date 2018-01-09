@@ -3,7 +3,7 @@ import App from './App.vue'
 import Vue from 'vue'
 import cache from 'src/utils/cache'
 
-// register global components
+// Register fh-components
 // Vue.component('a-div', require('fh-components/a-div').default)
 // Vue.component('flex-text', require('fh-components/flex-text').default)
 Vue.component('hamburger-button', require('fh-components/hamburger-button').default)
@@ -12,6 +12,7 @@ Vue.component('responsive-image', require('fh-components/responsive-image').defa
 // Vue.component('wp-content', require('fh-components/wp-content').default)
 Vue.component('wp-menu', require('fh-components/wp-menu').default)
 Vue.component('menu-item', require('fh-components/wp-menu-item').default)
+// Vue.component('split-text', require('fh-components/split-text').default)
 Vue.component('svg-image', require('src/components/SvgImage.vue'))
 // Vue.component('transition-fade', require('fh-components/transition-fade').default)
 
