@@ -3,30 +3,29 @@
  * By Drew Baker - 2011
  * drew@funkhausdesign.com
  *
- */	
+ */
 
 /*
  * Import fonts
- */ 
-    @import url("../fonts/fonts.css");
+ */
+    /* @import url("../fonts/fonts.css"); */
 
 
 /*
  * Globals
  */
-    html { 
-    	background: white;
-    }
-    
-    body.login {
-        font-size: 13px; 
-        color: #666666;    
+    html {
         background: white;
-    	line-height: 1.4; 
+    }
+    body.login {
+        font-size: 14px;
+        color: #222222;
+        background: white;
+        line-height: 1.4;
     	padding: 0;
     	margin: 0;
-    	border: none;     
-    	width: 100%;    	   
+    	border: none;
+    	width: 100%;
     }
     a {
     	outline: none;
@@ -36,63 +35,70 @@
 /*
  * Login Banner Image
  */
-    #login h1 a { 
-    	background: url(../images/backend/login-banner.png) no-repeat 9px 0;
-    	margin: 0; 
+    #login h1 a {
+    	background-image: url(../images/logo.svg);
+        background-position: center center;
+    	margin: 0;
     	background-size: auto;
     	width: auto;
-    }	
+    }
 
 
 /*
  * Login Form
  */
-    .login label {
-        color: #DB8F39;
-    }   
-    body.login input[type='text'], 
-    body.login input[type='password'] {
+    #loginform {
+        box-shadow: none;
+    }
+    #loginform label {
+        color: #222222;
+    }
+    #loginform input[type='text'],
+    #loginform input[type='password'] {
     	background: #F2F2F2;
     	border: 1px solid #CCCCCC;
     	font-family: inherit;
+        padding: 5px 8px;
+        box-sizing: border-box;
     }
-    body.login input[type="checkbox"], 
-    body.login input[type="radio"] {
+    #loginform input[type="checkbox"],
+    #loginform input[type="radio"] {
         vertical-align: baseline;
-    }    
+    }
 
 
 /*
  * Login Submit Button
- */     
+ */
     #wp-submit {
-    	background: #a8c7c9;
+    	background: #222222;
     	border: none;
     	text-shadow: none;
-    	box-shadow: 0 0 0 0;
-    } 
-    #wp-submit:hover {
-        color: #333;
+    	box-shadow: none;
+        text-transform: uppercase;
     }
-    
+    #wp-submit:hover {
+        color: #CCCCCC;
+    }
+
 
 /*
- * "Lost password" dialog
+ * "Lost password" link
  */
-    .login #nav { 
-    	text-shadow: none; 
-    } 
-    .login #nav a { 
-    	text-decoration: none; 
-    	color: #444545 !important; 
-    	padding: auto 1px auto 1px; 
+    #nav {
     	text-shadow: none;
     }
-    .login #nav a:hover { 
-    	color: #DB8F39 !important; 
-    	font-weight: bold; 
-    	text-shadow: none; 
-    }    
+    #nav a {
+    	text-decoration: none;
+    	color: inherit !important;
+    	padding: auto 1px auto 1px;
+    	text-shadow: none;
+    }
+    #nav a:hover {
+    	color: #CCCCCC !important;
+    	font-weight: normal;
+    	text-shadow: none;
+    }
 
 
 /*
@@ -101,5 +107,3 @@
     #backtoblog {
     	display: none;
     }
-
-
