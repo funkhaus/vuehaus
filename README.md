@@ -17,6 +17,7 @@ For a quick start, look at the [Example Workflow](#example-workflow). For a more
     1. [The Developer Role and Developer IDs](#the-developer-role-and-developer-ids)
     1. [Developer Capabilities](#developer-capabilities)
     1. [Advanced Routing](#advanced-routing)
+        1. [Front Page Children](#front-page-children)
     1. [Utility Functions](#utility-functions)
     1. [Upgrading Plugins](#upgrading-plugins)
 1. [Vuex and State](#vuex-and-state)
@@ -284,6 +285,15 @@ array(
 ```
 
 This isn't the limit of the routing table's capabilities - anything the Vue router can do, you can build in the `add_routes_to_json` function.
+
+#### Front Page Children
+When trying to get the children of the front page, you'll need to use `slug_from_dev_id` instead of `path_from_dev_id`:
+
+```php
+'/' . slug_from_dev_id('front-page') . '/:detail' => 'FrontPageChild',
+```
+
+`path_from_dev_id` would return a slash as the relative path to the front page, but `slug_from_dev_id` ensures that you're getting the front page's name.
 
 ### Utility Functions
 Vuepress defines a few utility functions to make building the routing table easier:
