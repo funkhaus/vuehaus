@@ -28,6 +28,7 @@ For a quick start, look at the [Example Workflow](#example-workflow). For a more
     1. [Example Workflow](#example-workflow)
     1. [Vuepress Events](#vuepress-events)
     1. [Partials](#partials)
+1. [Deploying](#deploying)
 1. [Recommended Reading](#recommended-reading)
 
 
@@ -39,7 +40,7 @@ For a quick start, look at the [Example Workflow](#example-workflow). For a more
 1. Go to the WordPress back-end, activate, the Vuepress theme, and follow the instructions to install [Rest-Easy](https://github.com/funkhaus/Rest-Easy).
 1. `npm run dev`
 1. To build: `npm run build`
-1. To build and deploy to server (using `.deployrc` for [fh-deploy](https://github.com/funkhaus/fh-deploy) configuration): `npm run deploy`
+1. To build and deploy to server (using `.deployrc.config.json` for [fh-deploy](https://github.com/funkhaus/fh-deploy) configuration): `npm run deploy`
 
 ## Common Tasks
 
@@ -461,6 +462,22 @@ Default partials include:
     * `$lt-phone: "only screen and (max-width: 750px)";`
     * `$lt-phone-landscape: "only screen and (max-width: 750px) and (orientation: landscape)";`
 
+## Deploying
+Vuepress comes with [fh-deploy](https://www.npmjs.com/package/fh-deploy) to make deploying your site as easy as possible.
+
+After running `npm install`, `.deploy.config.example.js` will rename itself to `.deploy.config.js`, which is .gitignored by default. The only things you should need to change in this config file are:
+
+* Your desired host
+* The port number (22 for SFTP)
+* Your username
+* Your password
+* The target directory to deploy to
+
+After that, you can run `npm run deploy`, which automatically runs `npm run build` and sends your files to your server!
+
+__Important note from fh-deploy readme:__
+
+Running fh-deploy will automatically overwrite any files of the same name on your server WITHOUT prompting. __Assume your remote files are going to be overwritten as soon as you run fh-deploy and make sure you keep up-to-date backups!__
 
 ## Recommended Reading
 Not Vuepress-specific reading material, but rather good practices and articles.
