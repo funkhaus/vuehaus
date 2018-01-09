@@ -4,6 +4,16 @@
 
         <router-view/>
 
+        <transition name="fade">
+            <div
+                v-if="$store.state.menuOpened"
+                class="click-blocker"
+                @click.native="$store.commit('CLOSE_MENU')">
+
+                <wp-menu name="Main Menu" @click.native="$store.commit('CLOSE_MENU')"/>
+            </div>
+        </transition>
+
     </div>
 </template>
 
