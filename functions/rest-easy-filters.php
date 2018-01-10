@@ -62,3 +62,15 @@
         return $input;
     }
     add_filter('rez_serialize_post', 'add_developer_id');
+
+/**
+ *  Serialize attachment video URL
+ *
+ * @param array $input The post currently being processed by Rest-Easy
+ */
+    function add_attachment_video_url($input){
+        $target = get_post($input['ID']);
+        $input['videoUrl'] = $target->custom_video_url;
+        return $input;
+    }
+    add_filter('rez_serialize_attachment', 'add_attachment_video_url');

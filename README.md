@@ -10,6 +10,7 @@ For a quick start, look at the [Example Workflow](#example-workflow). For a more
     1. [Loading Fonts](#loading-fonts)
     1. [Using SVGs](#using-svgs)
     1. [Images](#images)
+    1. [Images with Videos](#images-with-videos)
     1. [Shared Styles](#shared-styles)
 1. [Reading List](#reading-list)
 1. [Building a Vuepress Site: Back-End](#building-a-vuepress-site-back-end)
@@ -137,6 +138,9 @@ You can also include any of the following attributes:
 ```
 
 You must include either an `object` or a `src` parameter on a `responsive-image` element; all other values are optional.
+
+### Images with Videos
+All images in Vuepress have an associated video URL (saved as a metafield called `custom_video_url`). You can access this in a serialized image in Vuex with `image.videoUrl`.
 
 ### Shared Styles
 Vuepress supports SCSS out of the box, and comes with a style vars file in `src/styles/_vars.scss` and the base styling for the entire site in `src/styles/_base.scss`.

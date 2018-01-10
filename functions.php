@@ -112,3 +112,41 @@
         return '...';
     }
     //add_filter('excerpt_more', 'custom_excerpt_ellipsis');
+
+/*
+ * Add video URL metafield on attachments
+ */
+ add_filter( 'attachment_fields_to_edit', 'custom_add_attachment_video_url', 10, 2 );
+ function custom_add_attachment_video_url( $fields, $post ) {
+     $meta = get_post_meta( $post->ID, 'custom_video_url', true );
+     $fields['custom_video_url'] = array(
+             'label' =>  __( 'Video URL', 'text-domain' ),
+             'input' => 'text',
+             'value' => $meta,
+             'show_in_edit' => true,
+     );
+
+     return $fields;
+ }
+
+ /**
+ * Update custom field within media overlay (via ajax)
+ */
+add_action( 'wp_ajax_save-attachment-compat', 'custom_update_attachment_video_url_ajax', 0, 1 );
+function custom_update_attachment_video_url_ajax() {
+    $post_id = $_POST['id'];
+    $meta = $_POST['attachments'][ $post_id ]['custom_video_url'];
+    update_post_meta( $post_id , 'custom_video_url', $meta );
+
+    clean_post_cache( $post_id );
+}
+
+/**
+ * Update media custom field from edit media page (non ajax).
+ */
+add_action( 'edit_attachment', 'custom_update_attachment_video_url', 1 );
+function custom_update_attachment_video_url( $post_id ) {
+    $video_url = isset( $_POST['attachments'][ $post_id ]['custom_video_url'] ) ? $_POST['attachments'][ $post_id ]['custom_video_url'] : false;
+    update_post_meta( $post_id, 'custom_video_url', $video_url );
+    return;
+}
