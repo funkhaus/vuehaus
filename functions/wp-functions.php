@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Setup WordPress
  */
@@ -29,6 +28,16 @@
 	add_action( 'after_setup_theme', 'custom_theme_setup' );
 
 /*
+ * Enqueue any Custom Admin Scripts
+ */
+	function custom_admin_scripts() {
+		//wp_register_script('site-admin', get_template_directory_uri() . '/static/js/admin.js', 'jquery', '1.0');
+		//wp_enqueue_script('site-admin');
+	}
+	//add_action( 'admin_enqueue_scripts', 'custom_admin_scripts' );
+
+
+/*
  * Enqueue Custom Scripts
  */
     function custom_scripts() {
@@ -42,10 +51,11 @@
 			$bundle_path = $has_dev_bundle ? '/static/bundle.dev.js' : '/static/bundle.js';
 		}
 
-		// enqueue proper bundle
-		wp_enqueue_script('bundle', get_template_directory_uri() . $bundle_path, array(), custom_latest_timestamp(), true);
+		// Enqueue proper bundle
+		wp_enqueue_script('bundle', get_template_directory_uri() . $bundle_path, null, custom_latest_timestamp(), true);
     }
     add_action('wp_enqueue_scripts', 'custom_scripts', 10);
+
 
 /*
  * Convenience function to generate timestamp based on latest edits. Used to automate cache updating
@@ -64,6 +74,7 @@
 		// if valid return time of latest change, otherwise current time
         return rsort($stamps) ? reset($stamps) : time();
     }
+
 
 /*
  * Style login page and dashboard
@@ -88,6 +99,7 @@
 	add_action('login_head','custom_loginpage_styles');
     add_action('admin_print_styles', 'custom_admin_styles');
 
+
 /*
  * Add post thumbnail into RSS feed
  */
@@ -102,6 +114,7 @@
 	}
 	add_filter('the_excerpt_rss', 'rss_post_thumbnail');
 
+
 /*
  * Allow SVG uploads
  */
@@ -113,51 +126,23 @@
 
 
 /*
- * Second featured image uploader (requires changes to admin.js too).
- * @see: https://codex.wordpress.org/Javascript_Reference/wp.media
+ * Allow subscriber to see Private posts/pages
  */
-function custom_second_featured_image($post){
+	function add_theme_caps() {
+	    // Gets the author role
+	    $role = get_role('subscriber');
 
-    // Meta key (need to update the save_metabox function below to reflect this too!)
-    $meta_key = 'second_post_thumbnail';
+	    // Add capabilities
+	    $role->add_cap('read_private_posts');
+		$role->add_cap('read_private_pages');
+	}
+	//add_action( 'switch_theme', 'add_theme_caps');
 
-    // Get WordPress' media upload URL
-    $upload_link = esc_url( get_upload_iframe_src( 'image', $post->ID ) );
 
-    // See if there's a media id already saved as post meta
-    $image_id = get_post_meta( $post->ID, $meta_key, true );
-
-    // Get the image src
-    $image_src = wp_get_attachment_image_src( $image_id, 'post-thumbnail' );
-
-    // For convenience, see if the array is valid
-    $has_image = is_array( $image_src );
-
-    ?>
-
-        <div class="custom-meta custom-image-uploader">
-
-            <!-- A hidden input to set and post the chosen image id -->
-            <input class="custom-image-id" name="<?php echo $meta_key; ?>" type="hidden" value="<?php echo $image_id; ?>" />
-
-            <!-- Image container, which is manipulated with js -->
-            <div class="custom-image-container">
-                <?php if ( $has_image ) : ?>
-                    <img src="<?php echo $image_src[0] ?>"/>
-                <?php endif; ?>
-            </div>
-
-            <!-- Add & remove image links -->
-            <p class="hide-if-no-js">
-                <a class="upload-custom-image <?php if ( $has_image  ) { echo 'hidden'; } ?>" href="<?php echo $upload_link ?>">
-                    <?php _e('Set second featured image') ?>
-                </a>
-                <a class="delete-custom-image <?php if ( ! $has_image  ) { echo 'hidden'; } ?>" href="#">
-                    <?php _e('Remove image') ?>
-                </a>
-            </p>
-
-        </div>
-
-    <?php
-}
+/*
+ * Change the [...] that comes after excerpts
+ */
+    function custom_excerpt_ellipsis( $more ) {
+        return '...';
+    }
+    //add_filter('excerpt_more', 'custom_excerpt_ellipsis');

@@ -1,6 +1,7 @@
 <?php
-/**
- *  Custom Rest-Easy filters go in this file
+/*
+ * Custom Rest-Easy filters go in this file
+ * You can see the documentation here: https://github.com/funkhaus/Rest-Easy
  */
 
  /**
@@ -22,6 +23,7 @@
         return $input;
     }
     add_filter('rez_serialize_post', 'custom_video_embed');
+
 
 /**
  *  Serialize page siblings
@@ -51,6 +53,7 @@
     }
     add_filter('rez_gather_related', 'add_page_siblings');
 
+
 /**
  *  Serialize the Developer ID
  *
@@ -62,6 +65,7 @@
         return $input;
     }
     add_filter('rez_serialize_post', 'add_developer_id');
+
 
 /**
  *  Serialize attachment video URL

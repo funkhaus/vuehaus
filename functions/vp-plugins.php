@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * This file handles the required plugins of the Vuepress theme
+ */
     include_once get_template_directory() . '/functions/class-tgm-plugin-activation.php';
 
     function vuepress_register_required_plugins() {

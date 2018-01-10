@@ -46,6 +46,7 @@
             ''                                      => 'FrontPage',
             '/' . $category_base                    => 'Archive',
             '*'                                		=> 'Default'
+
         );
 
 		return $jsonData;
