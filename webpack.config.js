@@ -5,26 +5,6 @@ const path = require( 'path' )
 
 const isProd = process.env.NODE_ENV === 'production'
 
-const devPlugins = [
-    new webpack.EnvironmentPlugin({
-        NODE_ENV: 'development'
-    }),
-    new ExtractTextPlugin({
-        filename: 'bundle.css'
-    }),
-    new webpack.ProvidePlugin({
-        _get: ['lodash', 'get']
-    })
-]
-const prodPlugins = devPlugins.concat([
-    new webpack.optimize.UglifyJsPlugin({
-        compress: { warnings: false }
-    }),
-    new ExtractTextPlugin({
-        filename: 'bundle.css'
-    })
-])
-
 const config = {
     entry: ['whatwg-fetch', './src/main'],
     output: {
@@ -72,7 +52,7 @@ const config = {
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                    use: isProd ? 'css-loader?minimize' : 'css-loader',
+                    use: isProd ? 'css-loader?minimize' : 'css-loader?minimize',
                     fallback: 'vue-style-loader'
                 })
             }
@@ -85,17 +65,42 @@ const config = {
             'node_modules'
         ],
         alias: {
-            // Uncomment this if you need to use wp-content
-            // 'vue$': 'vue/dist/vue.esm.js'
+            'vue$': isProd ? 'vue/dist/vue.min.js' : 'vue/dist/vue.esm.js'
         }
     },
     performance: {
         maxEntrypointSize: 700000,
         hints: isProd ? 'warning' : false
     },
-    plugins: isProd ? prodPlugins : devPlugins
+    plugins: [
+        new ExtractTextPlugin({
+            filename: 'bundle.css'
+        }),
+        new webpack.ProvidePlugin({
+            _get: ['lodash', 'get']
+        })
+    ]
 }
 
-if (!isProd) config.devtool = '#source-map'
+// production only
+if (isProd) {
+
+    config.plugins = config.plugins.concat([
+        new webpack.optimize.UglifyJsPlugin({
+            compress: { warnings: false }
+        })
+    ])
+
+// dev only
+} else {
+
+    config.devtool = '#source-map'
+    config.plugins = config.plugins.concat([
+        new webpack.EnvironmentPlugin({
+            NODE_ENV: 'development'
+        })
+    ])
+
+}
 
 module.exports = config

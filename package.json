@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "npm run clean && webpack --watch",
-    "build": "npm run clean && NODE_ENV=production && webpack -p",
+    "build": "npm run clean && NODE_ENV=production webpack -p",
     "clean": "rm static/bundle.* || true",
     "install": "node bin/vp-install",
     "deploy": "npm run build && fh-deploy"
@@ -36,7 +36,7 @@
     "eslint-plugin-standard": "^3.0.1",
     "eslint-plugin-vue": "^2.0.1",
     "extract-text-webpack-plugin": "^2.1.0",
-    "fh-components": "^1.2.20",
+    "fh-components": "^1.2.22",
     "fh-deploy": "^1.0.2",
     "file-loader": "^0.9.0",
     "fs-extra": "^5.0.0",
