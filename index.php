@@ -16,6 +16,7 @@
         <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
     <![endif]-->
 
+    <?php get_template_part('parts/ga-tracking'); ?>
     <?php get_template_part('parts/og-tags'); ?>
     <?php get_template_part('parts/schema'); ?>
     <?php get_template_part('parts/font-loader'); ?>
