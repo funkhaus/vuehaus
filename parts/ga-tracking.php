@@ -2,8 +2,8 @@
     // Get options out of General Setting panel
     $tracking_names = array('ga_tracking_code_1', 'ga_tracking_code_2');
     $tracking_ids = array();
-    foreach($tracking_meta_names as $name) {
-        $option = get_option($name)
+    foreach($tracking_names as $name) {
+        $option = get_option($name);
         if( !empty($option) ) {
             $tracking_ids[] = $option;
         }
@@ -21,4 +21,4 @@
       gtag('config', '<?php echo $id; ?>');
       <?php endforeach; ?>
     </script>
-<php endif; ?>
+<?php endif; ?>
