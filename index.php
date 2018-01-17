@@ -2,7 +2,7 @@
 <html <?php language_attributes(); ?> prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>" />
-    <title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
+    <title><?php wp_title(); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="profile" href="http://gmpg.org/xfn/11" />

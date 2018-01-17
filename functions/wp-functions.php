@@ -14,6 +14,14 @@
     add_action('init', 'custom_wordpress_setup');
 
 /*
+ * Set custom page title
+ */
+    function alter_wordpress_title( $title, $sep ) {
+        return get_bloginfo('name') . $title;
+    }
+    add_filter('wp_title', 'alter_wordpress_title', 10, 2);
+
+/*
  * Setup theme
  */
     function custom_theme_setup() {

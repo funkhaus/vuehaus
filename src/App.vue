@@ -39,6 +39,16 @@
         components: {
             'site-header': SiteHeader
         },
+        watch: {
+            // change page title when title changes
+            '$store.state.meta.title' (title) {
+                if ( !document ) return
+                const el = document.createElement('div')
+                el.innerHTML = title
+                title = el.innerText || el.textContent
+                document.title = title
+            }
+        },
         mounted () {
             window.addEventListener('resize', throttle(this.onResize, 30))
             window.addEventListener('scroll', throttle(this.onScroll, 10))
