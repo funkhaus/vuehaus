@@ -93,7 +93,7 @@
 ?>
 
 <!-- start schema.org definition -->
-<script type="application/ld+json">
-    <?php echo json_encode($schema); ?>
-</script>
+    <script type="application/ld+json">
+        <?php echo json_encode($schema); ?>
+    </script>
 <!-- end schema.org -->

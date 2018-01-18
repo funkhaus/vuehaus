@@ -1,3 +1,12 @@
+<!--
+ ███████╗██╗   ██╗███╗   ██╗██╗  ██╗██╗  ██╗ █████╗ ██╗   ██╗███████╗
+ ██╔════╝██║   ██║████╗  ██║██║ ██╔╝██║  ██║██╔══██╗██║   ██║██╔════╝
+ █████╗  ██║   ██║██╔██╗ ██║█████╔╝ ███████║███████║██║   ██║███████╗
+ ██╔══╝  ██║   ██║██║╚██╗██║██╔═██╗ ██╔══██║██╔══██║██║   ██║╚════██║
+ ██║     ╚██████╔╝██║ ╚████║██║  ██╗██║  ██║██║  ██║╚██████╔╝███████║
+ ╚═╝      ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+ www.funkhaus.us
+-->
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> prefix="og: http://ogp.me/ns#">
 <head>
@@ -10,11 +19,6 @@
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
     <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/static/images/favicon.png" />
     <link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/static/images/icon-touch.png"/>
-
-    <!--Make Microsoft Internet Explorer behave like a standards-compliant browser. http://code.google.com/p/ie7-js/-->
-    <!--[if lt IE 9]>
-        <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
-    <![endif]-->
 
     <?php get_template_part('parts/ga-tracking'); ?>
     <?php get_template_part('parts/og-tags'); ?>
