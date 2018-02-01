@@ -18,9 +18,7 @@
             update_option('_custom_vuepress_templates', 'Default');
         }
 
-        // Options method for saving custom templates
-        // $custom_vuepress_templates = explode(',', get_option('_custom_vuepress_templates'));
-
+        // From functions/custom-vuepress-templates.php
         $custom_vuepress_templates = get_custom_vuepress_templates();
 
 		?>
