@@ -13,11 +13,6 @@
  */
 	function custom_media_meta($post) {
 
-        // ensure we have a default value for _custom_vuepress_templates
-        if( !get_option('_custom_vuepress_templates') ){
-            update_option('_custom_vuepress_templates', 'Default');
-        }
-
         // From functions/custom-vuepress-templates.php
         $custom_vuepress_templates = get_custom_vuepress_templates();
 
