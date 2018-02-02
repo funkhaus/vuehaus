@@ -469,15 +469,7 @@ Default partials include:
 ## Deploying
 Vuepress comes with [fh-deploy](https://www.npmjs.com/package/fh-deploy) to make deploying your site as easy as possible.
 
-After running `npm install`, `.deploy.config.example.js` will rename itself to `.deploy.config.js`, which is .gitignored by default. The only things you should need to change in this config file are:
-
-* Your desired host
-* The port number (22 for SFTP)
-* Your username
-* Your password
-* The target directory to deploy to
-
-After that, you can run `npm run deploy`, which automatically runs `npm run build` and sends your files to your server!
+Run `npm run deploy` to generate a config file based on a few user inputs. The queue of files to upload is in the package.json `files` property. `npm run deploy`  automatically runs `npm run build` and sends the queued files to your server!
 
 __Important note from fh-deploy readme:__
 
@@ -496,8 +488,9 @@ __Vuepress__
 
 http://funkhaus.us
 
-Version: 1.1.4
+Version: 1.1.5
 
+* 1.1.5 - Several misc. fixes, added fh-deploy version control in package.json
 * 1.1.4 - Restructuring according to [this issue](https://github.com/funkhaus/vuepress/issues/34)
 * 1.1.3 - Split Vuepress functionality into `/functions` directory
 * 1.1.2 - Added [TGM Plugin Activation](http://tgmpluginactivation.com/) to require plugins. Switching to x.x.x version numbering.
