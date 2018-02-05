@@ -12,9 +12,26 @@
  * Build media meta box
  */
 	function custom_media_meta($post) {
+
+        // From functions/custom-vuepress-templates.php
+        $custom_vuepress_templates = get_custom_vuepress_templates();
+
 		?>
 
         	<div class="custom-meta">
+
+                <?php if( !empty($custom_vuepress_templates) and count($custom_vuepress_templates) > 1 ) : ?>
+
+                    <label for="custom-vuepress-template">Select the custom template for this page:</label>
+                    <select id="custom-vuepress-template" name="custom_vuepress_template">
+                        <?php foreach( $custom_vuepress_templates as $template ) : ?>
+                            <option value="<?php echo $template; ?>" <?php selected($post->custom_vuepress_template, $template); ?>><?php echo $template; ?></option>
+                        <?php endforeach; ?>
+    				</select>
+    				<br/>
+
+                <?php endif; ?>
+
 				<label for="video-url">Enter the video URL for this page:</label>
 				<input id="video-url" class="short" title="This is needed for all video pages" name="custom_video_url" type="text" value="<?php echo $post->custom_video_url; ?>">
 				<br/>
@@ -84,6 +101,9 @@
         // check autosave
         if( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
             return $post_id;
+        }
+        if( isset($_POST['custom_vuepress_template']) ) {
+	        update_post_meta($post_id, 'custom_vuepress_template', $_POST['custom_vuepress_template']);
         }
         if( isset($_POST['custom_video_url']) ) {
 	        update_post_meta($post_id, 'custom_video_url', $_POST['custom_video_url']);

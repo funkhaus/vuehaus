@@ -18,6 +18,9 @@
     // Handles the server side processing of WordPress shortcodes
     include_once get_template_directory() . '/functions/shortcodes.php';
 
+    // Provides list of custom Vue Templates that the user can select from a drop-down menu
+    include_once get_template_directory() . '/functions/custom-vuepress-templates.php';
+
     // Defines the UI for custom meta boxes in WordPress
     include_once get_template_directory() . '/functions/meta-boxes.php';
 
