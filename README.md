@@ -14,7 +14,9 @@ For a quick start, look at the [Example Workflow](#example-workflow). For a more
     1. [Shared Styles](#shared-styles)
 1. [Reading List](#reading-list)
 1. [Building a Vuepress Site: Back-End](#building-a-vuepress-site-back-end)
+    1. [Manual Templates](#manual-templates)
     1. [Router and Templates](#router-and-templates)
+        1. [Manually Selected Template Routing](#manually-selected-template-routing)
     1. [The Developer Role and Developer IDs](#the-developer-role-and-developer-ids)
     1. [Developer Capabilities](#developer-capabilities)
     1. [Advanced Routing](#advanced-routing)
@@ -188,6 +190,21 @@ In Vuepress, you'll be building individual pages with Vue instead of PHP templat
 
 Any page on a Vuepress site will use the `index.php` template, which contains some automatically generated header tags and a single div called `#app`. This is where the main Vue component lives, with its content controlled by the [Vue router](https://router.vuejs.org/en/).
 
+### Manual Templates
+Many WordPress users are used to being able to select a given page's template through a drop-down menu in the WordPress backend. Vuepress mimics this feature in a drop-down menu below the post body field.
+
+To create manually selectable Vuepress templates:
+
+1. Create a Vue component (we'll call ours `ExampleTemplate.vue`) and `npm run build` like normal.
+1. Add the component name to the array in `functions/custom-vuepress-templates.php`. For our example, the array would look like this:
+```php
+array(
+    'Default',
+    'ExampleTemplate'
+);
+```
+1. Save and you should be able to select `ExampleTemplate` in the dropdown below the post body field! (See [here](#manually-selected-template-routing) for how this is implemented in the router.)
+
 ### Router and Templates
 A Vuepress site's routing table is built at runtime by `functions/router.php`'s `add_routes_to_json`] function. The table uses the Vue router, which in turn uses [path-to-regexp](https://github.com/pillarjs/path-to-regexp) to parse paths.
 
@@ -216,7 +233,8 @@ jsonData['routes'] = array(
 );
 ```
 
-That'd work just fine as long as the user never needed to change the URL to the About page - but what if they wanted to switch it to `our-team`?
+#### Manually Selected Template Routing
+Pages with manually-selected templates (ie, pages with a template selected in the dropdown below the post body field) have their routes set at the start of `router.php`'s output. This makes sure that they resolve to their manually-selected templates instead of other matching routes.
 
 ### The Developer Role and Developer IDs
 Since URLs can easily change in the WordPress backend, Vuepress includes a new WP role, Developer, that has access to a set of controls that other roles (even Administrator) can't see. One of these controls is for a page's "Developer ID" - an arbitrary value that can reliably identify a page.
