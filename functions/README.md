@@ -9,7 +9,7 @@ Here are a bunch of useful examples of how to use the Rest-Easy filter functions
  * @param array $post_data The post currently being processed by Rest-Easy
  */
     function add_second_featured_image($post_data){
-        $image_id = get_post_meta($post_data['id'], 'second_post_thumbnail;', true);
+        $image_id = get_post_meta($post_data['id'], 'second_post_thumbnail', true);
 
         if($image_id) {
             $post_data['secondPostThumbnail'] = apply_filters('rez_serialize_attachment', get_post($image_id));
