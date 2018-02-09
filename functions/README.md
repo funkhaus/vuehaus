@@ -1,4 +1,4 @@
-## Examples Rest Easy Filters
+## Example Rest-Easy Filters
 Here are a bunch of useful examples of how to use the Rest-Easy filter functions to send custom data to the frontend.
 
 
