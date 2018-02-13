@@ -130,7 +130,7 @@
         $mimes['svg'] = 'image/svg+xml';
         return $mimes;
     }
-    add_filter('upload_mimes', 'add_mime_types');
+    //add_filter('upload_mimes', 'add_mime_types');
 
 
 /*
@@ -153,7 +153,7 @@
     function custom_excerpt_ellipsis( $more ) {
         return '...';
     }
-    //add_filter('excerpt_more', 'custom_excerpt_ellipsis');
+    add_filter('excerpt_more', 'custom_excerpt_ellipsis');
 
 
 /*
@@ -194,8 +194,9 @@
     }
     add_action('admin_init', 'my_general_section');
 
+
 /*
- * Settings callbacks that build the markup
+ * Settings callbacks that build the Analytics markup
  */
     function vp_google_analytics_section() {
         echo '<p>Enter Google Analytics tracking codes. Uses the <code>gtag.js</code> tracking method.</p>';
