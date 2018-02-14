@@ -124,6 +124,19 @@
 
 
 /*
+ * Custom conditional function. Used to get the parent and all it's child.
+ */
+    function is_tree($tree_id, $target_post = null) {
+        // get full post object
+        $target_post = get_post($target_post);
+        // get all post ancestors
+        $ancestors = get_ancestors($target_post->ID, $target_post->post_type);
+        // if ID is target post OR in target post tree, return true
+        return ( ($target_post->ID == $tree_id) or in_array($tree_id, $ancestors) );
+    }
+
+
+/*
  * Allow SVG uploads
  */
     function add_mime_types($mimes) {
