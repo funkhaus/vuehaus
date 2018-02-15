@@ -460,6 +460,19 @@ Vuepress comes with a few SCSS [partials](http://sass-lang.com/guide) to make wr
 Default partials include:
 
 * `base` - Style applied in `App.vue`, affecting every page on the site.
+* `easings` - Several common easing functions. Includes:
+    * easeIn, easeOut, and easeInOut for:
+        * Sine
+        * Quad
+        * Cubic
+        * Quart
+        * Quint
+        * Expo
+        * Circ
+        * Back
+        * Fast
+    * authenticMotion
+
 * `transitions` - Common transitions applied in `App.vue`, affecting every page on the site. Includes:
     * `fade`
     * `slide-left`
