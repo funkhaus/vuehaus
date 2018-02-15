@@ -21,6 +21,8 @@ Vue.component('svg-image', require('src/components/SvgImage.vue'))
 // Vue.directive('full-height', fullHeight)
 // import reverseHover from 'fh-components/v-reverse-hover'
 // Vue.directive('reverse-hover', reverseHover)
+// import inView from 'fh-components/v-in-view'
+// Vue.directive('in-view', inView)
 
 // save initial page cache - dumped onto page as `jsonData` by Rest-Easy
 cache[window.location.pathname] = Promise.resolve(jsonData)
