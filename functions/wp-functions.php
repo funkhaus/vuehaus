@@ -219,3 +219,18 @@
         $option = get_option($args[0]);
         echo '<input type="text" id="'. $args[0] .'" name="'. $args[0] .'" value="' . $option . '" placeholder="UA-12345678-1"/>';
     }
+
+/*
+ * [svg-image] shortcode
+ */
+	function add_svg_image_shortcode( $atts ) {
+
+        extract(shortcode_atts(array(
+			'src'         => ''
+        ), $atts));
+
+		$props = 'src="' . $src . '"';
+
+		return '<svg-image ' . $props . '/>';
+	}
+	add_shortcode( 'svg-image', 'add_svg_image_shortcode' );
