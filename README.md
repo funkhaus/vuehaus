@@ -476,13 +476,18 @@ Default partials include:
     * `$mobile-padding: 20px;`
     * `$header-height: 80px;`
 
-    The following are breakpoints that can be used with:
+    The following are breakpoints that can be used with `@media #{$size} { /* your rules here */ }`:
 
-    `@media #{$size} { /* your rules here */ }`
     * `$gt-cinema: "only screen and (min-width: 1800px)";`
     * `$lt-desktop: "only screen and (max-width: 1100px)";`
     * `$lt-phone: "only screen and (max-width: 750px)";`
     * `$lt-phone-landscape: "only screen and (max-width: 750px) and (orientation: landscape)";`
+
+    `vars` includes the following mixins:
+
+    * `fill` - `position: absolute` with `top`, `right`, `bottom`, and `left` set to `0`.
+    * `cover` - Centered, no-repeat, `background-size: cover`.
+    * `contain` - Same as `cover`, but with `background-size: contain`.
 
 ## Deploying
 Vuepress comes with [fh-deploy](https://www.npmjs.com/package/fh-deploy) to make deploying your site as easy as possible.
