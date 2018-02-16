@@ -134,27 +134,19 @@
 
 
 /*
- * Update custom field within media overlay (via ajax)
+ * Update media custom field when updating attachment
  */
-    function custom_update_attachment_video_url_ajax() {
-        $post_id = $_POST['id'];
+    function custom_update_attachment_video_url( $post_id = null ) {
+        if( empty($post_id) and isset($_POST['id']) ) {
+            $post_id = $_POST['id'];
+        }
 
         if( isset( $_POST['attachments'][ $post_id ]['custom_video_url'] ) ) {
             update_post_meta( $post_id , 'custom_video_url', $_POST['attachments'][ $post_id ]['custom_video_url'] );
         }
 
         clean_post_cache($post_id);
-    }
-    add_action( 'wp_ajax_save-attachment-compat', 'custom_update_attachment_video_url_ajax', 0, 1 );
-
-
-/*
- * Update media custom field from edit media page (non ajax).
- */
-    function custom_update_attachment_video_url( $post_id ) {
-        if( isset( $_POST['attachments'][ $post_id ]['custom_video_url'] ) ) {
-            update_post_meta( $post_id , 'custom_video_url', $_POST['attachments'][ $post_id ]['custom_video_url'] );
-        }
         return;
     }
     add_action( 'edit_attachment', 'custom_update_attachment_video_url', 1 );
+    add_action( 'wp_ajax_save-attachment-compat', 'custom_update_attachment_video_url', 0, 1 );
