@@ -17,3 +17,18 @@
 		return '<vue-component-name ' . $props . '/>';
 	}
 	//add_shortcode( 'shortcode-name', 'custom_shortcode_function' );
+
+/*
+ * [svg-image] shortcode
+ */
+	function add_svg_image_shortcode( $atts ) {
+
+        extract(shortcode_atts(array(
+			'src'         => ''
+        ), $atts));
+
+		$props = 'src="' . $src . '"';
+
+		return '<svg-image ' . $props . '/>';
+	}
+	add_shortcode( 'svg-image', 'add_svg_image_shortcode' );
