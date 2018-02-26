@@ -169,6 +169,24 @@
         return rez_remove_siteurl($permalink) . $after;
     }
 
+    // Gets the children of a page with the given Developer ID
+    function get_children_of_dev_id($dev_id){
+        $parent = get_page_by_dev_id($dev_id);
+
+        if( $parent === false ) {
+            return false;
+        }
+
+        $args = array(
+            'posts_per_page'   => -1,
+            'post_type'        => 'page',
+            'orderby'          => 'menu_order',
+            'order'            => 'ASC',
+            'post_parent'      => $parent->ID,
+        );
+        return get_posts($args);
+    }
+
     // Makes sure Developer role can sort Nested Pages automatically
     function give_developer_ordering_permissions(){
 
