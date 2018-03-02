@@ -20,7 +20,7 @@
     "dev": "npm run clean && webpack --watch",
     "build": "npm run clean && NODE_ENV=production webpack -p",
     "clean": "rm static/bundle.* || true",
-    "deploy": "npm run build && fh-deploy"
+    "deploy": "fh-deploy"
   },
   "author": "Funkhaus",
   "license": "ISC",
