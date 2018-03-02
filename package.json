@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "dev": "npm run clean && webpack --watch",
-    "build": "npm run clean && NODE_ENV=production webpack -p",
+    "build": "npm run clean && NODE_ENV=production webpack",
     "clean": "rm static/bundle.* || true",
     "deploy": "fh-deploy"
   },

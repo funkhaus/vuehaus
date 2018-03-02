@@ -52,7 +52,7 @@ const config = {
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                    use: isProd ? 'css-loader?minimize' : 'css-loader?minimize',
+                    use: isProd ? 'css-loader?minimize' : 'css-loader',
                     fallback: 'vue-style-loader'
                 })
             }
