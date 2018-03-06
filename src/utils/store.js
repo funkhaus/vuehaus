@@ -75,6 +75,11 @@ export default new Vuex.Store( {
             return !state.loaded
         },
         post: state => {
+            // Return an empty object if we're still loading
+            if( !state.loaded ){
+                return {}
+            }
+
             // This is a "post" in the sense of a WordPress post - the first result of the Loop
             return _get(state.loop, '[0]', {})
         },
