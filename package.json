@@ -18,9 +18,9 @@
   ],
   "scripts": {
     "dev": "npm run clean && webpack --watch",
-    "build": "npm run clean && NODE_ENV=production webpack -p",
+    "build": "npm run clean && NODE_ENV=production webpack",
     "clean": "rm static/bundle.* || true",
-    "deploy": "npm run build && fh-deploy"
+    "deploy": "fh-deploy"
   },
   "author": "Funkhaus",
   "license": "ISC",
@@ -44,7 +44,7 @@
     "eslint-plugin-standard": "^3.0.1",
     "eslint-plugin-vue": "^2.0.1",
     "extract-text-webpack-plugin": "^2.1.0",
-    "fh-components": "^1.2.28",
+    "fh-components": "^1.2.33",
     "fh-deploy": "^1.1.2",
     "file-loader": "^0.9.0",
     "fs-extra": "^5.0.0",

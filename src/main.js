@@ -9,7 +9,7 @@ import cache from 'src/utils/cache'
 Vue.component('hamburger-button', require('fh-components/hamburger-button').default)
 Vue.component('responsive-image', require('fh-components/responsive-image').default)
 // Vue.component('video-stage', require('fh-components/video-stage').default)
-// Vue.component('wp-content', require('fh-components/wp-content').default)
+Vue.component('wp-content', require('fh-components/wp-content').default)
 Vue.component('wp-menu', require('fh-components/wp-menu').default)
 Vue.component('menu-item', require('fh-components/wp-menu-item').default)
 // Vue.component('split-text', require('fh-components/split-text').default)
