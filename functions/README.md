@@ -69,4 +69,152 @@ Here are a bunch of useful examples of how to use the Rest-Easy filter functions
         return $loop;
     }
     add_filter('rez_build_loop_data', 'serialize_contact_pages');
+    
+```
+
+
+## Example of some useful shortcodes
+Here are a bunch of useful examples of how to use WordPress shortcodes with Vuepress. You will need both the PHP and the Vue template.
+
+
+```php
+/*
+ * Image component (left or right aligned), with text on either side of it.
+ */
+	function custom_shortcode_image( $atts, $content = '', $name) {
+        $props = '';
+        $content = custom_filter_shortcode_text($content);
+
+		// Include default props here
+        extract(shortcode_atts(array(
+			'id'         => '' // ID of WordPress attachment/image
+        ), $atts));
+
+        if( !empty($id) ) {
+            $image = apply_filters('rez_serialize_attachment', get_post($id));
+
+            // Props to pass to Vue component
+    		$props = ':image="' . esc_attr(json_encode($image)) . '"';
+        }
+
+		return '<image-shortcode '. $props .' name="'. $name .'">'. $content .'</image-shortcode>';
+	}
+    add_shortcode( 'image-left', 'custom_shortcode_image' );
+    add_shortcode( 'image-right', 'custom_shortcode_image' );
+```
+
+```vue
+<template>
+
+    <div :class="classes">
+        <div v-if="image" class="image">
+            <responsive-image :object="image"/>
+        </div>
+        <div v-if="$slots.default" class="text">
+            <slot></slot>
+        </div>
+    </div>
+
+</template>
+
+<script>
+    export default {
+        props: {
+            image: {
+                type: Object,
+                default: ()=>{}
+            },
+            name: {
+                type: String,
+                default: 'image-left'
+            }
+        },
+        computed: {
+            classes () {
+                return [
+                    'shortcode',
+                    'image-shortcode',
+                    this.name
+                ]
+            }
+        }
+    }
+</script>
+
+<style lang="scss">
+    @import 'src/styles/vars';
+
+    .image-shortcode {
+        margin: 50px auto;
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-content: center;
+        align-items: center;
+
+        .image {
+            width: 50%;
+            padding-right: 30px;
+            box-sizing: border-box;
+        }
+        .text {
+            width: 50%;
+            padding: 0 40px;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+    }
+    .image-shortcode.image-right {
+        .image {
+            padding-left: 30px;
+            padding-right: 0;
+            order: 1;
+        }
+        .text {
+            order: 0;
+        }
+    }
+</style>
+```
+
+
+
+```php
+/*
+ * Half column of text
+ */
+	function custom_shortcode_half_column( $atts, $content = '', $name ) {
+        $content = custom_filter_shortcode_text($content);
+        return '<half-column>'. $content .'</half-column>';
+	}
+	add_shortcode( 'half-column', 'custom_shortcode_half_column' );
+```	
+
+```vue
+<template>
+
+    <div class="shortcode half-column">
+        <slot></slot>
+    </div>
+
+</template>
+
+<script>
+    export default {}
+</script>
+
+<style lang="scss">
+    @import 'src/styles/vars';
+
+    .half-column {
+        width: 50%;
+        display: inline-block;
+        vertical-align: top;
+    }
+    .half-column + .half-column {
+        width: 45%;
+    }
+</style>
 ```
