@@ -20,7 +20,6 @@
     <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/static/images/favicon.png" />
     <link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/static/images/icon-touch.png"/>
 
-    <?php get_template_part('parts/ga-tracking'); ?>
     <?php get_template_part('parts/og-tags'); ?>
     <?php get_template_part('parts/schema'); ?>
     <?php get_template_part('parts/font-loader'); ?>
