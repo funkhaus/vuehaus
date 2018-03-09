@@ -70,6 +70,7 @@
             // Probably unchanging
             ''                                      => 'FrontPage',
             '/' . $category_base                    => 'Archive',
+            '/(\\d+)/:slug'                         => 'Default', // If Permalinks set to "/%post_id%/%postname%/" then this will be a single Blog post
             '*'                                		=> 'Default'
 
         );
