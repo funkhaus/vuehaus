@@ -22,26 +22,10 @@
 	//add_shortcode( 'shortcode-name', 'custom_shortcode_function' );
 
 
-/*
- * Creates a an [svg-image] shortcode so a user can add SVGs into the editor correctly
- */
-	function add_svg_image_shortcode( $atts ) {
-
-        extract(shortcode_atts(array(
-			'src'         => ''
-        ), $atts));
-
-		$props = 'src="' . $src . '"';
-
-		return '<svg-image ' . $props . '/>';
-	}
-	//add_shortcode( 'svg-image', 'add_svg_image_shortcode' );
-
-
 /**
  * Utility function to clean up the way WordPress auto formats text in a shortcode.
  *
- * @param string $text A stirng of HTML text
+ * @param string $text A string of HTML text
  */
     function custom_filter_shortcode_text($text = '') {
         // Remove all the poorly formatted P tags that WP adds by default.

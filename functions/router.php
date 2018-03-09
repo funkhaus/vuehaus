@@ -38,12 +38,13 @@
         // build out router table to be used with Vue
         $programmed_routes = array(
 
+			// Your custom routes go here.
+			// If a custom route is defined for a specific post, it will override any entry in this array.
+
             // Per-site
             // '/path'                              => 'VueComponent',
             // '/path/:var'                         => 'ComponentWithVar'
             // '/path/*/:var'                       => 'WildcardAndVar'
-            // path_from_dev_id('dev-id')  		=> 'DefinedByDevId',
-		    // path_from_dev_id('dev-id', '/append-me') => 'DevIdPathPlusAppendedString',
 
             // Probably unchanging
             // ''                                      => 'FrontPage',

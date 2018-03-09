@@ -1,25 +1,6 @@
 ## Example Rest-Easy Filters
 Here are a bunch of useful examples of how to use the Rest-Easy filter functions to send custom data to the frontend.
 
-
-```php
-/**
- *  Include the second post thumbnail in all posts
- *
- * @param array $post_data The post currently being processed by Rest-Easy
- */
-    function add_second_featured_image($post_data){
-        $image_id = get_post_meta($post_data['id'], 'second_post_thumbnail', true);
-
-        if($image_id) {
-            $post_data['secondPostThumbnail'] = apply_filters('rez_serialize_attachment', get_post($image_id));
-        }
-        return $post_data;
-    }
-    add_filter('rez_serialize_post', 'add_second_featured_image');
-
-```
-
 ```php
 /**
  * Add a custom formatted date to all posts
@@ -36,31 +17,15 @@ Here are a bunch of useful examples of how to use the Rest-Easy filter functions
 
 ```php
 /**
- * Add custom credits to each post. Add line breaks while doing it.
- *
- * @param array $post_data The post currently being processed by Rest-Easy
- */
-    function custom_format_credits($post_data){
-        $post = get_post($post_data['id']);
-        $post_data['meta']['customCredits'] = nl2br($post->custom_credits);
-        return $post_data;
-    }
-    add_filter('rez_serialize_post', 'custom_format_credits');
-```
-
-
-```php
-/**
  * Overwrite the loop when in a tree to always be the children of the parent page.
  * This is useful when you want a child page to actually return all siblings as the main loop.
- * Common for contact pages that show as an accordian menu.
  *
- * @param array $loop All the pages/posts in the cuurent loop
+ * @param array $loop All the pages/posts in the curent loop
  */
     function serialize_contact_pages($loop){
-        
+
         $page = get_page_by_dev_id('contact');
-        
+
         if( is_tree($page->ID) ) {
             $loop = array();
             $loop[0] = apply_filters('rez_serialize_object', get_post($page->ID));
@@ -69,13 +34,11 @@ Here are a bunch of useful examples of how to use the Rest-Easy filter functions
         return $loop;
     }
     add_filter('rez_build_loop_data', 'serialize_contact_pages');
-    
-```
 
+```
 
 ## Example of some useful shortcodes
 Here are a bunch of useful examples of how to use WordPress shortcodes with Vuepress. You will need both the PHP and the Vue template.
-
 
 ```php
 /*
@@ -190,7 +153,7 @@ Here are a bunch of useful examples of how to use WordPress shortcodes with Vuep
         return '<half-column>'. $content .'</half-column>';
 	}
 	add_shortcode( 'half-column', 'custom_shortcode_half_column' );
-```	
+```
 
 ```vue
 <template>

@@ -1,4 +1,7 @@
 <?php
+    // automatic Open Graph tag generation
+    // https://www.redclayinteractive.com/what-are-open-graph-tags/
+
     /*
      * Build the image URL
      */

@@ -1,4 +1,7 @@
 <?php
+    // automatic structured data markup to improve search engine visibility
+    // https://developers.google.com/search/docs/guides/intro-structured-data
+
     // abort if no post to work off of
     if ( ! $post = get_post() ) return;
 

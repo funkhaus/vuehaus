@@ -71,7 +71,7 @@
     function custom_latest_timestamp() {
 
 		// set base, find top level assets of static dir
-        $base =  get_template_directory();
+        $base = get_template_directory();
 		$assets = array_merge(glob($base . '/static/*.js'), glob($base . '/static/*.css'));
 
 		// get m time of each asset
@@ -122,20 +122,6 @@
 	}
 	add_filter('the_excerpt_rss', 'rss_post_thumbnail');
 
-
-/*
- * Custom conditional function. Used to get the parent and all it's child.
- */
-    function is_tree($tree_id, $target_post = null) {
-        // get full post object
-        $target_post = get_post($target_post);
-        // get all post ancestors
-        $ancestors = get_ancestors($target_post->ID, $target_post->post_type);
-        // if ID is target post OR in target post tree, return true
-        return ( ($target_post->ID == $tree_id) or in_array($tree_id, $ancestors) );
-    }
-
-
 /*
  * Allow SVG uploads
  */
@@ -166,56 +152,4 @@
     function custom_excerpt_ellipsis( $more ) {
         return '...';
     }
-    add_filter('excerpt_more', 'custom_excerpt_ellipsis');
-
-
-/*
- * Add Google Analytics tracking settings to admin dashboard
- */
-    function my_general_section() {
-        add_settings_section(
-            'vp_google_analytics_section',  // Section ID
-            'Google Analytics Tracking IDs',        // Section Title
-            'vp_google_analytics_section', // Callback
-            'general'                      // This makes the section show up on the General Settings Page
-        );
-
-        add_settings_field(
-            'ga_tracking_code_1',   // Option ID
-            'Tracking ID #1',       // Label
-            'vp_google_analytics_settings', // !important - This is where the args go!
-            'general',                      // Page it will be displayed (General Settings)
-            'vp_google_analytics_section',  // Name of our section
-            array(
-                'ga_tracking_code_1' // Should match Option ID
-            )
-        );
-
-        add_settings_field(
-            'ga_tracking_code_2',   // Option ID
-            'Tracking ID #2',       // Label
-            'vp_google_analytics_settings', // !important - This is where the args go!
-            'general',                      // Page it will be displayed (General Settings)
-            'vp_google_analytics_section',  // Name of our section
-            array(
-                'ga_tracking_code_2' // Should match Option ID
-            )
-        );
-
-        register_setting('general','ga_tracking_code_1', 'esc_attr');
-        register_setting('general','ga_tracking_code_2', 'esc_attr');
-    }
-    add_action('admin_init', 'my_general_section');
-
-
-/*
- * Settings callbacks that build the Analytics markup
- */
-    function vp_google_analytics_section() {
-        echo '<p>Enter Google Analytics tracking codes. Uses the <code>gtag.js</code> tracking method.</p>';
-    }
-
-    function vp_google_analytics_settings($args) {
-        $option = get_option($args[0]);
-        echo '<input type="text" id="'. $args[0] .'" name="'. $args[0] .'" value="' . $option . '" placeholder="UA-12345678-1"/>';
-    }
+    // add_filter('excerpt_more', 'custom_excerpt_ellipsis');
