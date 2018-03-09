@@ -27,13 +27,14 @@
                 'name'      => 'Rest-Easy',
                 'slug'      => 'rest-easy',
                 'source'    => 'https://github.com/funkhaus/Rest-Easy/archive/master.zip',
-                'version'   => $latest_rest_easy
-            ),
-            array(
-                'name'      => 'Nested Pages',
-                'slug'      => 'wp-nested-pages',
-                'required'	=> false
+                'version'   => $latest_rest_easy,
+                'required'  => true
             )
+            // array(
+            //     'name'      => 'Nested Pages',
+            //     'slug'      => 'wp-nested-pages',
+            //     'required'	=> false
+            // )
         );
 
         tgmpa( $plugins, $config );
