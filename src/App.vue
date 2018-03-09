@@ -1,28 +1,15 @@
 <template>
     <div :class="classes">
-        <site-header/>
 
         <router-view/>
-
-        <transition name="fade">
-            <div
-                v-if="$store.state.menuOpened"
-                class="click-blocker"
-                @click.native="$store.commit('CLOSE_MENU')">
-
-                <wp-menu name="Main Menu" @click.native="$store.commit('CLOSE_MENU')"/>
-            </div>
-        </transition>
 
     </div>
 </template>
 
 <script>
-    import throttle from 'lodash/throttle'
     import router from 'src/utils/router'
     import store from 'src/utils/store'
     import _kebabCase from 'lodash/kebabCase'
-    import SiteHeader from 'src/components/SiteHeader.vue'
     import CacheCrawler from 'src/utils/cache-crawler'
 
     export default {
@@ -36,13 +23,12 @@
                 sTop: 0
             }
         },
-        components: {
-            'site-header': SiteHeader
-        },
         watch: {
             // change page title when title changes
             '$store.state.meta.title' (title) {
                 if ( !document ) return
+
+                // sanitize html and set as title
                 const el = document.createElement('div')
                 el.innerHTML = title
                 title = el.innerText || el.textContent
@@ -50,8 +36,8 @@
             }
         },
         mounted () {
-            window.addEventListener('resize', throttle(this.onResize, 30))
-            window.addEventListener('scroll', throttle(this.onScroll, 10))
+            window.addEventListener('resize', this.onResize)
+            window.addEventListener('scroll', this.onScroll)
 
             // start cache crawler after page has fully loaded
             window.onload = function(){
@@ -88,11 +74,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-
-    // import base styles and transitions
-    @import 'src/styles/base';
-    @import 'src/styles/transitions';
-
-</style>

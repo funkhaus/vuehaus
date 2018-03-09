@@ -9,10 +9,16 @@ function flatten(arr) {
     }, [])
 }
 
+// CacheCrawler preloads linked pages into the Vuepress cache.
+// It speeds up page navigation dramatically, but results in extra network requests, so it's turned off by default.
+// You can activate it manually in store.js
 class CacheCrawler {
     constructor(){
+        // which URLs we're going to try to preload
         this.candidates = []
+        // are we currently waiting for a response?
         this.fetching = false
+        // current candidate URL index
         this.index = 0
     }
 
@@ -20,9 +26,10 @@ class CacheCrawler {
         // reset index
         this.index = 0
 
-        // links in all site menus
+        // Which URLs should we try to load?
+        // URLs in all site menus:
         const menuCandidates = store.state.site.menus.map(menu => menu.items.map(item => item.relativePath))
-        // links in the loop
+        // URLs in the Loop:
         const loopCandidates = store.state.loop.map( page => {
             const output = [ page.relativePath ]
             if( page.related.children && page.related.children.length ){
@@ -31,6 +38,8 @@ class CacheCrawler {
             return output
         })
 
+        // add your own URLs to crawl here
+
         // list of locations where we want to look for links
         const candidateQueue = [
             menuCandidates,
@@ -38,6 +47,7 @@ class CacheCrawler {
         ]
         this.candidates = flatten(candidateQueue)
 
+        // start the fetch loop
         if( !this.fetching ){
             this.goFetch()
         }
@@ -52,14 +62,17 @@ class CacheCrawler {
             return
         }
 
+        // save the URL to fetch
         const path = this.candidates[this.index++]
 
+        // ignore if we've already cached this url
         if ( !cache[path] ){
-            const headers = new Headers({ 'Authorization': `Basic ${ btoa('flywheel:funkhaus') }` })
-            cache[path] = await fetch(`${path}?contentType=json`, { headers }).then(r => r.json())
+            // fetch the JSON data from the URL
+            // ?contentType=json is a Rest-Easy convention, ensuring that we only get a JSON response
+            cache[path] = await fetch(`${path}?contentType=json`).then(r => r.json())
         }
 
-
+        // continue the fetch loop
         this.goFetch()
     }
 }

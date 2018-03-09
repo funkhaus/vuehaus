@@ -7,22 +7,24 @@ import Vue from 'vue'
 Vue.use( VueRouter )
 
 // load all templates in folder
-const templates = require.context('src/views', true)
+const templates = require.context('src/templates', true)
 
-// build routing table
+// build routing table from jsonData (Rest-Easy data)
 const routeTable = []
 Object.keys(jsonData.routes).forEach(path => {
 
     let routeObject = jsonData.routes[path]
 
+    // handle shortcut route delcaration
+    // (ie, '/path' => 'MyTemplate' in functions.router.php)
     if( typeof routeObject === 'string' ){
         routeObject = {
             component: routeObject
         }
     }
 
+    // save the path and component name
     routeObject.path = path
-
     routeObject.name = routeObject.name || routeObject.component
 
     // get specified component, fallback to default
@@ -31,6 +33,7 @@ Object.keys(jsonData.routes).forEach(path => {
         component = templates(`./${ routeObject.component }.vue`)
     }
 
+    // set component
     routeObject.component = component
 
     // push new route entry to table
@@ -40,6 +43,9 @@ Object.keys(jsonData.routes).forEach(path => {
 const router = new VueRouter( {
     mode: 'history',
     routes: routeTable,
+
+    // scroll to top of page or to saved position
+    // https://router.vuejs.org/en/advanced/scroll-behavior.html
     scrollBehavior (to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition

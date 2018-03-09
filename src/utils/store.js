@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import Vue from 'vue'
 import cache from 'src/utils/cache'
 import _get from 'lodash/get'
-import CacheCrawler from 'src/utils/cache-crawler'
+//import CacheCrawler from 'src/utils/cache-crawler'
 
 // add vuex
 Vue.use( Vuex )
@@ -16,7 +16,6 @@ export default new Vuex.Store( {
         transitioning_in: false,
         transitioning_out: false,
         loaded: true,
-        menuOpened: false,
         referral: undefined
     },
     mutations: {
@@ -25,8 +24,8 @@ export default new Vuex.Store( {
             state.meta = data.meta
             state.loop = data.loop
 
-            // reboot cache-crawler
-            CacheCrawler.onNewPage()
+            // Uncomment next line and import statement above to use the cache-crawler
+            // CacheCrawler.onNewPage()
 
             return state
         },
@@ -40,12 +39,6 @@ export default new Vuex.Store( {
         },
         'SET_LOADED': (state, loaded) => {
             state.loaded = loaded || false
-        },
-        'OPEN_MENU': state => {
-            state.menuOpened = true
-        },
-        'CLOSE_MENU': state => {
-            state.menuOpened = false
         },
         'UPDATE_REFERRAL_ROUTE': (state, referral) => {
             state.referral = referral
