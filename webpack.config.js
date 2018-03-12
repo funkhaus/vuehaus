@@ -24,7 +24,7 @@ const config = {
                         })
                     },
                     extractCSS: true,
-                    preserveWhitespace: !isProd,
+                    preserveWhitespace: false,
                     postcss: [
                         require('autoprefixer')({
                             browsers: ['last 5 versions']
