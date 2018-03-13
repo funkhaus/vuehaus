@@ -33,7 +33,7 @@
 
 		$props = 'src="' . $src . '"';
 
-		return '<svg-image ' . $props . '/>';
+		return '<svg-image ' . $props . '></svg-image>';
 	}
 	//add_shortcode( 'svg-image', 'add_svg_image_shortcode' );
 
