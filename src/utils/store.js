@@ -8,6 +8,9 @@ import CacheCrawler from 'src/utils/cache-crawler'
 // add vuex
 Vue.use( Vuex )
 
+// headers for fetch requests
+const headers = new Headers({ credentials: 'same-origin' })
+
 export default new Vuex.Store( {
     state: {
         site: jsonData.site,
@@ -60,7 +63,6 @@ export default new Vuex.Store( {
             // no cache? set it
             if ( !cache[payload.path] ){
                 context.commit('SET_LOADED', false)
-                const headers = new Headers({ 'Authorization': `Basic ${ btoa('flywheel:funkhaus') }` })
                 cache[path] = fetch(`${path}?contentType=json`, { headers }).then(r => r.json())
             }
 
