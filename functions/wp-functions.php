@@ -39,7 +39,7 @@
  * Enqueue any Custom Admin Scripts
  */
 	function custom_admin_scripts() {
-		//wp_register_script('site-admin', get_template_directory_uri() . '/static/js/admin.js', 'jquery', '1.0');
+		//wp_register_script('site-admin', get_template_directory_uri() . '/static/js/admin.js', 'jquery', custom_latest_timestamp());
 		//wp_enqueue_script('site-admin');
 	}
 	//add_action( 'admin_enqueue_scripts', 'custom_admin_scripts' );
