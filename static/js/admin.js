@@ -2,12 +2,13 @@
 var funkhausAdmin = {
 
     init: function() {
-        funkhausAdmin.navMenuTweaks();
+        funkhausAdmin.showNavMenuUrls();
+        funkhausAdmin.showAttachmentIds();
         funkhausAdmin.autoRefresh();
         //funkhausAdmin.secondFeaturedImageUploader();
     },
 
-    navMenuTweaks: function(){
+    showNavMenuUrls: function(){
 
 		// Show the URL of menu items when hovering over wp_nav_menu box
 		var url;
@@ -19,6 +20,18 @@ var funkhausAdmin = {
 		);
 
     },
+
+    showAttachmentIds: function(){
+
+        // Show the attachment URLs on hover of attachment grid blocks
+        jQuery(document).on('mouseenter', '.media-modal .attachment, .media-frame .attachment', function(){
+            var id = jQuery(this).data('id');
+            if(id) {
+                jQuery(this).attr('title', 'Attachment ID: ' + id);
+            }
+        });
+
+    }
 
 	autoRefresh: function(){
 
@@ -118,8 +131,6 @@ var funkhausAdmin = {
 
         });
 	}
-
-
 };
 jQuery(document).ready(function(){
 	funkhausAdmin.init();
