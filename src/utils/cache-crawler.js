@@ -65,8 +65,10 @@ class CacheCrawler {
         // save the URL to fetch
         const path = this.candidates[this.index++]
 
-        // ignore if we've already cached this url
-        if ( !cache[path] ){
+        // conditions when we should ignore this path
+        const ignorePath = !path || typeof path != 'string' || !path.length || path.startsWith('#')
+
+        if ( !ignorePath && !cache[path] ){
             // fetch the JSON data from the URL
             // ?contentType=json is a Rest-Easy convention, ensuring that we only get a JSON response
             cache[path] = await fetch(`${path}?contentType=json`).then(r => r.json())
