@@ -54,7 +54,10 @@ class CacheCrawler {
 
         const path = this.candidates[this.index++]
 
-        if ( !cache[path] ){
+        // conditions when we should ignore this path
+        const ignorePath = !path || typeof path != 'string' || !path.length || path.startsWith('#')
+
+        if ( !ignorePath && !cache[path] ){
             const headers = new Headers({ 'Authorization': `Basic ${ btoa('flywheel:funkhaus') }` })
             cache[path] = await fetch(`${path}?contentType=json`, { headers }).then(r => r.json())
         }
