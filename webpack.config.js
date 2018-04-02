@@ -78,7 +78,7 @@ const config = {
             filename: 'bundle.css'
         }),
         new webpack.ProvidePlugin({
-            _get: ['lodash', 'get']
+            _get: ['lodash/get']
         })
     ]
 }
