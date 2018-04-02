@@ -4,7 +4,7 @@ Vuepress is a boilerplate used to build fast, responsive [WordPress](https://wor
 # Tutorial
 Head over to the [tutorial](https://github.com/funkhaus/vuepress/wiki/Vuepress-Tutorial) to learn how to build Vue.js + WordPress sites with Vuepress!
 
-# References
+# Reference
 
 ## Table of Contents
 1. [Install](#install)
@@ -15,12 +15,7 @@ Head over to the [tutorial](https://github.com/funkhaus/vuepress/wiki/Vuepress-T
     1. [Images](#images)
     1. [Images with Videos](#images-with-videos)
     1. [Shared Styles](#shared-styles)
-1. [Reading List](#reading-list)
-1. [Building a Vuepress Site: Back-End](#building-a-vuepress-site-back-end)
-    1. [Manual Templates](#manual-templates)
-    1. [Router and Templates](#router-and-templates)
-        1. [Manually Selected Template Routing](#manually-selected-template-routing)
-    1. [The Developer Role and Developer IDs](#the-developer-role-and-developer-ids)
+1. [The Developer Role and Developer IDs](#the-developer-role-and-developer-ids)
     1. [Developer Capabilities](#developer-capabilities)
     1. [Advanced Routing](#advanced-routing)
         1. [Front Page Children](#front-page-children)
@@ -30,10 +25,8 @@ Head over to the [tutorial](https://github.com/funkhaus/vuepress/wiki/Vuepress-T
     1. [Mutations](#mutations)
     1. [Actions](#actions)
     1. [Getters](#getters)
-1. [Building a Vuepress Site: Front-End](#building-a-vuepress-site-front-end)
-    1. [Example Workflow](#example-workflow)
-    1. [Vuepress Events](#vuepress-events)
-    1. [Partials](#partials)
+1. [Vuepress Events](#vuepress-events)
+1. [Partials](#partials)
 1. [Deploying](#deploying)
 1. [Recommended Reading](#recommended-reading)
 
@@ -175,69 +168,6 @@ The default breakpoints (with `lt` for "less than" and `gt` for "greater than") 
 * **`lt-phone`** - `only screen and (max-width: 750px)`
 * **`lt-phone-landscape`** - `only screen and (max-width: 750px) and (orientation: landscape)`
 
-## Reading List
-To get started with Vuepress, you should already know or familiarize yourself with:
-1. [WordPress](https://wordpress.org/)
-1. [Node.js and NPM](https://nodejs.org/en/download/) (npm is included with Node)
-1. [Vue.js](https://vuejs.org/)
-
-To get the most out of Vuepress, you can continue with:
-1. [Rest-Easy](https://github.com/funkhaus/Rest-Easy), a WordPress plugin by Funkhaus
-1. The [Vue router](https://router.vuejs.org/en/)
-1. [Vuex](https://vuex.vuejs.org/en/intro.html)
-
-## Building a Vuepress Site: Back-End
-Vuepress requires the [Rest-Easy](https://github.com/funkhaus/Rest-Easy) plugin to work correctly, so make sure you have that installed before getting started. Vuepress ships with [TGM Plugin Activation](http://tgmpluginactivation.com/) to make Rest-Easy installation simpler.
-
-In Vuepress, you'll be building individual pages with Vue instead of PHP templates. This can take some getting used to, but ultimately allows for all of the flexibility and power of Vue right from the start.
-
-Any page on a Vuepress site will use the `index.php` template, which contains some automatically generated header tags and a single div called `#app`. This is where the main Vue component lives, with its content controlled by the [Vue router](https://router.vuejs.org/en/).
-
-### Manual Templates
-Many WordPress users are used to being able to select a given page's template through a drop-down menu in the WordPress backend. Vuepress mimics this feature in a drop-down menu below the post body field.
-
-To create manually selectable Vuepress templates:
-
-1. Create a Vue component (we'll call ours `ExampleTemplate.vue`) and `npm run build` like normal.
-1. Add the component name to the array in `functions/custom-vuepress-templates.php`. For our example, the array would look like this:
-```php
-array(
-    'Default',
-    'ExampleTemplate'
-);
-```
-1. Save and you should be able to select `ExampleTemplate` in the dropdown below the post body field! (See [here](#manually-selected-template-routing) for how this is implemented in the router.)
-
-### Router and Templates
-A Vuepress site's routing table is built at runtime by `functions/router.php`'s `add_routes_to_json`] function. The table uses the Vue router, which in turn uses [path-to-regexp](https://github.com/pillarjs/path-to-regexp) to parse paths.
-
-```php
-jsonData['routes'] = array(
-    // The key is the relative path that a page must match, while the value is the Vue template name
-    ''                                  => 'FrontPage',
-    '/path'                             => 'VueComponent',
-    '/path/:var'                        => 'ComponentWithVar',
-    '/path/:optional*/:var'             => 'WildcardAndVar',
-    path_from_dev_id('dev-id')    => 'DefinedByDeveloperId',
-    path_from_dev_id('dev-id', '/append-me') => 'DevIdPathPlusAppendedString'
-);
-```
-
-Building the routing table dynamically lets the Vue router treat the WordPress database as the source of truth, ensuring pages route as expected.
-
-For example, if you wanted to build a front page and an About page, you might set up the following in `add_routes_to_json`:
-
-```php
-// Don't do it like this! See below for more
-jsonData['routes'] = array(
-    // The key is the relative path that a page must match, while the value is the Vue template name
-    ''              => 'FrontPage',
-    '/about'        => 'About'
-);
-```
-
-#### Manually Selected Template Routing
-Pages with manually-selected templates (ie, pages with a template selected in the dropdown below the post body field) have their routes set at the start of `router.php`'s output. This makes sure that they resolve to their manually-selected templates instead of other matching routes.
 
 ### The Developer Role and Developer IDs
 Since URLs can easily change in the WordPress backend, Vuepress includes a new WP role, Developer, that has access to a set of controls that other roles (even Administrator) can't see. One of these controls is for a page's "Developer ID" - an arbitrary value that can reliably identify a page.
@@ -401,42 +331,7 @@ Default Vuepress getters include:
 * `post` - Returns either the first post in `$store.state.loop` or, if none, an empty object.
 * `referralPath` - Returns either the `fullPath` of the current value of `$store.state.referral` or, if none, an empty string.
 
-## Building a Vuepress Site: Front-End
-Once you've set up the routing for a Vuepress site and understand its state functions, you can start working with Vue templates themselves.
-
-### Example workflow
-1. Plan and document the general structure of the site in your README.md. Example:
-
-    ```
-    * Front page
-    * About
-        * Our History
-        * Our Employees
-            * Employee Bio
-            * ...
-    ```
-1. Figure out which pages are necessary to the structure of the site. Give those pages Developer IDs and prevent non-Dev deletion. Example:
-
-    > Front Page, About, and Our Employees all have child pages, so we'll give them Developer IDs of 'front-page', 'about', and 'employees', respectively, as well as lock them.
-
-1. Create routing conditions in `functions/router.php`'s `add_routes_to_json` function:
-
-    ```
-    array(
-        ''                                    => 'FrontPage',
-        path_from_dev_id('about')             => 'About',
-        path_from_dev_id('employees)          => 'EmployeesGrid',
-        path_from_dev_id('about', '/:child')  => 'AboutChildGeneric',
-        path_from_dev_id('employees', '/:employee') => 'EmployeeDetail'
-    );
-    ```
-
-1. Create the necessary Vue templates. Example:
-    > We defined 'FrontPage', 'About', 'EmployeesGrid', 'AboutChildGeneric', and 'EmployeeDetail' above, so we'll be creating each of those as a .vue file in `src/views/`.
-
-1. `npm run dev` and start building in Vue!
-
-### Vuepress Events
+## Vuepress Events
 Throttled resize and scroll events are available to any child of the App component:
 
 ```js
@@ -452,7 +347,7 @@ this.$root.$on('throttled.scroll', () => {
 
 Both events are fired after the `$root` element saves updated window dimensions/scroll positions for resize/scroll events.
 
-### Partials
+## Partials
 Vuepress comes with a few SCSS [partials](http://sass-lang.com/guide) to make writing CSS easier. In a Vue template file:
 
 ```
@@ -530,9 +425,10 @@ __Vuepress__
 
 http://funkhaus.us
 
-Version: 1.1.5
+Version: 1.1.6
 
-* 1.1.5 - Several misc. fixes, added fh-deploy version control in package.json
+* 1.1.6 - New user tutorial available, trimmed down readme, several misc fixes
+* 1.1.5 - Several misc fixes, added fh-deploy version control in package.json
 * 1.1.4 - Restructuring according to [this issue](https://github.com/funkhaus/vuepress/issues/34)
 * 1.1.3 - Split Vuepress functionality into `/functions` directory
 * 1.1.2 - Added [TGM Plugin Activation](http://tgmpluginactivation.com/) to require plugins. Switching to x.x.x version numbering.
