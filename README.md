@@ -1,7 +1,10 @@
-## What
-Vuepress is a boilerplate used to build smooth, responsive [WordPress](https://wordpress.org/) templates with [Vue.js](https://vuejs.org/).
+# What
+Vuepress is a boilerplate used to build fast, responsive [WordPress](https://wordpress.org/) templates with [Vue.js](https://vuejs.org/).
 
-For a quick start, look at the [Example Workflow](#example-workflow). For a more in-depth introduction, head to the [Reading List](#reading-list) and continue from there.
+# Tutorial
+Head over to the [tutorial](https://github.com/funkhaus/vuepress/wiki/Vuepress-Tutorial) to learn how to build Vue.js + WordPress sites with Vuepress!
+
+# References
 
 ## Table of Contents
 1. [Install](#install)
@@ -37,13 +40,13 @@ For a quick start, look at the [Example Workflow](#example-workflow). For a more
 
 
 ## Install
-1. `git clone https://github.com/funkhaus/vuepress my-theme`
+1. In a WordPress `themes/` directory: `git clone https://github.com/funkhaus/vuepress my-theme`
 1. `cd my-theme`
 1. `npm install`
 1. Go to the WordPress back-end, activate, the Vuepress theme, and follow the instructions to install [Rest-Easy](https://github.com/funkhaus/Rest-Easy).
 1. `npm run dev`
 1. To build: `npm run build`
-1. To build and deploy to server (using `.deployrc.config.json` for [fh-deploy](https://github.com/funkhaus/fh-deploy) configuration): `npm run deploy`
+1. (Optional) To build and deploy to server using [fh-deploy](https://github.com/funkhaus/fh-deploy): `npm run deploy`
 
 ## Common Tasks
 
