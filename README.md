@@ -2,7 +2,7 @@
 Vuepress is a boilerplate used to build fast, responsive [WordPress](https://wordpress.org/) templates with [Vue.js](https://vuejs.org/).
 
 # Tutorial
-Head over to the [tutorial](https://github.com/funkhaus/vuepress/wiki/Vuepress-Tutorial) to learn how to build Vue.js + WordPress sites with Vuepress!
+Head over to the [tutorial](https://github.com/funkhaus/vuepress/wiki) to learn how to build Vue.js + WordPress sites with Vuepress!
 
 # Reference
 
