@@ -18,7 +18,7 @@
 </template>
 
 <script>
-    import throttle from 'lodash/throttle'
+    import _throttle from 'lodash/throttle'
     import router from 'src/utils/router'
     import store from 'src/utils/store'
     import _kebabCase from 'lodash/kebabCase'
@@ -50,8 +50,8 @@
             }
         },
         mounted () {
-            window.addEventListener('resize', throttle(this.onResize, 30))
-            window.addEventListener('scroll', throttle(this.onScroll, 10))
+            window.addEventListener('resize', _throttle(this.onResize, 30))
+            window.addEventListener('scroll', _throttle(this.onScroll, 10))
 
             // start cache crawler after page has fully loaded
             window.onload = function(){
@@ -76,8 +76,8 @@
                 return [
                     'container',
                     `breakpoint-${ this.breakpoint }`,
-                    { loading: this.$store.getters.loading },
                     `route-${ _kebabCase(this.$route.name) }`,
+                    { loading: this.$store.getters.loading },
                     { 'is-touch': this.$store.state.site.isMobile },
                     { 'not-touch': !this.$store.state.site.isMobile }
                 ]
