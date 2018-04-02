@@ -58,8 +58,7 @@ class CacheCrawler {
         const ignorePath = !path || typeof path != 'string' || !path.length || path.startsWith('#')
 
         if ( !ignorePath && !cache[path] ){
-            const headers = new Headers({ 'Authorization': `Basic ${ btoa('flywheel:funkhaus') }` })
-            cache[path] = await fetch(`${path}?contentType=json`, { headers }).then(r => r.json())
+            cache[path] = await fetch(`${path}?contentType=json`, { credentials: 'same-origin' }).then(r => r.json())
         }
 
 

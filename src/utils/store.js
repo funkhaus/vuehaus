@@ -8,16 +8,11 @@ import CacheCrawler from 'src/utils/cache-crawler'
 // add vuex
 Vue.use( Vuex )
 
-// headers for fetch requests
-const headers = new Headers({ credentials: 'same-origin' })
-
 export default new Vuex.Store( {
     state: {
         site: jsonData.site,
         meta: jsonData.meta,
         loop: jsonData.loop,
-        transitioning_in: false,
-        transitioning_out: false,
         loaded: true,
         menuOpened: false,
         referral: undefined
@@ -33,14 +28,6 @@ export default new Vuex.Store( {
 
             return state
         },
-        'SET_TRANSITIONING_IN': (state, transitioning) => {
-            state.transitioning_in = transitioning
-            return state
-        },
-        'SET_TRANSITIONING_OUT': (state, transitioning) => {
-            state.transitioning_out = transitioning
-            return state
-        },
         'SET_LOADED': (state, loaded) => {
             state.loaded = loaded || false
         },
@@ -53,7 +40,6 @@ export default new Vuex.Store( {
         'UPDATE_REFERRAL_ROUTE': (state, referral) => {
             state.referral = referral
         }
-
     },
     actions: {
         'LOAD_AND_REPLACE_QUERYDATA': async ( context, payload ) => {
@@ -63,7 +49,7 @@ export default new Vuex.Store( {
             // no cache? set it
             if ( !cache[payload.path] ){
                 context.commit('SET_LOADED', false)
-                cache[path] = fetch(`${path}?contentType=json`, { headers }).then(r => r.json())
+                cache[path] = fetch(`${path}?contentType=json`, { credentials: 'same-origin' }).then(r => r.json())
             }
 
             // wait for data, replace
