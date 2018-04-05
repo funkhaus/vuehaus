@@ -19,7 +19,7 @@ const config = {
                 options: {
                     loaders: {
                         'scss': ExtractTextPlugin.extract({
-                            use: isProd ? 'css-loader?minimize!sass-loader?minimize' : 'css-loader!sass-loader',
+                            use: isProd ? 'css-loader?minimize!sass-loader?minimize' : 'css-loader?{"sourceMap":true}!sass-loader?{"sourceMap":true}',
                             fallback: 'vue-style-loader'
                         })
                     },
