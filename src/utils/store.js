@@ -13,8 +13,6 @@ export default new Vuex.Store( {
         site: jsonData.site,
         meta: jsonData.meta,
         loop: jsonData.loop,
-        transitioning_in: false,
-        transitioning_out: false,
         loaded: true,
         referral: undefined
     },
@@ -27,14 +25,6 @@ export default new Vuex.Store( {
             // Uncomment next line and import statement above to use the cache-crawler
             // CacheCrawler.onNewPage()
 
-            return state
-        },
-        'SET_TRANSITIONING_IN': (state, transitioning) => {
-            state.transitioning_in = transitioning
-            return state
-        },
-        'SET_TRANSITIONING_OUT': (state, transitioning) => {
-            state.transitioning_out = transitioning
             return state
         },
         'SET_LOADED': (state, loaded) => {
@@ -53,8 +43,7 @@ export default new Vuex.Store( {
             // no cache? set it
             if ( !cache[payload.path] ){
                 context.commit('SET_LOADED', false)
-                const headers = new Headers({ 'Authorization': `Basic ${ btoa('flywheel:funkhaus') }` })
-                cache[path] = fetch(`${path}?contentType=json`, { headers }).then(r => r.json())
+                cache[path] = await fetch(`${path}?contentType=json`, { credentials: 'same-origin' }).then(r => r.json())
             }
 
             // wait for data, replace

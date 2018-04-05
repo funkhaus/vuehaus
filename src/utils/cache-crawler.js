@@ -71,7 +71,7 @@ class CacheCrawler {
         if ( !ignorePath && !cache[path] ){
             // fetch the JSON data from the URL
             // ?contentType=json is a Rest-Easy convention, ensuring that we only get a JSON response
-            cache[path] = await fetch(`${path}?contentType=json`).then(r => r.json())
+            cache[path] = await fetch(`${path}?contentType=json`, { credentials: 'same-origin' }).then(r => r.json())
         }
 
         // continue the fetch loop
