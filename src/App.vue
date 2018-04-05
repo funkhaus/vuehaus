@@ -24,6 +24,7 @@
     import _kebabCase from 'lodash/kebabCase'
     import SiteHeader from 'src/components/SiteHeader.vue'
     import CacheCrawler from 'src/utils/cache-crawler'
+    import { autoBlur } from 'auto-blur'
 
     export default {
         el: '#app',
@@ -57,6 +58,9 @@
             window.onload = function(){
                 CacheCrawler.onNewPage()
             }
+
+            // autoblur (see https://github.com/safrmo/auto-blur)
+            autoBlur()
         },
         methods: {
             onResize () {
