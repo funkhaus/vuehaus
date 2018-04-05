@@ -134,7 +134,7 @@
             return '#404';
         }
 
-        return rez_remove_siteurl(get_permalink($retrieved_page)) . $after;
+        return wp_make_link_relative(get_permalink($retrieved_page)) . $after;
     }
 
     // Convenience function - get slug by dev ID
@@ -166,7 +166,7 @@
     // Gets the relative path of the nth child of a page with given Developer ID
     function get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = ''){
         $permalink = get_permalink(get_child_of_dev_id($dev_id, $nth_child));
-        return rez_remove_siteurl($permalink) . $after;
+        return wp_make_link_relative($permalink) . $after;
     }
 
     // Gets the children of a page with the given Developer ID

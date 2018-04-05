@@ -32,7 +32,7 @@
 		// Build out router for pages with custom templates
 		$custom_template_routes = array();
 		foreach( $filtered_pages_with_custom_templates as $page ){
-			$custom_template_routes[rez_remove_siteurl($page)] = $page->custom_vuepress_template;
+			$custom_template_routes[wp_make_link_relative($page)] = $page->custom_vuepress_template;
 		}
 
         // build out router table to be used with Vue
