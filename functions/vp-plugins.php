@@ -7,7 +7,7 @@
     function vuepress_register_required_plugins() {
 
         // Change this value to install a new version of Rest-Easy
-        $latest_rest_easy = '1.42';
+        $latest_rest_easy = '1.43s';
 
         $config = array(
             'id'           => 'vuepress',              // Unique ID for hashing notices for multiple instances of TGMPA.
