@@ -7,6 +7,10 @@
     "type": "git",
     "url": "git://github.com/funkhaus/vuepress.git"
   },
+  "babel": {
+    "presets": ["env"],
+    "plugins": ["transform-runtime"]
+  },
   "files": [
     "functions/**/*.*",
     "parts/**/*.*",
