@@ -134,7 +134,10 @@
             return '#404';
         }
 
-        return wp_make_link_relative(get_permalink($retrieved_page)) . $after;
+        return  . $after;
+
+        $base_url = rtrim(wp_make_link_relative(get_permalink($retrieved_page)), '/');
+        return $base_url . $after;
     }
 
     // Convenience function - get slug by dev ID
@@ -166,7 +169,7 @@
     // Gets the relative path of the nth child of a page with given Developer ID
     function get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = ''){
         $permalink = get_permalink(get_child_of_dev_id($dev_id, $nth_child));
-        return wp_make_link_relative($permalink) . $after;
+        return $base_url = rtrim($permalink, '/');
     }
 
     // Gets the children of a page with the given Developer ID
