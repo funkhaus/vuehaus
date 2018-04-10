@@ -14,7 +14,7 @@ export default new Vuex.Store( {
         meta: jsonData.meta,
         loop: jsonData.loop,
         loaded: true,
-        referral: undefined
+        referral: null
     },
     mutations: {
         'REPLACE_QUERYDATA': ( state, data ) => {
