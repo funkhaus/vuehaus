@@ -6,8 +6,14 @@ import cache from 'src/utils/cache'
 // Register fh-components
 // Vue.component('a-div', require('fh-components/a-div').default)
 // Vue.component('flex-text', require('fh-components/flex-text').default)
-Vue.component('hamburger-button', require('fh-components/hamburger-button').default)
-Vue.component('responsive-image', require('fh-components/responsive-image').default)
+Vue.component(
+    'hamburger-button',
+    require('fh-components/hamburger-button').default
+)
+Vue.component(
+    'responsive-image',
+    require('fh-components/responsive-image').default
+)
 // Vue.component('video-stage', require('fh-components/video-stage').default)
 Vue.component('wp-content', require('fh-components/wp-content').default)
 Vue.component('wp-menu', require('fh-components/wp-menu').default)
@@ -28,4 +34,4 @@ Vue.component('svg-image', require('src/components/SvgImage.vue'))
 cache[window.location.pathname] = Promise.resolve(jsonData)
 
 // boot app
-new Vue( App )
+new Vue(App)

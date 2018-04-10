@@ -26,165 +26,169 @@
 </template>
 
 <script>
-    import _get from 'lodash/get'
+import _get from 'lodash/get'
 
-    export default {
-        props: {
-            loop: {
-                type: Boolean,
-                default: true
-            },
-            interval: {
-                type: Number,
-                default: 3500
-            },
-            running: {
-                type: Boolean,
-                default: true
-            },
-            infinite: {
-                type: Boolean,
-                default: true
-            },
-            items: {
-                type: Array,
-                default: () => []
-            }
+export default {
+    props: {
+        loop: {
+            type: Boolean,
+            default: true
         },
-        data () {
-            return {
-                activeSlide: 0,
-                direction: 'left',
-                timer: null
-            }
+        interval: {
+            type: Number,
+            default: 3500
         },
-        mounted () {
-            this.startTimer()
+        running: {
+            type: Boolean,
+            default: true
         },
-        destroyed () {
+        infinite: {
+            type: Boolean,
+            default: true
+        },
+        items: {
+            type: Array,
+            default: () => []
+        }
+    },
+    data() {
+        return {
+            activeSlide: 0,
+            direction: 'left',
+            timer: null
+        }
+    },
+    mounted() {
+        this.startTimer()
+    },
+    destroyed() {
+        this.stopTimer()
+    },
+    watch: {
+        activeSlide(to, from) {
+            if (this.infinite) return
+            if (to > from) return (this.direction = 'left')
+            this.direction = 'right'
+        }
+    },
+    methods: {
+        triggerNext() {
+            // restart timer
             this.stopTimer()
+            this.startTimer()
+            this.direction = 'left'
+
+            // set next or first
+            this.activeSlide++
+            if (this.loop)
+                this.activeSlide =
+                    (this.activeSlide + this.slides.length) % this.slides.length
+            else
+                this.activeSlide = Math.min(
+                    this.activeSlide,
+                    this.slides.length - 1
+                )
         },
-        watch: {
-            activeSlide (to, from) {
-                if ( this.infinite ) return
-                if ( to > from ) return this.direction = 'left'
-                this.direction = 'right'
-            }
+        triggerPrev() {
+            // restart timer
+            this.stopTimer()
+            this.startTimer()
+            this.direction = 'right'
+
+            // set prev or last
+            this.activeSlide--
+            if (this.loop)
+                this.activeSlide =
+                    (this.activeSlide + this.slides.length) % this.slides.length
+            else this.activeSlide = Math.max(this.activeSlide, 0)
         },
-        methods: {
-            triggerNext () {
-
-                // restart timer
-                this.stopTimer()
-                this.startTimer()
-                this.direction = 'left'
-
-                // set next or first
-                this.activeSlide++
-                if ( this.loop ) this.activeSlide = (this.activeSlide + this.slides.length) % this.slides.length
-                else this.activeSlide = Math.min(this.activeSlide, this.slides.length - 1)
-            },
-            triggerPrev () {
-
-                // restart timer
-                this.stopTimer()
-                this.startTimer()
-                this.direction = 'right'
-
-                // set prev or last
-                this.activeSlide--
-                if ( this.loop ) this.activeSlide = (this.activeSlide + this.slides.length) % this.slides.length
-                else this.activeSlide = Math.max(this.activeSlide, 0)
-            },
-            startTimer () {
-                // start auto timer
-                return this.timer = setInterval(() => {
-                    if ( this.running ) this.triggerNext()
-                }, this.interval)
-            },
-            stopTimer () {
-                // kill timer
-                return clearInterval(this.timer)
-            }
+        startTimer() {
+            // start auto timer
+            return (this.timer = setInterval(() => {
+                if (this.running) this.triggerNext()
+            }, this.interval))
         },
-        computed: {
-            slides () {
-                // prefer "items" prop, default to attached media
-                const slides = _get(this, '$store.getters.post.attachedMedia', [])
-                return this.items.length ? this.items : slides
-            }
+        stopTimer() {
+            // kill timer
+            return clearInterval(this.timer)
+        }
+    },
+    computed: {
+        slides() {
+            // prefer "items" prop, default to attached media
+            const slides = _get(this, '$store.getters.post.attachedMedia', [])
+            return this.items.length ? this.items : slides
         }
     }
+}
 </script>
 
 <style lang="scss">
+.fh-slideshow {
+    position: relative;
+    overflow: hidden;
+    max-height: 80vh;
+    height: 56vw;
 
-    .fh-slideshow {
-        position: relative;
-        overflow: hidden;
-        max-height: 80vh;
-        height: 56vw;
-
-        &:focus {
-            outline: none;
-        }
-        .slide {
-            height: 100%;
-            width: 100%;
-        }
-
-        // next/prev
-        .nav {
-            position: absolute;
-            margin-top: 10px;
-            cursor: pointer;
-            top: 50%;
-        }
-        .nav.next {
-            right: 10px;
-        }
-        .nav.prev {
-            left: 10px;
-        }
-
-        //pagination
-        .pagination {
-            text-align: center;
-            position: absolute;
-            padding: 20px;
-            bottom: 0;
-            right: 0;
-            left: 0;
-        }
-        .pagination-item {
-            background-color: rgba(255, 255, 255, 0.5);
-            display: inline-block;
-            margin: 0 10px;
-            height: 10px;
-            width: 10px;
-        }
-        .pagination-item.active {
-            background-color: rgba(255, 255, 255, 1);
-        }
+    &:focus {
+        outline: none;
+    }
+    .slide {
+        height: 100%;
+        width: 100%;
     }
 
-    // transition
-    .fh-slide-left-enter-active,
-    .fh-slide-left-leave-active,
-    .fh-slide-right-enter-active,
-    .fh-slide-right-leave-active {
-        transition: transform 0.5s ease;
+    // next/prev
+    .nav {
         position: absolute;
-        left: 0;
-        top: 0;
+        margin-top: 10px;
+        cursor: pointer;
+        top: 50%;
     }
-    .fh-slide-left-enter,
-    .fh-slide-right-leave-to {
-        transform: translateX(100%);
+    .nav.next {
+        right: 10px;
     }
-    .fh-slide-left-leave-to,
-    .fh-slide-right-enter {
-        transform: translateX(-100%);
+    .nav.prev {
+        left: 10px;
     }
 
+    //pagination
+    .pagination {
+        text-align: center;
+        position: absolute;
+        padding: 20px;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+    .pagination-item {
+        background-color: rgba(255, 255, 255, 0.5);
+        display: inline-block;
+        margin: 0 10px;
+        height: 10px;
+        width: 10px;
+    }
+    .pagination-item.active {
+        background-color: rgba(255, 255, 255, 1);
+    }
+}
+
+// transition
+.fh-slide-left-enter-active,
+.fh-slide-left-leave-active,
+.fh-slide-right-enter-active,
+.fh-slide-right-leave-active {
+    transition: transform 0.5s ease;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.fh-slide-left-enter,
+.fh-slide-right-leave-to {
+    transform: translateX(100%);
+}
+.fh-slide-left-leave-to,
+.fh-slide-right-enter {
+    transform: translateX(-100%);
+}
 </style>

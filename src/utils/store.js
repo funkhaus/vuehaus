@@ -6,9 +6,9 @@ import _get from 'lodash/get'
 import CacheCrawler from 'src/utils/cache-crawler'
 
 // add vuex
-Vue.use( Vuex )
+Vue.use(Vuex)
 
-export default new Vuex.Store( {
+export default new Vuex.Store({
     state: {
         site: jsonData.site,
         meta: jsonData.meta,
@@ -18,7 +18,7 @@ export default new Vuex.Store( {
         referral: undefined
     },
     mutations: {
-        'REPLACE_QUERYDATA': ( state, data ) => {
+        REPLACE_QUERYDATA: (state, data) => {
             state.site = data.site
             state.meta = data.meta
             state.loop = data.loop
@@ -28,34 +28,35 @@ export default new Vuex.Store( {
 
             return state
         },
-        'SET_LOADED': (state, loaded) => {
+        SET_LOADED: (state, loaded) => {
             state.loaded = loaded || false
         },
-        'OPEN_MENU': state => {
+        OPEN_MENU: state => {
             state.menuOpened = true
         },
-        'CLOSE_MENU': state => {
+        CLOSE_MENU: state => {
             state.menuOpened = false
         },
-        'UPDATE_REFERRAL_ROUTE': (state, referral) => {
+        UPDATE_REFERRAL_ROUTE: (state, referral) => {
             state.referral = referral
         }
     },
     actions: {
-        'LOAD_AND_REPLACE_QUERYDATA': async ( context, payload ) => {
-
+        LOAD_AND_REPLACE_QUERYDATA: async (context, payload) => {
             const path = payload.path || ''
 
             // no cache? set it
-            if ( !cache[payload.path] ){
+            if (!cache[payload.path]) {
                 context.commit('SET_LOADED', false)
-                cache[path] = fetch(`${path}?contentType=json`, { credentials: 'same-origin' }).then(r => r.json())
+                cache[path] = fetch(`${path}?contentType=json`, {
+                    credentials: 'same-origin'
+                }).then(r => r.json())
             }
 
             // wait for data, replace
             const data = await cache[path]
-            context.commit( 'REPLACE_QUERYDATA', data )
-            context.commit( 'SET_LOADED', true )
+            context.commit('REPLACE_QUERYDATA', data)
+            context.commit('SET_LOADED', true)
         }
     },
     getters: {
@@ -64,7 +65,7 @@ export default new Vuex.Store( {
         },
         post: state => {
             // Return an empty object if we're still loading
-            if( !state.loaded ){
+            if (!state.loaded) {
                 return {}
             }
 

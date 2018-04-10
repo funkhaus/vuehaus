@@ -134,8 +134,6 @@
             return '#404';
         }
 
-        return  . $after;
-
         $base_url = rtrim(wp_make_link_relative(get_permalink($retrieved_page)), '/');
         return $base_url . $after;
     }

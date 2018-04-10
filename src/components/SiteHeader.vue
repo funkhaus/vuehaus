@@ -9,9 +9,7 @@
 </script>
 
 <style lang="scss">
-
-    header .hamburger {
-        padding: 20px;
-    }
-
+header .hamburger {
+    padding: 20px;
+}
 </style>
