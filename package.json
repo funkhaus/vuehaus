@@ -9,7 +9,8 @@
         "clean": "rimraf static/bundle.*",
         "deploy": "fh-deploy",
         "format": "prettier --write 'src/**/*+(.js|.vue|.scss)'",
-        "precommit": "pretty-quick --staged"
+        "precommit": "pretty-quick --staged",
+        "test": "backstop test"
     },
     "repository": {
         "type": "git",
@@ -74,6 +75,7 @@
         "whatwg-fetch": "^2.0.3"
     },
     "devDependencies": {
+        "backstopjs": "^3.1.21",
         "husky": "^0.14.3",
         "prettier": "1.11.1",
         "pretty-quick": "^1.4.1"

@@ -16,3 +16,8 @@ node_modules
 .DS_Store
 .deploy.config.js
 .deployrc.json
+
+# backstop testing
+backstop_data/*
+!backstop_data/bitmaps_reference
+!backstop_data/engine_scripts
