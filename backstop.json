@@ -18,7 +18,7 @@
     "scenarios": [
         {
             "label": "Front Page",
-            "url": "http://sandbox.local"
+            "url": "http://example.local"
         }
     ],
     "paths": {
