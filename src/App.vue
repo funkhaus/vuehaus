@@ -55,6 +55,14 @@ export default {
             CacheCrawler.onNewPage()
         }
 
+        // Close menu on esc key
+        window.addEventListener('keydown', key => {
+            if (keyCode == 27) {
+                // Escape key
+                this.$store.commit('CLOSE_MENU')
+            }
+        })
+
         // autoblur (see https://github.com/safrmo/auto-blur)
         autoBlur()
     },
