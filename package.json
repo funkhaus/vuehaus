@@ -2,7 +2,15 @@
     "name": "vuepress",
     "version": "1.1.6",
     "description": "Build smooth, responsive Wordpress sites with Vue.",
-    "main": "index.js",
+    "main": "src/main.js",
+    "scripts": {
+        "dev": "npm run clean && webpack --watch",
+        "build": "npm run clean && NODE_ENV=production webpack",
+        "clean": "rimraf static/bundle.*",
+        "deploy": "fh-deploy",
+        "format": "prettier --write 'src/**/*+(.js|.vue|.scss)'",
+        "precommit": "pretty-quick --staged"
+    },
     "repository": {
         "type": "git",
         "url": "git://github.com/funkhaus/vuepress.git"
@@ -25,36 +33,18 @@
         "style.css",
         "screenshot.png"
     ],
-    "scripts": {
-        "dev": "npm run clean && webpack --watch",
-        "build": "npm run clean && NODE_ENV=production webpack",
-        "clean": "rimraf static/bundle.*",
-        "deploy": "fh-deploy",
-        "format": "prettier --write 'src/**/*+(.js|.vue|.scss)'",
-        "precommit": "pretty-quick --staged"
-    },
     "author": "Funkhaus",
     "license": "ISC",
     "dependencies": {
         "auto-blur": "^1.1.0",
         "autoprefixer": "^6.7.2",
         "babel-core": "^6.26.0",
-        "babel-eslint": "^7.2.3",
         "babel-loader": "^6.2.10",
         "babel-plugin-transform-runtime": "^6.15.0",
         "babel-preset-env": "^1.6.1",
         "colors": "^1.1.2",
         "compression-webpack-plugin": "^0.3.2",
         "css-loader": "^0.26.4",
-        "eslint": "^3.19.0",
-        "eslint-config-standard": "^10.2.1",
-        "eslint-config-vue": "^2.0.2",
-        "eslint-plugin-html": "^2.0.1",
-        "eslint-plugin-import": "^2.8.0",
-        "eslint-plugin-node": "^4.2.2",
-        "eslint-plugin-promise": "^3.6.0",
-        "eslint-plugin-standard": "^3.0.1",
-        "eslint-plugin-vue": "^2.0.1",
         "extract-text-webpack-plugin": "^2.1.0",
         "fh-components": "^1.2.41",
         "fh-deploy": "^1.1.5",
