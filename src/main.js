@@ -2,6 +2,22 @@
 import App from './App.vue'
 import Vue from 'vue'
 import cache from 'src/utils/cache'
+import Case from 'case'
+
+// Register components in src/
+// ===============================
+const components = require.context('src/components', true)
+components.keys().map(component => {
+    // turn './ComponentName.vue' into 'component-name'
+    const componentName = Case.kebab(
+        component.replace(/^\.\//, '').replace(/\.vue$/, '')
+    )
+    // register new component globally
+    Vue.component(componentName, components(component))
+})
+
+// Register outside components
+// ===============================
 
 // Register fh-components
 // Vue.component('a-div', require('fh-components/a-div').default)

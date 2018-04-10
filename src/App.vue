@@ -22,7 +22,6 @@ import _throttle from 'lodash/throttle'
 import router from 'src/utils/router'
 import store from 'src/utils/store'
 import _kebabCase from 'lodash/kebabCase'
-import SiteHeader from 'src/components/SiteHeader.vue'
 import CacheCrawler from 'src/utils/cache-crawler'
 import { autoBlur } from 'auto-blur'
 
@@ -36,9 +35,6 @@ export default {
             winWidth: window.innerWidth,
             sTop: 0
         }
-    },
-    components: {
-        'site-header': SiteHeader
     },
     watch: {
         // change page title when title changes

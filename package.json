@@ -43,6 +43,7 @@
         "babel-loader": "^6.2.10",
         "babel-plugin-transform-runtime": "^6.15.0",
         "babel-preset-env": "^1.6.1",
+        "case": "^1.5.4",
         "colors": "^1.1.2",
         "compression-webpack-plugin": "^0.3.2",
         "css-loader": "^0.26.4",
