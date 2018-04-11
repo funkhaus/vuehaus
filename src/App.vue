@@ -57,7 +57,7 @@ export default {
 
         // Close menu on esc key
         window.addEventListener('keydown', key => {
-            if (keyCode == 27) {
+            if (key && key.keyCode == 27) {
                 // Escape key
                 this.$store.commit('CLOSE_MENU')
             }
