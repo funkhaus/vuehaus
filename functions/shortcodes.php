@@ -44,8 +44,12 @@
  * @param string $text A stirng of HTML text
  */
     function custom_filter_shortcode_text($text = '') {
-        // Remove all the poorly formatted P tags that WP adds by default.
-        $tags = array("<p>", "</p>", "<br>", "</br>");
+        // Replace all the poorly formatted P tags that WP adds by default.
+        $tags = array("<p>", "</p>");
+        $text = str_replace($tags, "\n", $text);
+
+        // Remove any BR tags
+        $tags = array("<br>", "<br/>", "<br />");
         $text = str_replace($tags, "", $text);
 
         // Add back in the P and BR tags again, this will remove empty ones
