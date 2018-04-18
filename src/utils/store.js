@@ -4,11 +4,15 @@ import Vue from 'vue'
 import cache from 'src/utils/cache'
 import _get from 'lodash/get'
 import CacheCrawler from 'src/utils/cache-crawler'
+import transitionStore from 'src/transitions/store'
 
 // add vuex
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    modules: {
+        transitions: transitionStore
+    },
     state: {
         site: jsonData.site,
         meta: jsonData.meta,

@@ -16,6 +16,9 @@ components.keys().map(component => {
     Vue.component(componentName, components(component))
 })
 
+// Transitions controller
+Vue.component('page-transition', require('src/transitions').default)
+
 // Register outside components
 // ===============================
 

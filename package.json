@@ -17,7 +17,7 @@
         "url": "git://github.com/funkhaus/vuepress.git"
     },
     "babel": {
-        "presets": ["env"],
+        "presets": ["env", "stage-0"],
         "plugins": ["transform-runtime"]
     },
     "prettier": {
@@ -43,6 +43,7 @@
         "babel-loader": "^6.2.10",
         "babel-plugin-transform-runtime": "^6.15.0",
         "babel-preset-env": "^1.6.1",
+        "babel-preset-stage-0": "^6.24.1",
         "case": "^1.5.4",
         "colors": "^1.1.2",
         "compression-webpack-plugin": "^0.3.2",

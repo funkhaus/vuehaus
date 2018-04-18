@@ -2,7 +2,9 @@
     <div :class="classes">
         <site-header/>
 
-        <router-view/>
+        <page-transition>
+            <router-view/>
+        </page-transition>
 
         <transition name="fade">
             <div
