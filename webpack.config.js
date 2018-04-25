@@ -1,14 +1,15 @@
-const ExtractTextPlugin = require( 'extract-text-webpack-plugin' )
-const resolve = file => path.resolve( __dirname, file )
-const webpack = require( 'webpack' )
-const path = require( 'path' )
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const resolve = file => path.resolve(__dirname, file)
+const webpack = require('webpack')
+const path = require('path')
 
 const isProd = process.env.NODE_ENV === 'production'
 
 const config = {
     entry: ['whatwg-fetch', 'string.prototype.includes', './src/main'],
     output: {
-        path: resolve( 'static' ),
+        path: resolve('static'),
         filename: isProd ? 'bundle.js' : 'bundle.dev.js'
     },
     module: {
@@ -18,8 +19,10 @@ const config = {
                 loader: 'vue-loader',
                 options: {
                     loaders: {
-                        'scss': ExtractTextPlugin.extract({
-                            use: isProd ? 'css-loader?minimize!sass-loader?minimize' : 'css-loader?{"sourceMap":true}!sass-loader?{"sourceMap":true}',
+                        scss: ExtractTextPlugin.extract({
+                            use: isProd
+                                ? 'css-loader?minimize&url=false!sass-loader?minimize'
+                                : 'css-loader?{"sourceMap":true}&url=false!sass-loader?{"sourceMap":true}',
                             fallback: 'vue-style-loader'
                         })
                     },
@@ -52,7 +55,9 @@ const config = {
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                    use: isProd ? 'css-loader?minimize' : 'css-loader',
+                    use: isProd
+                        ? 'css-loader?minimize&url=false'
+                        : 'css-loader?url=false',
                     fallback: 'vue-style-loader'
                 })
             }
@@ -60,12 +65,12 @@ const config = {
     },
     resolve: {
         modules: [
-            path.resolve( __dirname, 'app' ),
-            resolve( './' ),
+            path.resolve(__dirname, 'app'),
+            resolve('./'),
             'node_modules'
         ],
         alias: {
-            'vue$': isProd ? 'vue/dist/vue.min.js' : 'vue/dist/vue.esm.js'
+            vue$: isProd ? 'vue/dist/vue.min.js' : 'vue/dist/vue.esm.js'
         }
     },
     performance: {
@@ -85,23 +90,16 @@ const config = {
 
 // production only
 if (isProd) {
+    config.plugins = config.plugins.concat([new UglifyJsPlugin()])
 
-    config.plugins = config.plugins.concat([
-        new webpack.optimize.UglifyJsPlugin({
-            compress: { warnings: false }
-        })
-    ])
-
-// dev only
+    // dev only
 } else {
-
     config.devtool = '#source-map'
     config.plugins = config.plugins.concat([
         new webpack.EnvironmentPlugin({
             NODE_ENV: 'development'
         })
     ])
-
 }
 
 module.exports = config

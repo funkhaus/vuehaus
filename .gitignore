@@ -6,6 +6,7 @@ logs
 static/build*
 static/bundle*
 *.map
+bundleStats.json
 
 # Runtime data
 pids
