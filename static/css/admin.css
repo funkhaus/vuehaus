@@ -8,59 +8,62 @@
 /*
  * Logo Icon
  */
-    /* This should be 16px X 16px */
-    #wpwrap #wpadminbar #wp-admin-bar-wp-logo > .ab-item {
-        background-image: url(../images/favicon.png);
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: 26px auto;
-        background-color: #ffffff;
-    }
-    #wpwrap #wpadminbar #wp-admin-bar-wp-logo > .ab-item span {
-        visibility: hidden;
-    }
+/* This should be 16px X 16px */
+#wpwrap #wpadminbar #wp-admin-bar-wp-logo > .ab-item {
+    background-image: url(../images/favicon.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 26px auto;
+    background-color: #ffffff;
+}
+#wpwrap #wpadminbar #wp-admin-bar-wp-logo > .ab-item span {
+    visibility: hidden;
+}
+body:not(.is-developer) #toplevel_page_edit-post_type-acf-field-group {
+    display: none;
+}
 
 /*
  * Post/Page Meta Boxs
  */
-    .custom-meta label {
-        width: 280px;
-        display: inline-block;
-        text-align: right;
-    }
-    .custom-meta input {
-        width: calc(100% - 320px);
-        max-width: 800px;
-        height: 25px;
-        vertical-align: middle;
-    }
-    .custom-meta .for-textarea {
-        vertical-align: top;
-    }
-    .custom-meta textarea {
-        width: calc(100% - 320px);
-        max-width: 800px;
-    }
-    .custom-meta input[type="checkbox"],
-    .custom-meta input[type="radio"] {
-        height: 16px;
-        width: 16px;
-        display: inline-block;
-        vertical-align: middle;
-    }
-    /* Image Uploader */
-    .custom-meta .custom-image-container img {
-        width: 100%;
-        height: auto;
-    }
-    .custom-meta.custom-image-uploader p:last-child {
-        margin-bottom: 1px;
-    }
+.custom-meta label {
+    width: 280px;
+    display: inline-block;
+    text-align: right;
+}
+.custom-meta input {
+    width: calc(100% - 320px);
+    max-width: 800px;
+    height: 25px;
+    vertical-align: middle;
+}
+.custom-meta .for-textarea {
+    vertical-align: top;
+}
+.custom-meta textarea {
+    width: calc(100% - 320px);
+    max-width: 800px;
+}
+.custom-meta input[type='checkbox'],
+.custom-meta input[type='radio'] {
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+    vertical-align: middle;
+}
+/* Image Uploader */
+.custom-meta .custom-image-container img {
+    width: 100%;
+    height: auto;
+}
+.custom-meta.custom-image-uploader p:last-child {
+    margin-bottom: 1px;
+}
 
 /*
  * Turn off menus
  */
-    /*
+/*
     #menu-posts {
         display: none;
     }
@@ -89,6 +92,6 @@
         display: none;
     }
     */
-    #menu-comments {
-        display: none;
-    }
+#menu-comments {
+    display: none;
+}

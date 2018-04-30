@@ -207,3 +207,12 @@
 
     }
     add_action('admin_init', 'give_developer_ordering_permissions', 1);
+
+    // add 'is-developer' class to WP admin pages if we're a developer
+    function add_developer_admin_body_class($classes){
+        if( user_is_developer() ){
+            $classes .= 'is-developer';
+        }
+        return $classes;
+    }
+    add_filter('admin_body_class', 'add_developer_admin_body_class');
