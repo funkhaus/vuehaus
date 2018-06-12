@@ -77,3 +77,27 @@ export const wait = (time = 1000) => {
         return setTimeout(resolve, time)
     })
 }
+
+export const buildShareLinks = opts => {
+    const url = opts.url || ''
+    const text = opts.text || ''
+    const title = opts.title || ''
+
+    return {
+        facebook: encodeURIComponent(
+            `https://www.facebook.com/sharer/sharer.php?u=${url}`
+        ),
+        twitter: encodeURIComponent(
+            `http://twitter.com/share?text=${text.substring(0, 280)}&url=${url}`
+        ),
+        tumblr: encodeURIComponent(
+            `http://www.tumblr.com/share/link?url=${url}`
+        ),
+        reddit: encodeURIComponent(
+            `http://www.reddit.com/submit?url=${url}&title=${title}`
+        ),
+        email: encodeURIComponent(
+            `mailto:?subject=${title}&body=${text}%0D%0A %0D%0A${url}`
+        )
+    }
+}
