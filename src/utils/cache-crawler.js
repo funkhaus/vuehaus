@@ -24,7 +24,7 @@ class CacheCrawler {
 
         // links in all site menus
         const menuCandidates = store.state.site.menus.map(menu =>
-            menu.items.map(item => item.relativePath)
+            menu.items.map(item => (item.isExternal ? null : item.relativePath))
         )
         // links in the loop
         const loopCandidates = store.state.loop.map(page => {
