@@ -84,20 +84,27 @@ export const buildShareLinks = opts => {
     const title = opts.title || ''
 
     return {
-        facebook: encodeURIComponent(
-            `https://www.facebook.com/sharer/sharer.php?u=${url}`
-        ),
-        twitter: encodeURIComponent(
-            `http://twitter.com/share?text=${text.substring(0, 280)}&url=${url}`
-        ),
-        tumblr: encodeURIComponent(
-            `http://www.tumblr.com/share/link?url=${url}`
-        ),
-        reddit: encodeURIComponent(
-            `http://www.reddit.com/submit?url=${url}&title=${title}`
-        ),
-        email: encodeURIComponent(
-            `mailto:?subject=${title}&body=${text}%0D%0A %0D%0A${url}`
-        )
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            url
+        )}`,
+        twitter: `http://twitter.com/share?text=${encodeURIComponent(
+            text.substring(0, 280)
+        )}&url=${encodeURIComponent(url)}`,
+        tumblr: `http://www.tumblr.com/share/link?url=${encodeURIComponent(
+            url
+        )}`,
+        reddit: `http://www.reddit.com/submit?url=${url}&title=${encodeURIComponent(
+            title
+        )}`,
+        email: `mailto:?subject=${encodeURIComponent(
+            title
+        )}&body=${encodeURIComponent(text)}%0D%0A %0D%0A${encodeURIComponent(
+            url
+        )}`,
+        linkedin: `http://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+            url
+        )}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(
+            text
+        )}`
     }
 }
