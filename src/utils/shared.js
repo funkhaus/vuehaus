@@ -1,3 +1,5 @@
+import scrollToElement from 'scroll-to-element'
+
 /* global _get */
 
 /*
@@ -107,4 +109,20 @@ export const buildShareLinks = opts => {
             text
         )}`
     }
+}
+
+// smooth scroll to top of page
+export const scrollUp = () => {
+    return new Promise((resolve, reject) => {
+        const sTop = window.pageYOffset || document.documentElement.scrollTop
+        if (sTop <= 10) return resolve()
+
+        const speed = Math.min(sTop, 500)
+        const scroller = scrollToElement(document.body, {
+            duration: speed,
+            ease: 'inOutQuad'
+        })
+        if (scroller) scroller.on('end', resolve)
+        else reject()
+    })
 }

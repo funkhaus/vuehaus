@@ -65,6 +65,7 @@
         "postcss-url": "^7.3.0",
         "rimraf": "^2.6.2",
         "sass-loader": "^6.0.6",
+        "scroll-to-element": "^2.0.0",
         "string.prototype.includes": "^1.0.0",
         "style-loader": "^0.13.1",
         "svg-inline-loader": "^0.7.1",
