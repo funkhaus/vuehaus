@@ -65,9 +65,15 @@ class CacheCrawler {
             path.startsWith('#')
 
         if (!ignorePath && !cache[path]) {
-            const response = await fetch(`${path}?contentType=json`, {
-                credentials: 'same-origin'
-            }).then(res => (res.ok ? res.json() : false))
+            // Allows for query strings in path
+            const connector = path.includes('?') ? '&' : '?'
+
+            const response = await fetch(
+                `${path}${connector}contentType=json`,
+                {
+                    credentials: 'same-origin'
+                }
+            ).then(res => (res.ok ? res.json() : false))
 
             // avoid caching non-200 responses
             if (response) {
