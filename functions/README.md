@@ -1,6 +1,6 @@
 ## Example Rest-Easy Filters
-Here are a bunch of useful examples of how to use the Rest-Easy filter functions to send custom data to the frontend.
 
+Here are a bunch of useful examples of how to use the Rest-Easy filter functions to send custom data to the frontend.
 
 ```php
 /**
@@ -17,7 +17,6 @@ Here are a bunch of useful examples of how to use the Rest-Easy filter functions
         return $post_data;
     }
     add_filter('rez_serialize_post', 'add_second_featured_image');
-
 ```
 
 ```php
@@ -48,7 +47,6 @@ Here are a bunch of useful examples of how to use the Rest-Easy filter functions
     add_filter('rez_serialize_post', 'custom_format_credits');
 ```
 
-
 ```php
 /**
  * Overwrite the loop when in a tree to always be the children of the parent page.
@@ -58,9 +56,9 @@ Here are a bunch of useful examples of how to use the Rest-Easy filter functions
  * @param array $loop All the pages/posts in the cuurent loop
  */
     function serialize_contact_pages($loop){
-        
+
         $page = get_page_by_dev_id('contact');
-        
+
         if( is_tree($page->ID) ) {
             $loop = array();
             $loop[0] = apply_filters('rez_serialize_object', get_post($page->ID));
@@ -69,13 +67,11 @@ Here are a bunch of useful examples of how to use the Rest-Easy filter functions
         return $loop;
     }
     add_filter('rez_build_loop_data', 'serialize_contact_pages');
-    
 ```
 
-
 ## Example of some useful shortcodes
-Here are a bunch of useful examples of how to use WordPress shortcodes with Vuepress. You will need both the PHP and the Vue template.
 
+Here are a bunch of useful examples of how to use WordPress shortcodes with Vuepress. You will need both the PHP and the Vue template.
 
 ```php
 /*
@@ -118,68 +114,62 @@ Here are a bunch of useful examples of how to use WordPress shortcodes with Vuep
 </template>
 
 <script>
-    export default {
-        props: {
-            image: {
-                type: Object,
-                default: ()=>{}
-            },
-            name: {
-                type: String,
-                default: 'image-left'
-            }
+export default {
+    props: {
+        image: {
+            type: Object,
+            default: () => {}
         },
-        computed: {
-            classes () {
-                return [
-                    'shortcode',
-                    'image-shortcode',
-                    this.name
-                ]
-            }
+        name: {
+            type: String,
+            default: 'image-left'
+        }
+    },
+    computed: {
+        classes() {
+            return ['shortcode', 'image-shortcode', this.name]
         }
     }
+}
 </script>
 
 <style lang="scss">
-    @import 'src/styles/vars';
+@import 'src/styles/vars';
 
-    .image-shortcode {
-        margin: 50px auto;
+.image-shortcode {
+    margin: 50px auto;
 
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-content: center;
-        align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
 
-        .image {
-            width: 50%;
-            padding-right: 30px;
-            box-sizing: border-box;
-        }
-        .text {
-            width: 50%;
-            padding: 0 40px;
-            box-sizing: border-box;
-            margin: 0 auto;
-        }
+    .image {
+        width: 50%;
+        padding-right: 30px;
+        box-sizing: border-box;
     }
-    .image-shortcode.image-right {
-        .image {
-            padding-left: 30px;
-            padding-right: 0;
-            order: 1;
-        }
-        .text {
-            order: 0;
-        }
+    .text {
+        width: 50%;
+        padding: 0 40px;
+        box-sizing: border-box;
+        margin: 0 auto;
     }
+}
+.image-shortcode.image-right {
+    .image {
+        padding-left: 30px;
+        padding-right: 0;
+        order: 1;
+    }
+    .text {
+        order: 0;
+    }
+}
 </style>
 ```
-
-
 
 ```php
 /*
@@ -190,7 +180,7 @@ Here are a bunch of useful examples of how to use WordPress shortcodes with Vuep
         return '<half-column>'. $content .'</half-column>';
 	}
 	add_shortcode( 'half-column', 'custom_shortcode_half_column' );
-```	
+```
 
 ```vue
 <template>
@@ -202,19 +192,33 @@ Here are a bunch of useful examples of how to use WordPress shortcodes with Vuep
 </template>
 
 <script>
-    export default {}
+export default {}
 </script>
 
 <style lang="scss">
-    @import 'src/styles/vars';
+@import 'src/styles/vars';
 
-    .half-column {
-        width: 50%;
-        display: inline-block;
-        vertical-align: top;
-    }
-    .half-column + .half-column {
-        width: 45%;
-    }
+.half-column {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+}
+.half-column + .half-column {
+    width: 45%;
+}
 </style>
+```
+
+```php
+/**
+ *  Add serialized version of blog page to site data
+ */
+    function add_blog_permalink_to_sitedata($site_data){
+        $blog_page = get_page_by_dev_id('blog');
+        if ( $blog_page ) {
+            $site_data['blogPage'] = apply_filters('rez_serialize_post', $blog_page);
+        }
+        return $site_data;
+    }
+    add_filter('rez_build_site_data', 'add_blog_permalink_to_sitedata');
 ```
