@@ -1,8 +1,6 @@
 <template>
 
-    <main class="content home">
-        Hi Postal
-    </main>
+    <main class="content home"></main>
 
 </template>
 
