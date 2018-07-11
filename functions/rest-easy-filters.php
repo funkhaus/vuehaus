@@ -27,6 +27,36 @@
      }
      add_filter('rez_serialize_nav_item', 'add_dev_id_to_nav_items');
 
+ /*
+  * Serialize ACF content with get_field to respect ACF custom formatting
+  */
+     function serialize_custom_acf_content($post_data){
+
+         // check to make sure we have ACF installed
+         if (!function_exists('get_fields')){
+             return $post_data;
+         }
+
+         // get ACF fields attached to target post
+         $acf_fields = get_fields($post_data['ID']);
+
+         // prep to save serialized fields
+         $post_data['acf'] = array();
+
+         if( !empty($acf_fields) ){
+
+             // serialize ACF fields
+             foreach( $acf_fields as $name => $value ){
+                 $post_data['acf'][$name] = $value;
+             }
+
+         }
+
+         return $post_data;
+     }
+     add_filter('rez_serialize_post', 'serialize_custom_acf_content');
+
+
 /**
  *  Serialize page siblings
  *
