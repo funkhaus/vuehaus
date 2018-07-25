@@ -41,6 +41,8 @@ Vue.component('wp-content', require('fh-components/wp-content'))
 Vue.component('wp-menu', require('fh-components/wp-menu'))
 
 // Register directives
+// import animated from 'fh-components/v-animated'
+// Vue.directive('animated', animated)
 // import fullHeight from 'fh-components/v-full-height'
 // Vue.directive('full-height', fullHeight)
 // import inView from 'fh-components/v-in-view'
