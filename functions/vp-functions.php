@@ -6,8 +6,9 @@
 
     function vuepress_register_required_plugins() {
 
-        // Change this value to install a new version of Rest-Easy
+        // Change these values to install new versions of FH plugins
         $latest_rest_easy = '1.45';
+        $latest_focushaus = '1.0.3';
 
         $config = array(
             'id'           => 'vuepress',              // Unique ID for hashing notices for multiple instances of TGMPA.
@@ -33,6 +34,12 @@
                 'name'      => 'Nested Pages',
                 'slug'      => 'wp-nested-pages',
                 'required'	=> false
+            ),
+            array(
+                'name'      => 'Focushaus',
+                'slug'      => 'focushaus',
+                'source'    => 'https://github.com/funkhaus/focushaus/archive/master.zip',
+                'version'   => $latest_focushaus
             )
         );
 
