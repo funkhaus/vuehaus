@@ -126,3 +126,8 @@ export const scrollUp = () => {
         else reject()
     })
 }
+
+// clamp a value between min and max, inclusive
+export const clamp = (val, min, max) => {
+    return Math.min(Math.max(val, min), max)
+}
