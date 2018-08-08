@@ -107,7 +107,10 @@ export const buildShareLinks = opts => {
             url
         )}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(
             text
-        )}`
+        )}`,
+        pinterest: `http://pinterest.com/pin/create/button/?url=${encodeURIComponent(
+            url
+        )}&description=${encodeURIComponent(text)}`
     }
 }
 
