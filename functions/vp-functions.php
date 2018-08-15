@@ -8,7 +8,7 @@
 
         // Change these values to install new versions of FH plugins
         $latest_rest_easy = '1.45';
-        $latest_focushaus = '1.0.4';
+        $latest_focushaus = '1.0.5';
 
         $config = array(
             'id'           => 'vuepress',              // Unique ID for hashing notices for multiple instances of TGMPA.
