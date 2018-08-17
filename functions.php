@@ -6,6 +6,9 @@
     // Builds Vue router
     include_once get_template_directory() . '/functions/router.php';
 
+    // Sets up custom Gutenberg blocks
+    include_once get_template_directory() . '/functions/blocks.php';
+
     // Custom Rest-Easy filters
     include_once get_template_directory() . '/functions/rest-easy-filters.php';
 
