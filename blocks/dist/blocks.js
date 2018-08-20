@@ -1,38 +1,53 @@
-!(function(t) {
-    function r(n) {
-        if (e[n]) return e[n].exports
-        var o = (e[n] = { i: n, l: !1, exports: {} })
-        return t[n].call(o.exports, o, o.exports, r), (o.l = !0), o.exports
+!(function(e) {
+    function t(r) {
+        if (n[r]) return n[r].exports
+        var o = (n[r] = { i: r, l: !1, exports: {} })
+        return e[r].call(o.exports, o, o.exports, t), (o.l = !0), o.exports
     }
-    var e = {}
-    ;(r.m = t),
-        (r.c = e),
-        (r.d = function(t, e, n) {
-            r.o(t, e) ||
-                Object.defineProperty(t, e, {
+    var n = {}
+    ;(t.m = e),
+        (t.c = n),
+        (t.d = function(e, n, r) {
+            t.o(e, n) ||
+                Object.defineProperty(e, n, {
                     configurable: !1,
                     enumerable: !0,
-                    get: n
+                    get: r
                 })
         }),
-        (r.n = function(t) {
-            var e =
-                t && t.__esModule
+        (t.n = function(e) {
+            var n =
+                e && e.__esModule
                     ? function() {
-                          return t.default
+                          return e.default
                       }
                     : function() {
-                          return t
+                          return e
                       }
-            return r.d(e, 'a', e), e
+            return t.d(n, 'a', n), n
         }),
-        (r.o = function(t, r) {
-            return Object.prototype.hasOwnProperty.call(t, r)
+        (t.o = function(e, t) {
+            return Object.prototype.hasOwnProperty.call(e, t)
         }),
-        (r.p = ''),
-        r((r.s = 0))
+        (t.p = ''),
+        t((t.s = 0))
 })([
-    function(t, r, e) {
-        'use strict'
+    function(e, t) {
+        ;(0, wp.blocks.registerBlockType)('custom-fh/template-block', {
+            title: 'Worker Block',
+            description: 'The block template.',
+            icon: 'universal-access-alt',
+            category: 'custom-fh',
+            edit: function() {
+                return wp.element.createElement('p', null, 'Hello editor.')
+            },
+            save: function() {
+                return wp.element.createElement(
+                    'p',
+                    null,
+                    'Hello saved content.'
+                )
+            }
+        })
     }
 ])
