@@ -32,6 +32,7 @@
         "singleQuote": true
     },
     "files": [
+        "blocks/**/*.*",
         "functions/**/*.*",
         "parts/**/*.*",
         "static/**/*.*",
