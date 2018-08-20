@@ -1,62 +1,38 @@
-var el = wp.element.createElement,
-    registerBlockType = wp.blocks.registerBlockType,
-    RichText = wp.editor.RichText
-
-// Register your own blocks here.
-/*
-registerBlockType('theme-slug/block-name', {
-    title: 'Block Name',
-    description: 'Block description.',
-    icon: 'universal-access-alt',
-    category: 'custom-fh',
-
-    edit: function() {
-        return el('p', {}, 'Hello editor.')
-    },
-
-    save: function() {
-        return el('p', {}, 'Hello saved content.')
+!(function(t) {
+    function r(n) {
+        if (e[n]) return e[n].exports
+        var o = (e[n] = { i: n, l: !1, exports: {} })
+        return t[n].call(o.exports, o, o.exports, r), (o.l = !0), o.exports
     }
-})
-*/
-
-registerBlockType('theme-slug/block-name', {
-    title: 'Worker',
-    description: 'Block description.',
-    icon: 'universal-access-alt',
-    category: 'custom-fh',
-
-    // this controls the shape of `props` in the functions below
-    attributes: {
-        content: {
-            type: 'array',
-            source: 'children',
-            selector: 'p'
-        }
-    },
-
-    edit: function(props) {
-        var content = props.attributes.content
-
-        function onChangeContent(newContent) {
-            props.setAttributes({ content: newContent })
-        }
-
-        return el(RichText, {
-            tagName: 'p',
-            className: props.className,
-            onChange: onChangeContent,
-            value: content
-        })
-    },
-
-    save: function(props) {
-        var content = props.attributes.content
-
-        return el(RichText.Content, {
-            tagName: 'p',
-            className: props.className,
-            value: content
-        })
+    var e = {}
+    ;(r.m = t),
+        (r.c = e),
+        (r.d = function(t, e, n) {
+            r.o(t, e) ||
+                Object.defineProperty(t, e, {
+                    configurable: !1,
+                    enumerable: !0,
+                    get: n
+                })
+        }),
+        (r.n = function(t) {
+            var e =
+                t && t.__esModule
+                    ? function() {
+                          return t.default
+                      }
+                    : function() {
+                          return t
+                      }
+            return r.d(e, 'a', e), e
+        }),
+        (r.o = function(t, r) {
+            return Object.prototype.hasOwnProperty.call(t, r)
+        }),
+        (r.p = ''),
+        r((r.s = 0))
+})([
+    function(t, r, e) {
+        'use strict'
     }
-})
+])
