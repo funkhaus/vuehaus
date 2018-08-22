@@ -56,6 +56,39 @@
      }
      add_filter('rez_serialize_post', 'serialize_custom_acf_content');
 
+ /**
+  *  Add pages with dev ID to site data
+  *
+  * @param array $input The nav item currently being processed by Rest-Easy
+  */
+     function add_dev_page_links_to_site_data($site_data){
+
+         $args = array(
+        	'posts_per_page'   => -1,
+        	'orderby'          => 'menu_order',
+        	'order'            => 'ASC',
+            // get all non-empty custom_developer_id pages
+            'meta_query'        => array(
+                array(
+                    'key'   => 'custom_developer_id',
+                    'value' => array(''),
+                    'compare'   => 'NOT IN'
+                )
+            ),
+        	'post_type'        => 'page',
+        );
+        $posts_array = get_posts( $args );
+
+        $site_data['devIds'] = array();
+
+        foreach($posts_array as $dev_id_page){
+            $key = $dev_id_page->custom_developer_id;
+            $site_data['devIds'][$key] = wp_make_link_relative(get_permalink($dev_id_page));
+        }
+
+        return $site_data;
+     }
+     add_filter('rez_build_site_data', 'add_dev_page_links_to_site_data');
 
 /**
  *  Serialize page siblings
