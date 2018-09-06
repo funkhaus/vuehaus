@@ -122,3 +122,15 @@
     //     return $related;
     // }
     // add_filter('rez_gather_related', 'add_page_siblings', 10, 2);
+
+// Add theme options to site data
+// function add_theme_options_to_site($site_data){
+//     if ( function_exists('the_field') ){
+//         $site_data['themeOptions'] = array(
+//             'singleText'                => get_field('single_text', 'option'),
+//             'multilineText'             => explode("\n", get_field('multiline_text', 'option')),
+//         );
+//     }
+//     return $site_data;
+// }
+// add_filter('rez_build_site_data', 'add_theme_options_to_site');
