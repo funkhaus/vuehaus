@@ -219,3 +219,14 @@
         $option = get_option($args[0]);
         echo '<input type="text" id="'. $args[0] .'" name="'. $args[0] .'" value="' . $option . '" placeholder="UA-12345678-1"/>';
     }
+
+/*
+ * Add theme options page
+ */
+    // if( function_exists('acf_add_options_page') ) {
+    // 	acf_add_options_page(array(
+    // 		'page_title' 	=> 'Theme Settings',
+    // 		'menu_title'	=> 'Theme Settings',
+    // 		'menu_slug' 	=> 'theme-settings'
+    // 	));
+    // }
