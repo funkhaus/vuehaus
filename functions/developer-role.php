@@ -216,3 +216,57 @@
         return $classes;
     }
     add_filter('admin_body_class', 'add_developer_admin_body_class');
+
+    // add extra capabilities for common plugins
+    function add_extra_vp_capabilities(){
+        global $wp_roles;
+
+        // add desired developer capabilities here
+        $caps_to_add = array(
+            'manage_woocommerce',
+            'view_woocommerce_reports'
+        );
+
+        // woocommerce defaults
+        // (https://github.com/woocommerce/woocommerce/blob/master/includes/class-wc-install.php#L981)
+        $capability_types = array( 'product', 'shop_order', 'shop_coupon' );
+        foreach ( $capability_types as $capability_type ) {
+            $wc_caps_to_add = array(
+                // Post type.
+                "edit_{$capability_type}",
+                "read_{$capability_type}",
+                "delete_{$capability_type}",
+                "edit_{$capability_type}s",
+                "edit_others_{$capability_type}s",
+                "publish_{$capability_type}s",
+                "read_private_{$capability_type}s",
+                "delete_{$capability_type}s",
+                "delete_private_{$capability_type}s",
+                "delete_published_{$capability_type}s",
+                "delete_others_{$capability_type}s",
+                "edit_private_{$capability_type}s",
+                "edit_published_{$capability_type}s",
+                // Terms.
+                "manage_{$capability_type}_terms",
+                "edit_{$capability_type}_terms",
+                "delete_{$capability_type}_terms",
+                "assign_{$capability_type}_terms",
+            );
+
+            foreach($wc_caps_to_add as $wc_cap_to_add){
+                $caps_to_add[] = $wc_cap_to_add;
+            }
+        }
+
+        // get developer role
+        $developer_role = get_role('developer');
+
+        // add desired caps to developer if they don't exist yet
+        foreach($caps_to_add as $cap_to_add){
+            if( !$developer_role->has_cap($cap_to_add) ){
+                $wp_roles->add_cap( 'developer', $cap_to_add );
+            }
+        }
+    }
+    // add permissions after any plugin activated
+    add_action('activated_plugin', 'add_extra_vp_capabilities');
