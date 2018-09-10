@@ -95,3 +95,6 @@ body:not(.is-developer) #toplevel_page_edit-post_type-acf-field-group {
 #menu-comments {
     display: none;
 }
+/* body:not(.is-developer) #toplevel_page_edit-post_type-acf-field-group {
+    display: none;
+} */
