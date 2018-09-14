@@ -25,12 +25,14 @@ registerBlockType('custom-fh/block-slug', {
         }
 
         return (
-            <RichText
-                tagName="p"
-                className={className}
-                onChange={onChangeContent}
-                value={content}
-            />
+            <div className="fh-custom-block">
+                <RichText
+                    tagName="p"
+                    className={className}
+                    onChange={onChangeContent}
+                    value={content}
+                />
+            </div>
         )
     },
 

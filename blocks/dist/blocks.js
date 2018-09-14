@@ -74,6 +74,13 @@
     /************************************************************************/
     /******/ [
         /* 0 */
+        /***/ function(module, exports, __webpack_require__) {
+            __webpack_require__(1)
+            module.exports = __webpack_require__(2)
+
+            /***/
+        },
+        /* 1 */
         /***/ function(module, exports) {
             var registerBlockType = wp.blocks.registerBlockType
             var RichText = wp.editor.RichText
@@ -104,12 +111,16 @@
                         setAttributes({ content: newContent })
                     }
 
-                    return wp.element.createElement(RichText, {
-                        tagName: 'p',
-                        className: className,
-                        onChange: onChangeContent,
-                        value: content
-                    })
+                    return wp.element.createElement(
+                        'div',
+                        { className: 'fh-custom-block' },
+                        wp.element.createElement(RichText, {
+                            tagName: 'p',
+                            className: className,
+                            onChange: onChangeContent,
+                            value: content
+                        })
+                    )
                 },
 
                 // On save
@@ -126,6 +137,11 @@
                 }
             })
 
+            /***/
+        },
+        /* 2 */
+        /***/ function(module, exports) {
+            // removed by extract-text-webpack-plugin
             /***/
         }
         /******/
