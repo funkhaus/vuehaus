@@ -1,51 +1,6 @@
-const { registerBlockType } = wp.blocks
-const { RichText } = wp.editor
+import buildBlock from './utils/builder'
 
-registerBlockType('custom-fh/block-slug', {
-    title: 'Worker',
-    description: 'The current block',
-    icon: 'universal-access-alt',
-    category: 'custom-fh',
-
-    // This defines the shape of the data in the functions below
-    attributes: {
-        content: {
-            type: 'array',
-            source: 'children',
-            selector: 'p'
-        }
-    },
-
-    // Editor
-    edit({ attributes, className, setAttributes }) {
-        const { content } = attributes
-
-        function onChangeContent(newContent) {
-            setAttributes({ content: newContent })
-        }
-
-        return (
-            <div className="fh-custom-block">
-                <RichText
-                    tagName="p"
-                    className={className}
-                    onChange={onChangeContent}
-                    value={content}
-                />
-            </div>
-        )
-    },
-
-    // On save
-    save({ attributes, className }) {
-        const { content } = attributes
-
-        return (
-            <RichText.Content
-                tagName="p"
-                className={className}
-                value={content}
-            />
-        )
-    }
+buildBlock({
+    name: 'Split Block',
+    description: 'Image next to text'
 })

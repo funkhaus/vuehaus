@@ -24,6 +24,7 @@
             {
                 "pragma": "wp.element.createElement"
             }
-        ]
+        ],
+        "transform-object-rest-spread"
     ]
 }
