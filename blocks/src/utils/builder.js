@@ -1,7 +1,8 @@
+// prep prebuilt components
+import prebuilt from '../prebuilt'
+
 const { registerBlockType } = wp.blocks
 const { RichText } = wp.editor
-import editJsx from './prebuilt-jsx-edit-blocks'
-import saveJsx from './prebuilt-jsx-save-blocks'
 
 export default (opts = {}) => {
     const settings = {
@@ -20,15 +21,8 @@ export default (opts = {}) => {
     // build attributes according to content child names
     const attributes = {}
     settings.content.map(child => {
-        console.log(child)
-
-        if (child.name) {
-            // TODO: different values for different types
-            attributes[child.name] = {
-                type: 'array',
-                source: 'children',
-                selector: `.${child.name}`
-            }
+        if (child.type && prebuilt[child.type]) {
+            attributes[child.name] = prebuilt[child.type].attributes(child)
         }
     })
 
@@ -49,8 +43,8 @@ export default (opts = {}) => {
 
             const output = settings.content
                 .map(child => {
-                    if (child.name) {
-                        return editJsx[child.type](props, child)
+                    if (child.type && prebuilt[child.type]) {
+                        return prebuilt[child.type].edit(props, child)
                     }
 
                     return child
@@ -64,8 +58,8 @@ export default (opts = {}) => {
         save(props) {
             const output = settings.content
                 .map(child => {
-                    if (child.name) {
-                        return saveJsx[child.type](props, child)
+                    if (child.type && prebuilt[child.type]) {
+                        return prebuilt[child.type].save(props, child)
                     }
 
                     return null

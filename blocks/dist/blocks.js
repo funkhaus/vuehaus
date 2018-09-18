@@ -94,10 +94,11 @@
                 __WEBPACK_IMPORTED_MODULE_0__utils_builder__['a' /* default */]
             )({
                 name: 'Split Block',
+                slug: 'split-block',
                 description: 'Image next to text',
                 class: 'split-block',
                 content: [
-                    wp.element.createElement('h2', null, 'Test'),
+                    wp.element.createElement('h2', null, 'Title'),
                     { name: 'content', type: 'text' },
                     wp.element.createElement('h2', null, 'Byline'),
                     { name: 'byline', type: 'text' }
@@ -109,11 +110,8 @@
         /* 2 */
         /***/ function(module, __webpack_exports__, __webpack_require__) {
             'use strict'
-            /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__prebuilt_jsx_edit_blocks__ = __webpack_require__(
-                8
-            )
-            /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__prebuilt_jsx_save_blocks__ = __webpack_require__(
-                9
+            /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__prebuilt__ = __webpack_require__(
+                11
             )
             var _extends =
                 Object.assign ||
@@ -133,6 +131,8 @@
                     }
                     return target
                 }
+
+            // prep prebuilt components
 
             var registerBlockType = wp.blocks.registerBlockType
             var RichText = wp.editor.RichText
@@ -159,15 +159,17 @@
                 // build attributes according to content child names
                 var attributes = {}
                 settings.content.map(function(child) {
-                    console.log(child)
-
-                    if (child.name) {
-                        // TODO: different values for different types
-                        attributes[child.name] = {
-                            type: 'array',
-                            source: 'children',
-                            selector: '.' + child.name
-                        }
+                    if (
+                        child.type &&
+                        __WEBPACK_IMPORTED_MODULE_0__prebuilt__[
+                            'a' /* default */
+                        ][child.type]
+                    ) {
+                        attributes[
+                            child.name
+                        ] = __WEBPACK_IMPORTED_MODULE_0__prebuilt__[
+                            'a' /* default */
+                        ][child.type].attributes(child)
                     }
                 })
 
@@ -191,10 +193,15 @@
 
                         var output = settings.content
                             .map(function(child) {
-                                if (child.name) {
-                                    return __WEBPACK_IMPORTED_MODULE_0__prebuilt_jsx_edit_blocks__[
+                                if (
+                                    child.type &&
+                                    __WEBPACK_IMPORTED_MODULE_0__prebuilt__[
                                         'a' /* default */
-                                    ][child.type](props, child)
+                                    ][child.type]
+                                ) {
+                                    return __WEBPACK_IMPORTED_MODULE_0__prebuilt__[
+                                        'a' /* default */
+                                    ][child.type].edit(props, child)
                                 }
 
                                 return child
@@ -214,10 +221,15 @@
                     save: function save(props) {
                         var output = settings.content
                             .map(function(child) {
-                                if (child.name) {
-                                    return __WEBPACK_IMPORTED_MODULE_1__prebuilt_jsx_save_blocks__[
+                                if (
+                                    child.type &&
+                                    __WEBPACK_IMPORTED_MODULE_0__prebuilt__[
                                         'a' /* default */
-                                    ][child.type](props, child)
+                                    ][child.type]
+                                ) {
+                                    return __WEBPACK_IMPORTED_MODULE_0__prebuilt__[
+                                        'a' /* default */
+                                    ][child.type].save(props, child)
                                 }
 
                                 return null
@@ -246,7 +258,9 @@
         ,
         ,
         ,
-        /* 4 */ /* 5 */ /* 6 */ /* 7 */ /* 8 */
+        ,
+        ,
+        /* 4 */ /* 5 */ /* 6 */ /* 7 */ /* 8 */ /* 9 */ /* 10 */
         /***/ function(module, __webpack_exports__, __webpack_require__) {
             'use strict'
             function _defineProperty(obj, key, value) {
@@ -266,7 +280,14 @@
             var RichText = wp.editor.RichText
 
             /* harmony default export */ __webpack_exports__['a'] = {
-                text: function text(props, child) {
+                attributes: function attributes(child) {
+                    return {
+                        type: 'array',
+                        source: 'children',
+                        selector: '.' + child.name
+                    }
+                },
+                edit: function edit(props, child) {
                     var attributes = props.attributes,
                         className = props.className,
                         setAttributes = props.setAttributes
@@ -287,18 +308,8 @@
                         onChange: onChangeContent,
                         value: content
                     })
-                }
-            }
-
-            /***/
-        },
-        /* 9 */
-        /***/ function(module, __webpack_exports__, __webpack_require__) {
-            'use strict'
-            var RichText = wp.editor.RichText
-
-            /* harmony default export */ __webpack_exports__['a'] = {
-                text: function text(props, child) {
+                },
+                save: function save(props, child) {
                     // data attributes passed from editor
                     var attributes = props.attributes
 
@@ -313,6 +324,19 @@
                         value: content
                     })
                 }
+            }
+
+            /***/
+        },
+        /* 11 */
+        /***/ function(module, __webpack_exports__, __webpack_require__) {
+            'use strict'
+            /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__text__ = __webpack_require__(
+                10
+            )
+
+            /* harmony default export */ __webpack_exports__['a'] = {
+                text: __WEBPACK_IMPORTED_MODULE_0__text__['a' /* default */]
             }
 
             /***/
