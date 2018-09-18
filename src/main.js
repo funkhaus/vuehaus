@@ -2,14 +2,14 @@
 import App from './App.vue'
 import Vue from 'vue'
 import cache from 'src/utils/cache'
-import Case from 'case'
+import _kebabCase from 'lodash/kebabCase'
 
 // Register components in src/
 // ===============================
 const components = require.context('src/components', true)
 components.keys().map(component => {
     // turn './ComponentName.vue' into 'component-name'
-    const componentName = Case.kebab(
+    const componentName = _kebabCase(
         component.replace(/^\.\//, '').replace(/\.vue$/, '')
     )
     // register new component globally

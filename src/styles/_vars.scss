@@ -13,8 +13,8 @@ $lt-phone: 'only screen and (max-width: 750px)';
 $lt-phone-landscape: 'only screen and (max-width: 750px) and (orientation: landscape)';
 
 // mixins
-@mixin fill {
-    position: absolute;
+@mixin fill($position: absolute) {
+    position: $position;
     bottom: 0;
     right: 0;
     left: 0;
