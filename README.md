@@ -454,17 +454,20 @@ The simplest example is creating a new text block:
 
 ```js
 buildBlock({
-    // The human-readable name of your block
-    name: 'Text Block',
-
     // The unique slug of your block (namespaced to your theme) (required)
     slug: 'text-block',
 
-    // A short block description
-    description: 'A block of text.',
-
     // Class applied to the block (required)
     class: 'text-block',
+
+    // The human-readable name of your block (optional)
+    name: 'Text Block',
+
+    // A short block description (optional)
+    description: 'A block of text.',
+
+    // WP Dash Icon (https://developer.wordpress.org/resource/dashicons/) (optional)
+    icon: 'format-gallery',
 
     // The block content (required)
     content: [
@@ -482,7 +485,7 @@ When you've added a new block, it will appear under your theme name in the block
 
 ### Block Content
 
-`content` is an array that contains 1 or more piece of data, identified with a name and a type:
+`content` is an array that contains 1 or more objects with a name and a type:
 
 ```js
 content: [
