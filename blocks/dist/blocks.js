@@ -93,18 +93,36 @@
             // Define your blocks here!
 
             // Example block
-            // buildBlock({
-            //     name: 'Title and Byline',
-            //     slug: 'title-and-byline',
-            //     description: 'A title and a byline.',
-            //     class: 'split-block',
-            //     content: [
-            //         <h2>Title</h2>,
-            //         { name: 'content', type: 'text' },
-            //         <h2>Byline</h2>,
-            //         { name: 'byline', type: 'text' }
-            //     ]
-            // })
+            Object(
+                __WEBPACK_IMPORTED_MODULE_0__utils_builder__['a' /* default */]
+            )({
+                name: 'Title and Byline',
+                slug: 'title-and-byline',
+                description: 'A title and a byline.',
+                class: 'split-block',
+                content: [
+                    wp.element.createElement('h2', null, 'Title'),
+                    { name: 'content', type: 'text' },
+                    wp.element.createElement('h2', null, 'Byline'),
+                    { name: 'byline', type: 'text' }
+                ]
+            })
+
+            Object(
+                __WEBPACK_IMPORTED_MODULE_0__utils_builder__['a' /* default */]
+            )({
+                name: 'lines and image',
+                slug: 'lines-and-image',
+                class: 'lines-and-image',
+                content: [
+                    wp.element.createElement('h2', null, 'Line 1'),
+                    { name: 'content', type: 'text' },
+                    wp.element.createElement('h2', null, 'Line 2'),
+                    { name: 'byline', type: 'text' },
+                    wp.element.createElement('h2', null, 'Image'),
+                    { name: 'image', type: 'image' }
+                ]
+            })
 
             /***/
         },
@@ -138,7 +156,7 @@
             var registerBlockType = wp.blocks.registerBlockType
             var RichText = wp.editor.RichText
 
-            /* unused harmony default export */ var _unused_webpack_default_export = function() {
+            /* harmony default export */ __webpack_exports__['a'] = function() {
                 var opts =
                     arguments.length > 0 && arguments[0] !== undefined
                         ? arguments[0]
@@ -335,9 +353,120 @@
             /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__text__ = __webpack_require__(
                 10
             )
+            /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__image__ = __webpack_require__(
+                12
+            )
 
             /* harmony default export */ __webpack_exports__['a'] = {
-                text: __WEBPACK_IMPORTED_MODULE_0__text__['a' /* default */]
+                text: __WEBPACK_IMPORTED_MODULE_0__text__['a' /* default */],
+                image: __WEBPACK_IMPORTED_MODULE_1__image__['a' /* default */]
+            }
+
+            /***/
+        },
+        /* 12 */
+        /***/ function(module, __webpack_exports__, __webpack_require__) {
+            'use strict'
+            function _defineProperty(obj, key, value) {
+                if (key in obj) {
+                    Object.defineProperty(obj, key, {
+                        value: value,
+                        enumerable: true,
+                        configurable: true,
+                        writable: true
+                    })
+                } else {
+                    obj[key] = value
+                }
+                return obj
+            }
+
+            var MediaUpload = wp.editor.MediaUpload
+            var Button = wp.components.Button
+
+            /* harmony default export */ __webpack_exports__['a'] = {
+                // attributes
+                attributes: function attributes(child) {
+                    return {
+                        mediaID: {
+                            type: 'number'
+                        },
+                        mediaURL: {
+                            type: 'string',
+                            source: 'attribute',
+                            selector: 'img',
+                            attribute: 'src'
+                        },
+                        width: {
+                            type: 'number'
+                        },
+                        height: {
+                            type: 'number'
+                        }
+                    }
+                },
+
+                // editing
+                edit: function edit(props, child) {
+                    var setAttributes = props.setAttributes,
+                        attributes = props.attributes
+                    var _attributes$child$nam = attributes[child.name],
+                        mediaID = _attributes$child$nam.mediaID,
+                        mediaURL = _attributes$child$nam.mediaURL
+
+                    // selecting the image
+
+                    function onSelectImage(newImage) {
+                        // console.log(newImage)
+                        setAttributes(
+                            _defineProperty({}, child.name, {
+                                mediaURL: newImage.url,
+                                mediaID: newImage.id,
+                                width: newImage.width,
+                                height: newImage.height
+                            })
+                        )
+                    }
+
+                    // edit block
+                    return wp.element.createElement(MediaUpload, {
+                        onSelect: onSelectImage,
+                        type: 'image',
+                        value: mediaID,
+                        render: function render(_ref) {
+                            var open = _ref.open
+                            return wp.element.createElement(
+                                Button,
+                                {
+                                    className: mediaID
+                                        ? 'image-button'
+                                        : 'button button-large',
+                                    onClick: open
+                                },
+                                !mediaID
+                                    ? 'Upload Image'
+                                    : wp.element.createElement('img', {
+                                          src: mediaURL
+                                      })
+                            )
+                        }
+                    })
+                },
+                save: function save(props, child) {
+                    var attributes = props.attributes
+                    var mediaID = attributes.mediaID,
+                        mediaURL = attributes.mediaURL,
+                        width = attributes.width,
+                        height = attributes.height
+
+                    return wp.element.createElement('img', {
+                        'data-replace-with': 'responsive-image',
+                        src: mediaURL,
+                        'data-wp-id': mediaID,
+                        width: width,
+                        height: height
+                    })
+                }
             }
 
             /***/
