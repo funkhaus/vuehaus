@@ -20,11 +20,15 @@ export default (opts = {}) => {
     // build attributes according to content child names
     const attributes = {}
     settings.content.map(child => {
-        // TODO: different values for different types
-        attributes[child.name] = {
-            type: 'array',
-            source: 'children',
-            selector: `.${child.name}`
+        console.log(child)
+
+        if (child.name) {
+            // TODO: different values for different types
+            attributes[child.name] = {
+                type: 'array',
+                source: 'children',
+                selector: `.${child.name}`
+            }
         }
     })
 
@@ -43,18 +47,30 @@ export default (opts = {}) => {
             const { attributes, className, setAttributes } = props
             const classes = `${settings.class} fh-custom-block`
 
-            const output = settings.content.map(child =>
-                editJsx[child.type](props, child)
-            )
+            const output = settings.content
+                .map(child => {
+                    if (child.name) {
+                        return editJsx[child.type](props, child)
+                    }
+
+                    return child
+                })
+                .filter(x => x)
 
             return <div className={classes}>{output}</div>
         },
 
         // On save
         save(props) {
-            const output = settings.content.map(child =>
-                saveJsx[child.type](props, child)
-            )
+            const output = settings.content
+                .map(child => {
+                    if (child.name) {
+                        return saveJsx[child.type](props, child)
+                    }
+
+                    return null
+                })
+                .filter(x => x)
 
             return <div className={settings.class}>{output}</div>
         }

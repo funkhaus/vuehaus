@@ -97,7 +97,9 @@
                 description: 'Image next to text',
                 class: 'split-block',
                 content: [
+                    wp.element.createElement('h2', null, 'Test'),
                     { name: 'content', type: 'text' },
+                    wp.element.createElement('h2', null, 'Byline'),
                     { name: 'byline', type: 'text' }
                 ]
             })
@@ -157,11 +159,15 @@
                 // build attributes according to content child names
                 var attributes = {}
                 settings.content.map(function(child) {
-                    // TODO: different values for different types
-                    attributes[child.name] = {
-                        type: 'array',
-                        source: 'children',
-                        selector: '.' + child.name
+                    console.log(child)
+
+                    if (child.name) {
+                        // TODO: different values for different types
+                        attributes[child.name] = {
+                            type: 'array',
+                            source: 'children',
+                            selector: '.' + child.name
+                        }
                     }
                 })
 
@@ -183,11 +189,19 @@
 
                         var classes = settings.class + ' fh-custom-block'
 
-                        var output = settings.content.map(function(child) {
-                            return __WEBPACK_IMPORTED_MODULE_0__prebuilt_jsx_edit_blocks__[
-                                'a' /* default */
-                            ][child.type](props, child)
-                        })
+                        var output = settings.content
+                            .map(function(child) {
+                                if (child.name) {
+                                    return __WEBPACK_IMPORTED_MODULE_0__prebuilt_jsx_edit_blocks__[
+                                        'a' /* default */
+                                    ][child.type](props, child)
+                                }
+
+                                return child
+                            })
+                            .filter(function(x) {
+                                return x
+                            })
 
                         return wp.element.createElement(
                             'div',
@@ -198,11 +212,19 @@
 
                     // On save
                     save: function save(props) {
-                        var output = settings.content.map(function(child) {
-                            return __WEBPACK_IMPORTED_MODULE_1__prebuilt_jsx_save_blocks__[
-                                'a' /* default */
-                            ][child.type](props, child)
-                        })
+                        var output = settings.content
+                            .map(function(child) {
+                                if (child.name) {
+                                    return __WEBPACK_IMPORTED_MODULE_1__prebuilt_jsx_save_blocks__[
+                                        'a' /* default */
+                                    ][child.type](props, child)
+                                }
+
+                                return null
+                            })
+                            .filter(function(x) {
+                                return x
+                            })
 
                         return wp.element.createElement(
                             'div',
