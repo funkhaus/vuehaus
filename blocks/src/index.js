@@ -4,5 +4,8 @@ buildBlock({
     name: 'Split Block',
     description: 'Image next to text',
     class: 'split-block',
-    content: ['text']
+    content: [
+        { name: 'content', type: 'text' },
+        { name: 'byline', type: 'text' }
+    ]
 })

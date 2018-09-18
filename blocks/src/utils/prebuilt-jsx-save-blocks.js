@@ -1,17 +1,14 @@
 const { RichText } = wp.editor
 
 export default {
-    text: (props, index) => {
-        const { attributes, className } = props
-        const key = `child${index}`
+    text: (props, child) => {
+        const { attributes } = props
+        const key = child.name
         const content = attributes[key]
+        const classes = `${child.name}`
 
         return (
-            <RichText.Content
-                tagName="p"
-                className={className}
-                value={content}
-            />
+            <RichText.Content className={classes} tagName="p" value={content} />
         )
     }
 }

@@ -1,20 +1,20 @@
 const { RichText } = wp.editor
 
 export default {
-    text: (props, index) => {
+    text: (props, child) => {
         const { attributes, className, setAttributes } = props
-        const key = `child${index}`
-        const content = attributes[key]
+        const content = attributes[child.name]
+
+        const classes = `${child.name} ${className}`
 
         function onChangeContent(newContent) {
-            console.log('test', { [key]: newContent })
-            setAttributes({ [key]: newContent })
+            setAttributes({ [child.name]: newContent })
         }
 
         return (
             <RichText
                 tagName="p"
-                className={className}
+                className={classes}
                 onChange={onChangeContent}
                 value={content}
             />

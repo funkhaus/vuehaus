@@ -19,15 +19,13 @@ export default (opts = {}) => {
 
     // build attributes
     const attributes = {}
-    settings.content.map((child, i) => {
-        attributes[`child${i}`] = {
+    settings.content.map(child => {
+        attributes[child.name] = {
             type: 'array',
             source: 'children',
-            selector: 'p'
+            selector: `.${child.name}`
         }
     })
-
-    console.log(attributes)
 
     // register desired block
     registerBlockType(`custom-fh/${settings.slug}`, {
@@ -36,23 +34,15 @@ export default (opts = {}) => {
         icon: settings.icon,
         category: 'custom-fh',
 
-        // This defines the shape of the data in the functions below
-        // attributes: {
-        //     content: {
-        //         type: 'array',
-        //         source: 'children',
-        //         selector: 'p'
-        //     }
-        // },
-
         attributes,
 
         // Editor
         edit(props) {
             const { attributes, className, setAttributes } = props
             const classes = `${settings.class} fh-custom-block`
-            const output = settings.content.map((child, i) =>
-                editJsx[child](props, i)
+
+            const output = settings.content.map(child =>
+                editJsx[child.type](props, child)
             )
 
             return <div className={classes}>{output}</div>
@@ -60,8 +50,8 @@ export default (opts = {}) => {
 
         // On save
         save(props) {
-            const output = settings.content.map((child, i) =>
-                saveJsx[child](props, i)
+            const output = settings.content.map(child =>
+                saveJsx[child.type](props, child)
             )
 
             return <div className={settings.class}>{output}</div>

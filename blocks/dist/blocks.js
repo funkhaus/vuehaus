@@ -96,7 +96,10 @@
                 name: 'Split Block',
                 description: 'Image next to text',
                 class: 'split-block',
-                content: ['text']
+                content: [
+                    { name: 'content', type: 'text' },
+                    { name: 'byline', type: 'text' }
+                ]
             })
 
             /***/
@@ -153,15 +156,13 @@
 
                 // build attributes
                 var attributes = {}
-                settings.content.map(function(child, i) {
-                    attributes['child' + i] = {
+                settings.content.map(function(child) {
+                    attributes[child.name] = {
                         type: 'array',
                         source: 'children',
-                        selector: 'p'
+                        selector: '.' + child.name
                     }
                 })
-
-                console.log(attributes)
 
                 // register desired block
                 registerBlockType('custom-fh/' + settings.slug, {
@@ -169,15 +170,6 @@
                     description: settings.description,
                     icon: settings.icon,
                     category: 'custom-fh',
-
-                    // This defines the shape of the data in the functions below
-                    // attributes: {
-                    //     content: {
-                    //         type: 'array',
-                    //         source: 'children',
-                    //         selector: 'p'
-                    //     }
-                    // },
 
                     attributes: attributes,
 
@@ -188,10 +180,11 @@
                             setAttributes = props.setAttributes
 
                         var classes = settings.class + ' fh-custom-block'
-                        var output = settings.content.map(function(child, i) {
+
+                        var output = settings.content.map(function(child) {
                             return __WEBPACK_IMPORTED_MODULE_0__prebuilt_jsx_edit_blocks__[
                                 'a' /* default */
-                            ][child](props, i)
+                            ][child.type](props, child)
                         })
 
                         return wp.element.createElement(
@@ -203,10 +196,10 @@
 
                     // On save
                     save: function save(props) {
-                        var output = settings.content.map(function(child, i) {
+                        var output = settings.content.map(function(child) {
                             return __WEBPACK_IMPORTED_MODULE_1__prebuilt_jsx_save_blocks__[
                                 'a' /* default */
-                            ][child](props, i)
+                            ][child.type](props, child)
                         })
 
                         return wp.element.createElement(
@@ -249,25 +242,24 @@
             var RichText = wp.editor.RichText
 
             /* harmony default export */ __webpack_exports__['a'] = {
-                text: function text(props, index) {
+                text: function text(props, child) {
                     var attributes = props.attributes,
                         className = props.className,
                         setAttributes = props.setAttributes
 
-                    var key = 'child' + index
-                    var content = attributes[key]
+                    var content = attributes[child.name]
+
+                    var classes = child.name + ' ' + className
 
                     function onChangeContent(newContent) {
-                        console.log(
-                            'test',
-                            _defineProperty({}, key, newContent)
+                        setAttributes(
+                            _defineProperty({}, child.name, newContent)
                         )
-                        setAttributes(_defineProperty({}, key, newContent))
                     }
 
                     return wp.element.createElement(RichText, {
                         tagName: 'p',
-                        className: className,
+                        className: classes,
                         onChange: onChangeContent,
                         value: content
                     })
@@ -282,16 +274,16 @@
             var RichText = wp.editor.RichText
 
             /* harmony default export */ __webpack_exports__['a'] = {
-                text: function text(props, index) {
-                    var attributes = props.attributes,
-                        className = props.className
+                text: function text(props, child) {
+                    var attributes = props.attributes
 
-                    var key = 'child' + index
+                    var key = child.name
                     var content = attributes[key]
+                    var classes = '' + child.name
 
                     return wp.element.createElement(RichText.Content, {
+                        className: classes,
                         tagName: 'p',
-                        className: className,
                         value: content
                     })
                 }
