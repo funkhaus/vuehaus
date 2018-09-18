@@ -17,9 +17,10 @@ export default (opts = {}) => {
         ...opts
     }
 
-    // build attributes
+    // build attributes according to content child names
     const attributes = {}
     settings.content.map(child => {
+        // TODO: different values for different types
         attributes[child.name] = {
             type: 'array',
             source: 'children',
@@ -34,6 +35,7 @@ export default (opts = {}) => {
         icon: settings.icon,
         category: 'custom-fh',
 
+        // use attributes from earlier
         attributes,
 
         // Editor

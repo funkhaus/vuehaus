@@ -154,9 +154,10 @@
                     opts
                 )
 
-                // build attributes
+                // build attributes according to content child names
                 var attributes = {}
                 settings.content.map(function(child) {
+                    // TODO: different values for different types
                     attributes[child.name] = {
                         type: 'array',
                         source: 'children',
@@ -171,6 +172,7 @@
                     icon: settings.icon,
                     category: 'custom-fh',
 
+                    // use attributes from earlier
                     attributes: attributes,
 
                     // Editor
@@ -275,10 +277,12 @@
 
             /* harmony default export */ __webpack_exports__['a'] = {
                 text: function text(props, child) {
+                    // data attributes passed from editor
                     var attributes = props.attributes
 
-                    var key = child.name
-                    var content = attributes[key]
+                    // get content and classes relevant to this particular block
+
+                    var content = attributes[child.name]
                     var classes = '' + child.name
 
                     return wp.element.createElement(RichText.Content, {
