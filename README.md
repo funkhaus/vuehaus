@@ -34,6 +34,11 @@ Head over to the [tutorial](https://github.com/funkhaus/vuepress/wiki) to learn 
     1.  [Getters](#getters)
 1.  [Vuepress Events](#vuepress-events)
 1.  [Partials](#partials)
+1.  [Gutenberg Blocks](#gutenberg-blocks)
+    1.  [Adding a Block](#adding-a-block)
+    1.  [Block Content](#block-content)
+    1.  [Block Content Types](#block-content-types)
+        1. [Adding Content Types](#adding-content-types)
 1.  [Deploying](#deploying)
 1.  [Recommended Reading](#recommended-reading)
 
@@ -180,10 +185,10 @@ Vuepress also comes with a few suggested breakpoints in that same vars file - yo
 
 The default breakpoints (with `lt` for "less than" and `gt` for "greater than") are:
 
-*   **`gt-cinema`** - `only screen and (min-width: 1800px)`
-*   **`lt-desktop`** - `only screen and (max-width: 1100px)`
-*   **`lt-phone`** - `only screen and (max-width: 750px)`
-*   **`lt-phone-landscape`** - `only screen and (max-width: 750px) and (orientation: landscape)`
+-   **`gt-cinema`** - `only screen and (min-width: 1800px)`
+-   **`lt-desktop`** - `only screen and (max-width: 1100px)`
+-   **`lt-phone`** - `only screen and (max-width: 750px)`
+-   **`lt-phone-landscape`** - `only screen and (max-width: 750px) and (orientation: landscape)`
 
 ### The Developer Role and Developer IDs
 
@@ -274,13 +279,13 @@ When trying to get the children of the front page, you'll need to use `slug_from
 
 Vuepress defines a few utility functions to make building the routing table easier:
 
-*   `get_child_of_dev_id($dev_id, $nth_child = 0)` - Get the post object of the nth child (zero-based, default `0`) of a page with the given Developer ID.
-*   `get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = '')` - Get the relative path of the nth child of a page with the given Developer ID. Adds `$after` to the retrieved path.
-*   `get_children_of_dev_id($dev_id)` - Get the children of a page with the given Developer ID. Returns `false` if no page with Developer ID exists or an empty array if no children found.
-*   `get_page_by_dev_id($dev_id)` - Get the first page with a given Developer ID. Returns the complete WP Post object or `false` if none found.
-*   `path_from_dev_id($dev_id, $after = '')` - Get the relative path of a page with a given Developer ID. Adds `$after` to the retrieved path. Returns `'#404'` if no page with the given Developer ID is found.
-*   `slug_from_dev_id($dev_id)` - Get the slug of a page with a given Developer ID.
-*   `user_is_developer()` - Boolean indicating whether the current logged-in user is a Developer or not.
+-   `get_child_of_dev_id($dev_id, $nth_child = 0)` - Get the post object of the nth child (zero-based, default `0`) of a page with the given Developer ID.
+-   `get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = '')` - Get the relative path of the nth child of a page with the given Developer ID. Adds `$after` to the retrieved path.
+-   `get_children_of_dev_id($dev_id)` - Get the children of a page with the given Developer ID. Returns `false` if no page with Developer ID exists or an empty array if no children found.
+-   `get_page_by_dev_id($dev_id)` - Get the first page with a given Developer ID. Returns the complete WP Post object or `false` if none found.
+-   `path_from_dev_id($dev_id, $after = '')` - Get the relative path of a page with a given Developer ID. Adds `$after` to the retrieved path. Returns `'#404'` if no page with the given Developer ID is found.
+-   `slug_from_dev_id($dev_id)` - Get the slug of a page with a given Developer ID.
+-   `user_is_developer()` - Boolean indicating whether the current logged-in user is a Developer or not.
 
 ### Upgrading Plugins
 
@@ -316,13 +321,13 @@ this.$store.commit('MUTATION_NAME', payload)
 
 Default Vuepress mutations:
 
-*   `'REPLACE_QUERYDATA', { site, meta, loop }` - Replaces the `store`'s `site`, `meta`, and `loop` properties with the `site`, `meta`, and `loop` properties of the payload.
-*   `'SET_TRANSITIONING_IN, true | false'` - Sets `state.transitioning_in` to the given value.
-*   `'SET_TRANSITIONING_OUT, true | false'` - Sets `state.transitioning_out` to the given value.
-*   `'SET_LOADED', true | false` - Sets `state.loaded` to the given value.
-*   `'OPEN_MENU'` - Sets `state.menuOpened` to `true`.
-*   `'CLOSE_MENU'` - Sets `state.menuOpened` to `false`.
-*   `'UPDATE_REFERRAL_ROUTE'` - Sets `state.referral` to given referral object.
+-   `'REPLACE_QUERYDATA', { site, meta, loop }` - Replaces the `store`'s `site`, `meta`, and `loop` properties with the `site`, `meta`, and `loop` properties of the payload.
+-   `'SET_TRANSITIONING_IN, true | false'` - Sets `state.transitioning_in` to the given value.
+-   `'SET_TRANSITIONING_OUT, true | false'` - Sets `state.transitioning_out` to the given value.
+-   `'SET_LOADED', true | false` - Sets `state.loaded` to the given value.
+-   `'OPEN_MENU'` - Sets `state.menuOpened` to `true`.
+-   `'CLOSE_MENU'` - Sets `state.menuOpened` to `false`.
+-   `'UPDATE_REFERRAL_ROUTE'` - Sets `state.referral` to given referral object.
 
 ### Actions
 
@@ -334,7 +339,7 @@ this.$store.dispatch('ACTION_NAME', payload)
 
 Default Vuepress actions:
 
-*   `'LOAD_AND_REPLACE_QUERYDATA, { path: 'url string' }'` - Runs the following process:
+-   `'LOAD_AND_REPLACE_QUERYDATA, { path: 'url string' }'` - Runs the following process:
     1.  Sets `state.loaded` to `false`.
     1.  Checks `src/utils/cache.js` (which is a global cache that can be `import`ed into any other file) for the given `path` key.
         If none is found:
@@ -352,9 +357,9 @@ Getters are shortcuts to dynamic state properties:
 
 Default Vuepress getters include:
 
-*   `loading` - Returns the opposite of `$store.state.loaded`.
-*   `post` - Returns either the first post in `$store.state.loop` or, if none, an empty object.
-*   `referralPath` - Returns either the `fullPath` of the current value of `$store.state.referral` or, if none, an empty string.
+-   `loading` - Returns the opposite of `$store.state.loaded`.
+-   `post` - Returns either the first post in `$store.state.loop` or, if none, an empty object.
+-   `referralPath` - Returns either the `fullPath` of the current value of `$store.state.referral` or, if none, an empty string.
 
 ## Vuepress Events
 
@@ -387,52 +392,132 @@ Vuepress comes with a few SCSS [partials](http://sass-lang.com/guide) to make wr
 
 Default partials include:
 
-*   `base` - Style applied in `App.vue`, affecting every page on the site.
-*   `easings` - Several common easing functions. Includes:
+-   `base` - Style applied in `App.vue`, affecting every page on the site.
+-   `easings` - Several common easing functions. Includes:
 
-    *   easeIn, easeOut, and easeInOut for:
-        *   Sine
-        *   Quad
-        *   Cubic
-        *   Quart
-        *   Quint
-        *   Expo
-        *   Circ
-        *   Back
-        *   Fast
-    *   authenticMotion
+    -   easeIn, easeOut, and easeInOut for:
+        -   Sine
+        -   Quad
+        -   Cubic
+        -   Quart
+        -   Quint
+        -   Expo
+        -   Circ
+        -   Back
+        -   Fast
+    -   authenticMotion
 
-*   `transitions` - Common transitions applied in `App.vue`, affecting every page on the site. Includes:
+-   `transitions` - Common transitions applied in `App.vue`, affecting every page on the site. Includes:
 
-    *   `fade`
-    *   `slide-left`
-    *   `slide-right`
+    -   `fade`
+    -   `slide-left`
+    -   `slide-right`
 
     Usable with:
 
     `<transition name="transition-name"><your-code-here/></transition>`
 
-*   `vars` - Variables to use across the site. Import in any given template to make global CSS changes much easier to manage. Defaults include:
+-   `vars` - Variables to use across the site. Import in any given template to make global CSS changes much easier to manage. Defaults include:
 
-    *   `$white: #ffffff;`
-    *   `$black: #000000;`
-    *   `$font-family: 'Helvetica';`
-    *   `$desktop-padding: 50px;`
-    *   `$mobile-padding: 20px;`
-    *   `$header-height: 80px;`
+    -   `$white: #ffffff;`
+    -   `$black: #000000;`
+    -   `$font-family: 'Helvetica';`
+    -   `$desktop-padding: 50px;`
+    -   `$mobile-padding: 20px;`
+    -   `$header-height: 80px;`
 
     The following are breakpoints that can be used with `@media #{$size} { /* your rules here */ }`:
 
-    *   `$gt-cinema: "only screen and (min-width: 1800px)";`
-    *   `$lt-desktop: "only screen and (max-width: 1100px)";`
-    *   `$lt-phone: "only screen and (max-width: 750px)";`
-    *   `$lt-phone-landscape: "only screen and (max-width: 750px) and (orientation: landscape)";`
+    -   `$gt-cinema: "only screen and (min-width: 1800px)";`
+    -   `$lt-desktop: "only screen and (max-width: 1100px)";`
+    -   `$lt-phone: "only screen and (max-width: 750px)";`
+    -   `$lt-phone-landscape: "only screen and (max-width: 750px) and (orientation: landscape)";`
 
     `vars` includes the following mixins:
 
-    *   `fill` - `position: absolute` with `top`, `right`, `bottom`, and `left` set to `0`.
-    *   `cover` - Centered, no-repeat, `background-size: cover`.
-    *   `contain` - Same as `cover`, but with `background-size: contain`.
+    -   `fill` - `position: absolute` with `top`, `right`, `bottom`, and `left` set to `0`.
+    -   `cover` - Centered, no-repeat, `background-size: cover`.
+    -   `contain` - Same as `cover`, but with `background-size: contain`.
+
+## Gutenberg Blocks
+
+Vuepress comes with [Gutenberg](https://wordpress.org/gutenberg/) support out of the box, including a simple way to create and use your own custom blocks.
+
+### Adding a Block
+
+To add a new block:
+
+-   Call `buildBlock` in `blocks/src/index.js`
+-   Run `npm run block-dev` for development and `npm run block-build` for production.
+
+The simplest example is creating a new text block:
+
+```js
+buildBlock({
+    // The human-readable name of your block
+    name: 'Text Block',
+
+    // The unique slug of your block (namespaced to your theme) (required)
+    slug: 'text-block',
+
+    // A short block description
+    description: 'A block of text.',
+
+    // Class applied to the block (required)
+    class: 'text-block',
+
+    // The block content (required)
+    content: [
+        {
+            // Unique name for this item
+            name: 'myContent',
+            // Item type - 'text'
+            type: 'text'
+        }
+    ]
+})
+```
+
+When you've added a new block, it will appear under your theme name in the block menu when editing a Gutenberg post.
+
+### Block Content
+
+`content` is an array that contains 1 or more piece of data, identified with a name and a type:
+
+```js
+content: [
+    { name: 'firstWord', type: 'text' },
+    { name: 'middleWord', type: 'text' },
+    { name: 'lastWord', type: 'text' }
+]
+```
+
+You can also include [JSX](https://reactjs.org/docs/introducing-jsx.html) in your content:
+
+```js
+content: [
+    <h2>Enter Your Headline Here:</h2>,
+    { name: 'headline', type: 'text' },
+    <h2>Enter Your Content Here:</h2>,
+    { name: 'body', type: 'text' }
+]
+```
+
+### Block Content Types
+
+You can use any of the following as the `type` parameter in block content:
+
+-   `text`
+
+#### Adding Content Types
+
+To add a new content type:
+
+1. Create a new JS file in `blocks/src/prebuilt`.
+1. Export an object containing `attributes`, `edit`, and `save` from this file.
+    1. You can use `blocks/src/prebuilt/text.js` as a model for each property, all of which are required to save and render content correctly.
+1. Import the result into `blocks/src/prebuilt/index.js`. Export this value with the name of the type as the key.
+    1. Example: `text.js` is imported to the index file, then exported with the key `text`. Blocks wanting to use this type can do so by setting their `type` to `'text'`.
 
 ## Deploying
 
@@ -459,11 +544,11 @@ http://funkhaus.us
 
 Version: 1.1.6
 
-*   1.1.6 - New user tutorial available, trimmed down readme, several misc fixes
-*   1.1.5 - Several misc fixes, added fh-deploy version control in package.json
-*   1.1.4 - Restructuring according to [this issue](https://github.com/funkhaus/vuepress/issues/34)
-*   1.1.3 - Split Vuepress functionality into `/functions` directory
-*   1.1.2 - Added [TGM Plugin Activation](http://tgmpluginactivation.com/) to require plugins. Switching to x.x.x version numbering.
-*   1.11 - Switched `_custom_developer_id` to `custom_developer_id`
-*   1.1 - Switched `_custom_guid` to `_custom_developer_id`
-*   1.0 - Initial release
+-   1.1.6 - New user tutorial available, trimmed down readme, several misc fixes
+-   1.1.5 - Several misc fixes, added fh-deploy version control in package.json
+-   1.1.4 - Restructuring according to [this issue](https://github.com/funkhaus/vuepress/issues/34)
+-   1.1.3 - Split Vuepress functionality into `/functions` directory
+-   1.1.2 - Added [TGM Plugin Activation](http://tgmpluginactivation.com/) to require plugins. Switching to x.x.x version numbering.
+-   1.11 - Switched `_custom_developer_id` to `custom_developer_id`
+-   1.1 - Switched `_custom_guid` to `_custom_developer_id`
+-   1.0 - Initial release

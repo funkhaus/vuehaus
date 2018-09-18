@@ -18,7 +18,7 @@ export default (opts = {}) => {
         ...opts
     }
 
-    // build attributes according to content child names
+    // build attributes according to content children
     const attributes = {}
     settings.content.map(child => {
         if (child.type && prebuilt[child.type]) {
@@ -33,7 +33,7 @@ export default (opts = {}) => {
         icon: settings.icon,
         category: 'custom-fh',
 
-        // use attributes from earlier
+        // use attributes defined above
         attributes,
 
         // Editor

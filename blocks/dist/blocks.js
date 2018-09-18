@@ -90,20 +90,21 @@
                 2
             )
 
-            Object(
-                __WEBPACK_IMPORTED_MODULE_0__utils_builder__['a' /* default */]
-            )({
-                name: 'Split Block',
-                slug: 'split-block',
-                description: 'Image next to text',
-                class: 'split-block',
-                content: [
-                    wp.element.createElement('h2', null, 'Title'),
-                    { name: 'content', type: 'text' },
-                    wp.element.createElement('h2', null, 'Byline'),
-                    { name: 'byline', type: 'text' }
-                ]
-            })
+            // Define your blocks here!
+
+            // Example block
+            // buildBlock({
+            //     name: 'Title and Byline',
+            //     slug: 'title-and-byline',
+            //     description: 'A title and a byline.',
+            //     class: 'split-block',
+            //     content: [
+            //         <h2>Title</h2>,
+            //         { name: 'content', type: 'text' },
+            //         <h2>Byline</h2>,
+            //         { name: 'byline', type: 'text' }
+            //     ]
+            // })
 
             /***/
         },
@@ -137,7 +138,7 @@
             var registerBlockType = wp.blocks.registerBlockType
             var RichText = wp.editor.RichText
 
-            /* harmony default export */ __webpack_exports__['a'] = function() {
+            /* unused harmony default export */ var _unused_webpack_default_export = function() {
                 var opts =
                     arguments.length > 0 && arguments[0] !== undefined
                         ? arguments[0]
@@ -156,7 +157,7 @@
                     opts
                 )
 
-                // build attributes according to content child names
+                // build attributes according to content children
                 var attributes = {}
                 settings.content.map(function(child) {
                     if (
@@ -180,7 +181,7 @@
                     icon: settings.icon,
                     category: 'custom-fh',
 
-                    // use attributes from earlier
+                    // use attributes defined above
                     attributes: attributes,
 
                     // Editor
