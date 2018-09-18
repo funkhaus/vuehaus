@@ -94,7 +94,9 @@
                 __WEBPACK_IMPORTED_MODULE_0__utils_builder__['a' /* default */]
             )({
                 name: 'Split Block',
-                description: 'Image next to text'
+                description: 'Image next to text',
+                class: 'split-block',
+                content: ['text']
             })
 
             /***/
@@ -102,6 +104,12 @@
         /* 2 */
         /***/ function(module, __webpack_exports__, __webpack_require__) {
             'use strict'
+            /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__prebuilt_jsx_edit_blocks__ = __webpack_require__(
+                8
+            )
+            /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__prebuilt_jsx_save_blocks__ = __webpack_require__(
+                9
+            )
             var _extends =
                 Object.assign ||
                 function(target) {
@@ -136,10 +144,24 @@
                         slug: 'block-slug',
                         name: 'Example',
                         description: '',
-                        icon: 'format-gallery'
+                        icon: 'format-gallery',
+                        content: [],
+                        class: 'block-class'
                     },
                     opts
                 )
+
+                // build attributes
+                var attributes = {}
+                settings.content.map(function(child, i) {
+                    attributes['child' + i] = {
+                        type: 'array',
+                        source: 'children',
+                        selector: 'p'
+                    }
+                })
+
+                console.log(attributes)
 
                 // register desired block
                 registerBlockType('custom-fh/' + settings.slug, {
@@ -149,48 +171,49 @@
                     category: 'custom-fh',
 
                     // This defines the shape of the data in the functions below
-                    attributes: {
-                        content: {
-                            type: 'array',
-                            source: 'children',
-                            selector: 'p'
-                        }
-                    },
+                    // attributes: {
+                    //     content: {
+                    //         type: 'array',
+                    //         source: 'children',
+                    //         selector: 'p'
+                    //     }
+                    // },
+
+                    attributes: attributes,
 
                     // Editor
-                    edit: function edit(_ref) {
-                        var attributes = _ref.attributes,
-                            className = _ref.className,
-                            setAttributes = _ref.setAttributes
-                        var content = attributes.content
+                    edit: function edit(props) {
+                        var attributes = props.attributes,
+                            className = props.className,
+                            setAttributes = props.setAttributes
 
-                        function onChangeContent(newContent) {
-                            setAttributes({ content: newContent })
-                        }
+                        var classes = settings.class + ' fh-custom-block'
+                        var output = settings.content.map(function(child, i) {
+                            return __WEBPACK_IMPORTED_MODULE_0__prebuilt_jsx_edit_blocks__[
+                                'a' /* default */
+                            ][child](props, i)
+                        })
 
                         return wp.element.createElement(
                             'div',
-                            { className: 'fh-custom-block' },
-                            wp.element.createElement(RichText, {
-                                tagName: 'p',
-                                className: className,
-                                onChange: onChangeContent,
-                                value: content
-                            })
+                            { className: classes },
+                            output
                         )
                     },
 
                     // On save
-                    save: function save(_ref2) {
-                        var attributes = _ref2.attributes,
-                            className = _ref2.className
-                        var content = attributes.content
-
-                        return wp.element.createElement(RichText.Content, {
-                            tagName: 'p',
-                            className: className,
-                            value: content
+                    save: function save(props) {
+                        var output = settings.content.map(function(child, i) {
+                            return __WEBPACK_IMPORTED_MODULE_1__prebuilt_jsx_save_blocks__[
+                                'a' /* default */
+                            ][child](props, i)
                         })
+
+                        return wp.element.createElement(
+                            'div',
+                            { className: settings.class },
+                            output
+                        )
                     }
                 })
             }
@@ -200,6 +223,80 @@
         /* 3 */
         /***/ function(module, exports) {
             // removed by extract-text-webpack-plugin
+            /***/
+        },
+        ,
+        ,
+        ,
+        ,
+        /* 4 */ /* 5 */ /* 6 */ /* 7 */ /* 8 */
+        /***/ function(module, __webpack_exports__, __webpack_require__) {
+            'use strict'
+            function _defineProperty(obj, key, value) {
+                if (key in obj) {
+                    Object.defineProperty(obj, key, {
+                        value: value,
+                        enumerable: true,
+                        configurable: true,
+                        writable: true
+                    })
+                } else {
+                    obj[key] = value
+                }
+                return obj
+            }
+
+            var RichText = wp.editor.RichText
+
+            /* harmony default export */ __webpack_exports__['a'] = {
+                text: function text(props, index) {
+                    var attributes = props.attributes,
+                        className = props.className,
+                        setAttributes = props.setAttributes
+
+                    var key = 'child' + index
+                    var content = attributes[key]
+
+                    function onChangeContent(newContent) {
+                        console.log(
+                            'test',
+                            _defineProperty({}, key, newContent)
+                        )
+                        setAttributes(_defineProperty({}, key, newContent))
+                    }
+
+                    return wp.element.createElement(RichText, {
+                        tagName: 'p',
+                        className: className,
+                        onChange: onChangeContent,
+                        value: content
+                    })
+                }
+            }
+
+            /***/
+        },
+        /* 9 */
+        /***/ function(module, __webpack_exports__, __webpack_require__) {
+            'use strict'
+            var RichText = wp.editor.RichText
+
+            /* harmony default export */ __webpack_exports__['a'] = {
+                text: function text(props, index) {
+                    var attributes = props.attributes,
+                        className = props.className
+
+                    var key = 'child' + index
+                    var content = attributes[key]
+
+                    return wp.element.createElement(RichText.Content, {
+                        tagName: 'p',
+                        className: className,
+                        value: content
+                    })
+                }
+            }
+
             /***/
         }
         /******/
