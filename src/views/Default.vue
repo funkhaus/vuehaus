@@ -1,7 +1,7 @@
 <template>
 
     <main class="content fallback">
-        <wp-content :html="$store.getters.post.content"/>
+        <gutenberg-content :html="$store.getters.post.content"/>
     </main>
 
 </template>
