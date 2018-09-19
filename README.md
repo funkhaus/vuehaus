@@ -512,6 +512,7 @@ content: [
 You can use any of the following as the `type` parameter in block content:
 
 -   `text`
+-   `image`
 
 #### Adding Content Types
 
