@@ -26,7 +26,10 @@ export default {
     // editing
     edit: (props, child) => {
         const { setAttributes, attributes } = props
-        const { mediaID, mediaURL } = attributes[child.name]
+
+        // try to find correct attributes, default to empty object
+        const atts = attributes[child.name] || {}
+        const { mediaID, mediaURL } = atts
 
         // selecting the image
         function onSelectImage(newImage) {
@@ -62,16 +65,26 @@ export default {
     },
     save: (props, child) => {
         const { attributes } = props
-        const { mediaID, mediaURL, width, height } = attributes
 
-        return (
-            <img
-                data-replace-with="responsive-image"
-                src={mediaURL}
-                data-wp-id={mediaID}
-                width={width}
-                height={height}
-            />
-        )
+        // ignore if we don't have the correct content
+        if (!attributes || !attributes[child.name]) {
+            return ''
+        }
+
+        const { mediaID, mediaURL, width, height } = attributes[child.name]
+
+        if (mediaURL) {
+            return (
+                <img
+                    data-replace-with="responsive-image"
+                    src={mediaURL}
+                    data-wp-id={mediaID}
+                    width={width}
+                    height={height}
+                />
+            )
+        }
+
+        return ''
     }
 }

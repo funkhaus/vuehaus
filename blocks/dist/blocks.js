@@ -76,7 +76,7 @@
         /* 0 */
         /***/ function(module, exports, __webpack_require__) {
             __webpack_require__(1)
-            module.exports = __webpack_require__(3)
+            module.exports = __webpack_require__(6)
 
             /***/
         },
@@ -130,7 +130,7 @@
         /***/ function(module, __webpack_exports__, __webpack_require__) {
             'use strict'
             /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__prebuilt__ = __webpack_require__(
-                11
+                3
             )
             var _extends =
                 Object.assign ||
@@ -269,17 +269,23 @@
             /***/
         },
         /* 3 */
-        /***/ function(module, exports) {
-            // removed by extract-text-webpack-plugin
+        /***/ function(module, __webpack_exports__, __webpack_require__) {
+            'use strict'
+            /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__text__ = __webpack_require__(
+                4
+            )
+            /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__image__ = __webpack_require__(
+                5
+            )
+
+            /* harmony default export */ __webpack_exports__['a'] = {
+                text: __WEBPACK_IMPORTED_MODULE_0__text__['a' /* default */],
+                image: __WEBPACK_IMPORTED_MODULE_1__image__['a' /* default */]
+            }
+
             /***/
         },
-        ,
-        ,
-        ,
-        ,
-        ,
-        ,
-        /* 4 */ /* 5 */ /* 6 */ /* 7 */ /* 8 */ /* 9 */ /* 10 */
+        /* 4 */
         /***/ function(module, __webpack_exports__, __webpack_require__) {
             'use strict'
             function _defineProperty(obj, key, value) {
@@ -347,24 +353,7 @@
 
             /***/
         },
-        /* 11 */
-        /***/ function(module, __webpack_exports__, __webpack_require__) {
-            'use strict'
-            /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__text__ = __webpack_require__(
-                10
-            )
-            /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__image__ = __webpack_require__(
-                12
-            )
-
-            /* harmony default export */ __webpack_exports__['a'] = {
-                text: __WEBPACK_IMPORTED_MODULE_0__text__['a' /* default */],
-                image: __WEBPACK_IMPORTED_MODULE_1__image__['a' /* default */]
-            }
-
-            /***/
-        },
-        /* 12 */
+        /* 5 */
         /***/ function(module, __webpack_exports__, __webpack_require__) {
             'use strict'
             function _defineProperty(obj, key, value) {
@@ -410,9 +399,12 @@
                 edit: function edit(props, child) {
                     var setAttributes = props.setAttributes,
                         attributes = props.attributes
-                    var _attributes$child$nam = attributes[child.name],
-                        mediaID = _attributes$child$nam.mediaID,
-                        mediaURL = _attributes$child$nam.mediaURL
+
+                    // try to find correct attributes, default to empty object
+
+                    var atts = attributes[child.name] || {}
+                    var mediaID = atts.mediaID,
+                        mediaURL = atts.mediaURL
 
                     // selecting the image
 
@@ -454,21 +446,38 @@
                 },
                 save: function save(props, child) {
                     var attributes = props.attributes
-                    var mediaID = attributes.mediaID,
-                        mediaURL = attributes.mediaURL,
-                        width = attributes.width,
-                        height = attributes.height
 
-                    return wp.element.createElement('img', {
-                        'data-replace-with': 'responsive-image',
-                        src: mediaURL,
-                        'data-wp-id': mediaID,
-                        width: width,
-                        height: height
-                    })
+                    // ignore if we don't have the correct content
+
+                    if (!attributes || !attributes[child.name]) {
+                        return ''
+                    }
+
+                    var _attributes$child$nam = attributes[child.name],
+                        mediaID = _attributes$child$nam.mediaID,
+                        mediaURL = _attributes$child$nam.mediaURL,
+                        width = _attributes$child$nam.width,
+                        height = _attributes$child$nam.height
+
+                    if (mediaURL) {
+                        return wp.element.createElement('img', {
+                            'data-replace-with': 'responsive-image',
+                            src: mediaURL,
+                            'data-wp-id': mediaID,
+                            width: width,
+                            height: height
+                        })
+                    }
+
+                    return ''
                 }
             }
 
+            /***/
+        },
+        /* 6 */
+        /***/ function(module, exports) {
+            // removed by extract-text-webpack-plugin
             /***/
         }
         /******/
