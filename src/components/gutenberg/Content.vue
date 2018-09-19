@@ -1,7 +1,7 @@
 <template>
 
-    <wp-content 
-        class="gutenberg-content" 
+    <wp-content
+        class="gutenberg-content"
         :html="html"
         :unwrap="unwrap"
         :replace="cmpReplace"
@@ -37,6 +37,7 @@ export default {
             output.push({
                 selector: '[data-replace-with]',
                 callback: el => {
+                    // TODO: More generic replacer
                     const src = el.getAttribute('src')
                     const height = el.getAttribute('height')
                     const width = el.getAttribute('width')
@@ -53,10 +54,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-@import 'src/styles/vars';
-
-.gutenberg-content {
-}
-</style>

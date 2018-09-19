@@ -39,6 +39,7 @@ Head over to the [tutorial](https://github.com/funkhaus/vuepress/wiki) to learn 
     1.  [Block Content](#block-content)
     1.  [Block Content Types](#block-content-types)
         1. [Adding Content Types](#adding-content-types)
+    1.  [Rendering Gutenberg Content](#rendering-gutenberg-content)
 1.  [Deploying](#deploying)
 1.  [Recommended Reading](#recommended-reading)
 
@@ -521,6 +522,12 @@ To add a new content type:
     1. You can use `blocks/src/prebuilt/text.js` as a model for each property, all of which are required to save and render content correctly.
 1. Import the result into `blocks/src/prebuilt/index.js`. Export this value with the name of the type as the key.
     1. Example: `text.js` is imported to the index file, then exported with the key `text`. Blocks wanting to use this type can do so by setting their `type` to `'text'`.
+
+### Rendering Gutenberg Content
+
+[fh-components](https://github.com/funkhaus/fh-components) comes with a `wp-content` component designed for rendering WordPress content, but we recommend using the built-in `gutenberg-content` component for Gutenberg pages.
+
+It accepts all the same [arguments](https://github.com/funkhaus/fh-components#wp-content) as `wp-content`, but comes with extra `replace` values to handle images in content.
 
 ## Deploying
 
