@@ -90,39 +90,19 @@
                 2
             )
 
-            // Define your blocks here!
-
             // Example block
-            Object(
-                __WEBPACK_IMPORTED_MODULE_0__utils_builder__['a' /* default */]
-            )({
-                name: 'Title and Byline',
-                slug: 'title-and-byline',
-                description: 'A title and a byline.',
-                class: 'split-block',
-                content: [
-                    wp.element.createElement('h2', null, 'Title'),
-                    { name: 'content', type: 'text' },
-                    wp.element.createElement('h2', null, 'Byline'),
-                    { name: 'byline', type: 'text' }
-                ]
-            })
-
-            Object(
-                __WEBPACK_IMPORTED_MODULE_0__utils_builder__['a' /* default */]
-            )({
-                name: 'lines and image',
-                slug: 'lines-and-image',
-                class: 'lines-and-image',
-                content: [
-                    wp.element.createElement('h2', null, 'Line 1'),
-                    { name: 'content', type: 'text' },
-                    wp.element.createElement('h2', null, 'Line 2'),
-                    { name: 'byline', type: 'text' },
-                    wp.element.createElement('h2', null, 'Image'),
-                    { name: 'image', type: 'image' }
-                ]
-            })
+            // buildBlock({
+            //     name: 'Title and Image',
+            //     slug: 'title-and-image',
+            //     description: 'A title and an image.',
+            //     class: 'title-and-image',
+            //     content: [
+            //         <h2>Title</h2>,
+            //         { name: 'content', type: 'text' },
+            //         <h2>Image</h2>,
+            //         { name: 'image', type: 'image' }
+            //     ]
+            // })
 
             /***/
         },
@@ -156,7 +136,7 @@
             var registerBlockType = wp.blocks.registerBlockType
             var RichText = wp.editor.RichText
 
-            /* harmony default export */ __webpack_exports__['a'] = function() {
+            /* unused harmony default export */ var _unused_webpack_default_export = function() {
                 var opts =
                     arguments.length > 0 && arguments[0] !== undefined
                         ? arguments[0]
