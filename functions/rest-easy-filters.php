@@ -56,6 +56,22 @@
      }
      add_filter('rez_serialize_post', 'serialize_custom_acf_content');
 
+/*
+ * Add Focushaus focal point to ACF images
+ */
+    function add_focal_point_to_acf_images($target){
+
+        if( function_exists('get_offset_x') ){
+            $target['focus'] = array(
+                'x' => get_offset_x( $target->ID ),
+                'y' => get_offset_y( $target->ID )
+            );
+        }
+
+        return $target;
+    }
+    add_filter('acf/format_value/type=image', 'add_focal_point_to_acf_images', 20, 4);
+
  /**
   *  Add pages with dev ID to site data
   *
