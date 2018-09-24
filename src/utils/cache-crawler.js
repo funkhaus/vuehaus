@@ -1,5 +1,6 @@
 import cache from 'src/utils/cache'
 import store from 'src/utils/store'
+import _get from 'lodash/get'
 
 // flatten n-dimensional array
 // https://stackoverflow.com/a/15030117/3856675
@@ -23,11 +24,13 @@ class CacheCrawler {
         this.index = 0
 
         // links in all site menus
-        const menuCandidates = store.state.site.menus.map(menu =>
+        const menus = _get(store, 'state.site.menus', [])
+        const menuCandidates = menus.map(menu =>
             menu.items.map(item => (item.isExternal ? null : item.relativePath))
         )
         // links in the loop
-        const loopCandidates = store.state.loop.map(page => {
+        const loop = _get(store, 'state.loop', [])
+        const loopCandidates = loop.map(page => {
             const output = [page.relativePath]
             if (page.related.children && page.related.children.length) {
                 output.push(

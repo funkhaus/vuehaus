@@ -10,8 +10,7 @@
         "clean": "rimraf static/bundle.*",
         "deploy": "fh-deploy",
         "format": "prettier --write 'src/**/*+(.js|.vue|.scss)'",
-        "analyze":
-            "webpack --profile --json > bundleStats.json && webpack-bundle-analyzer bundleStats.json",
+        "analyze": "webpack --profile --json > bundleStats.json && webpack-bundle-analyzer bundleStats.json",
         "precommit": "pretty-quick --staged"
     },
     "repository": {
@@ -19,8 +18,13 @@
         "url": "git://github.com/funkhaus/vuepress.git"
     },
     "babel": {
-        "presets": ["env", "stage-0"],
-        "plugins": ["transform-runtime"]
+        "presets": [
+            "env",
+            "stage-0"
+        ],
+        "plugins": [
+            "transform-runtime"
+        ]
     },
     "prettier": {
         "tabWidth": 4,
@@ -84,7 +88,7 @@
     "devDependencies": {
         "backstopjs": "^3.1.21",
         "husky": "^0.14.3",
-        "prettier": "1.11.1",
+        "prettier": "^1.14.3",
         "pretty-quick": "^1.4.1"
     }
 }
