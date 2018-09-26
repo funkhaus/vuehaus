@@ -7,7 +7,7 @@
     function vuepress_register_required_plugins() {
 
         // Change these values to install new versions of FH plugins
-        $latest_rest_easy = '1.45';
+        $latest_rest_easy = '1.46';
         $latest_focushaus = '1.0.5';
 
         $config = array(
