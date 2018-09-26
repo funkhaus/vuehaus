@@ -2,7 +2,9 @@
     /*
      * Build the image URL
      */
-        $shared_image = get_template_directory_uri() . "/screenshot.png";
+        $use_png = file_exists(dirname(__FILE__) . '/../screenshot.png');
+        $extension = $use_png ? 'png' : 'jpg';
+        $shared_image = get_template_directory_uri() . "/screenshot." . $extension;
         if( is_single() || is_page() ) {
             // If page or is single, set the shared image to the post thumbnail.
             $image_id = get_post_thumbnail_id();

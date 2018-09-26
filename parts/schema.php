@@ -3,12 +3,14 @@
     if ( ! $post = get_post() ) return;
 
     // schema defaults
+    $use_png = file_exists(dirname(__FILE__) . '/../screenshot.png');
+    $extension = $use_png ? 'png' : 'jpg';
     $schema = array(
         '@context'      => 'http://schema.org',
         '@type'         => 'WebPage',
         'headline'      => get_bloginfo('description'),
         'url'           => get_bloginfo('url'),
-        'thumbnailUrl'  => get_template_directory_uri() . '/screenshot.png'
+        'thumbnailUrl'  => get_template_directory_uri() . '/screenshot.' . $extension
     );
 
     // helper to generate schema Person object
