@@ -2,6 +2,8 @@
     // abort if no post to work off of
     if ( ! $post = get_post() ) return;
 
+    the_post();
+
     // schema defaults
     $use_png = file_exists(dirname(__FILE__) . '/../screenshot.png');
     $extension = $use_png ? 'png' : 'jpg';
