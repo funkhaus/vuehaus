@@ -25,7 +25,7 @@
     include_once get_template_directory() . '/functions/meta-boxes.php';
 
     //Add additional ACF functionality
-    include_once get_template_directory() . '/functions/acf-functions.php';
+    include_once get_template_directory() . '/acf/acf-imports.php';
 
 /*
  * Generally you don't have to edit any of the files below
