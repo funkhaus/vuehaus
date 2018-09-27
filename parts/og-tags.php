@@ -1,4 +1,5 @@
 <?php
+    the_post();
     /*
      * Build the image URL
      */
