@@ -24,6 +24,9 @@
     // Defines the UI for custom meta boxes in WordPress
     include_once get_template_directory() . '/functions/meta-boxes.php';
 
+    //Add additional ACF functionality
+    include_once get_template_directory() . '/functions/acf-functions.php';
+
 /*
  * Generally you don't have to edit any of the files below
  */
