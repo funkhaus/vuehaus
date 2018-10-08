@@ -150,3 +150,31 @@
 //     return $site_data;
 // }
 // add_filter('rez_build_site_data', 'add_theme_options_to_site');
+    
+    // Adds adjacent posts when they are unset due to recent bug in wordpress.
+    //function add_adjacent_posts($related, $post = null) {
+    //      if (is_null($related['next']) && is_null($related['prev'])) {
+    //          $prev = get_posts(array(
+    //              'post_type'            =>      'post',
+    //              'posts_per_page'       =>      1,
+    //              'date_query'           =>      array(
+    //                  'after'    =>  $post->post_date
+    //              )
+    //          ));
+    //          $next = get_posts(array(
+    //              'post_type'            =>      'post',
+    //              'posts_per_page'       =>      1,
+    //              'date_query'           =>      array(
+    //                  'before'    =>  $post->post_date
+    //              )
+    //          ));
+    //         if (count($next) > 0){
+    //              $related['next'] = apply_filters('rez_serialize_object', $next[0]);
+    //         }
+    //         if (count($prev) > 0){
+    //             $related['prev'] = apply_filters('rez_serialize_object', $prev[0]);
+    //         }
+    //      }
+    //      return $related;
+    //  }
+    //  add_filter('rez_gather_related', 'add_adjacent_posts', 10, 2);
