@@ -57,15 +57,20 @@
      add_filter('rez_serialize_post', 'serialize_custom_acf_content');
 
 /*
- * Add Focushaus focal point to ACF images
+ * Add Focushaus focal point and Funky-Colors colors to ACF images
  */
     function add_focal_point_to_acf_images($target){
 
         if( function_exists('get_offset_x') ){
             $target['focus'] = array(
-                'x' => get_offset_x( $target->ID ),
-                'y' => get_offset_y( $target->ID )
+                'x' => get_offset_x( $target['ID'] ),
+                'y' => get_offset_y( $target['ID'] )
             );
+        }
+
+        if( function_exists('get_primary_image_color') ){
+            $target['primary_color'] = get_primary_image_color($target['ID']);
+            $target['secondary_color'] = get_second_image_color($target['ID']);
         }
 
         return $target;
@@ -150,7 +155,7 @@
 //     return $site_data;
 // }
 // add_filter('rez_build_site_data', 'add_theme_options_to_site');
-    
+
     // Adds adjacent posts when they are unset due to recent bug in wordpress.
     //function add_adjacent_posts($related, $post = null) {
     //      if (is_null($related['next']) && is_null($related['prev'])) {
