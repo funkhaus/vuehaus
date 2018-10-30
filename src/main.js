@@ -28,13 +28,13 @@ Vue.component('image-loader', require('fh-components/image-loader'))
 // Vue.component('mailing-list', require('fh-components/mailing-list'))
 // Vue.component('menu-item', require('fh-components/wp-menu-item'))
 Vue.component('responsive-image', require('fh-components/responsive-image'))
+// Vue.component('reveal-footer', require('fh-components/reveal-footer'))
 // Vue.component('scroll-to', require('fh-components/scroll-to'))
 // Vue.component('slide-show', require('fh-components/slide-show'))
 // Vue.component('split-text', require('fh-components/split-text'))
 Vue.component('svg-image', require('src/components/SvgImage.vue'))
 // Vue.component('sticky-wrap', require('fh-components/sticky-wrap'))
 // Vue.component('text-typer', require('fh-components/text-typer'))
-// Vue.component('transition-fade', require('fh-components/transition-fade'))
 // Vue.component('velocity-animate', require('fh-components/velocity-animate'))
 // Vue.component('video-stage', require('fh-components/video-stage'))
 Vue.component('wp-content', require('fh-components/wp-content'))
@@ -43,6 +43,8 @@ Vue.component('wp-menu', require('fh-components/wp-menu'))
 // Register directives
 // import animated from 'fh-components/v-animated'
 // Vue.directive('animated', animated)
+// import draggable from 'fh-components/v-draggable'
+// Vue.directive('draggable', draggable)
 // import fullHeight from 'fh-components/v-full-height'
 // Vue.directive('full-height', fullHeight)
 // import inView from 'fh-components/v-in-view'
