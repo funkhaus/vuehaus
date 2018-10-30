@@ -14,9 +14,9 @@
  * Globals
  */
 :root {
-    --main-color: #164bb5;
-    --accent-color: white;
-    --text-color: white;
+    --main-color: white;
+    --accent-color: black;
+    --text-color: black;
     --hover-text-color: #00a0d2;
 }
 html {
@@ -80,6 +80,8 @@ a {
     box-shadow: none;
     text-transform: uppercase;
     border: 2px solid var(--accent-color);
+    height: initial;
+    padding-top: 2px;
 }
 #wp-submit:hover,
 #wp-submit:focus {
