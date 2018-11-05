@@ -5,7 +5,7 @@
     "main": "src/main.js",
     "scripts": {
         "dev": "npm run clean && webpack --watch",
-        "build": "npm run clean && NODE_ENV=production webpack",
+        "build": "npm run clean && cross-env NODE_ENV=production webpack",
         "test": "backstop test",
         "clean": "rimraf static/bundle.*",
         "deploy": "fh-deploy",
@@ -69,6 +69,7 @@
         "babel-preset-stage-0": "^6.24.1",
         "backstopjs": "^3.8.4",
         "compression-webpack-plugin": "^2.0.0",
+        "cross-env": "^5.2.0",
         "css-loader": "^0.26.4",
         "extract-text-webpack-plugin": "^2.1.0",
         "fh-deploy": "^1.1.5",
