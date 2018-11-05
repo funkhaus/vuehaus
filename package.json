@@ -55,7 +55,7 @@
         "compression-webpack-plugin": "^0.3.2",
         "css-loader": "^0.26.4",
         "extract-text-webpack-plugin": "^2.1.0",
-        "fh-components": "^1.2.90",
+        "fh-components": "^1.4.5",
         "fh-deploy": "^1.1.5",
         "file-loader": "^0.9.0",
         "fs-extra": "^5.0.0",

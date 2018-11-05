@@ -73,9 +73,38 @@
             $target['secondary_color'] = get_second_image_color($target['ID']);
         }
 
+        $image['videoSrc'] = $target->custom_video_url;
+
         return $target;
     }
     add_filter('acf/format_value/type=image', 'add_focal_point_to_acf_images', 20, 4);
+
+/*
+ * Add Focushaus focal point and Funky-Colors colors to ACF gallery images
+ */
+    function add_image_data_to_acf_galleries($value){
+
+        foreach ($value as $index => &$image) {
+            $target_post = get_post($image['id']);
+
+            if( function_exists('get_offset_x') ){
+                $image['focus'] = array(
+                    'x' => get_offset_x( $image['id'] ),
+                    'y' => get_offset_y( $image['id'] )
+                );
+            }
+            if( function_exists('get_primary_image_color') ){
+                $image['primary_color'] = get_primary_image_color($image['id']);
+                $image['secondary_color'] = get_second_image_color($image['id']);
+            }
+
+            // add video to gallery image
+            $image['meta']['custom_video_url'] = $target_post->custom_video_url;
+
+        }
+        return $value;
+    }
+    add_filter('acf/format_value/type=gallery', 'add_image_data_to_acf_galleries', 20, 4);
 
  /**
   *  Add pages with dev ID to site data
