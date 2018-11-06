@@ -36,6 +36,7 @@ Head over to the [tutorial](https://github.com/funkhaus/vuepress/wiki) to learn 
 1.  [Partials](#partials)
 1.  [Deploying](#deploying)
 1.  [Recommended Reading](#recommended-reading)
+1.  [Contributing](#contributing)
 
 ## Install
 
@@ -180,10 +181,10 @@ Vuepress also comes with a few suggested breakpoints in that same vars file - yo
 
 The default breakpoints (with `lt` for "less than" and `gt` for "greater than") are:
 
-*   **`gt-cinema`** - `only screen and (min-width: 1800px)`
-*   **`lt-desktop`** - `only screen and (max-width: 1100px)`
-*   **`lt-phone`** - `only screen and (max-width: 750px)`
-*   **`lt-phone-landscape`** - `only screen and (max-width: 750px) and (orientation: landscape)`
+-   **`gt-cinema`** - `only screen and (min-width: 1800px)`
+-   **`lt-desktop`** - `only screen and (max-width: 1100px)`
+-   **`lt-phone`** - `only screen and (max-width: 750px)`
+-   **`lt-phone-landscape`** - `only screen and (max-width: 750px) and (orientation: landscape)`
 
 ### The Developer Role and Developer IDs
 
@@ -274,13 +275,13 @@ When trying to get the children of the front page, you'll need to use `slug_from
 
 Vuepress defines a few utility functions to make building the routing table easier:
 
-*   `get_child_of_dev_id($dev_id, $nth_child = 0)` - Get the post object of the nth child (zero-based, default `0`) of a page with the given Developer ID.
-*   `get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = '')` - Get the relative path of the nth child of a page with the given Developer ID. Adds `$after` to the retrieved path.
-*   `get_children_of_dev_id($dev_id)` - Get the children of a page with the given Developer ID. Returns `false` if no page with Developer ID exists or an empty array if no children found.
-*   `get_page_by_dev_id($dev_id)` - Get the first page with a given Developer ID. Returns the complete WP Post object or `false` if none found.
-*   `path_from_dev_id($dev_id, $after = '')` - Get the relative path of a page with a given Developer ID. Adds `$after` to the retrieved path. Returns `'#404'` if no page with the given Developer ID is found.
-*   `slug_from_dev_id($dev_id)` - Get the slug of a page with a given Developer ID.
-*   `user_is_developer()` - Boolean indicating whether the current logged-in user is a Developer or not.
+-   `get_child_of_dev_id($dev_id, $nth_child = 0)` - Get the post object of the nth child (zero-based, default `0`) of a page with the given Developer ID.
+-   `get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = '')` - Get the relative path of the nth child of a page with the given Developer ID. Adds `$after` to the retrieved path.
+-   `get_children_of_dev_id($dev_id)` - Get the children of a page with the given Developer ID. Returns `false` if no page with Developer ID exists or an empty array if no children found.
+-   `get_page_by_dev_id($dev_id)` - Get the first page with a given Developer ID. Returns the complete WP Post object or `false` if none found.
+-   `path_from_dev_id($dev_id, $after = '')` - Get the relative path of a page with a given Developer ID. Adds `$after` to the retrieved path. Returns `'#404'` if no page with the given Developer ID is found.
+-   `slug_from_dev_id($dev_id)` - Get the slug of a page with a given Developer ID.
+-   `user_is_developer()` - Boolean indicating whether the current logged-in user is a Developer or not.
 
 ### Upgrading Plugins
 
@@ -316,13 +317,13 @@ this.$store.commit('MUTATION_NAME', payload)
 
 Default Vuepress mutations:
 
-*   `'REPLACE_QUERYDATA', { site, meta, loop }` - Replaces the `store`'s `site`, `meta`, and `loop` properties with the `site`, `meta`, and `loop` properties of the payload.
-*   `'SET_TRANSITIONING_IN, true | false'` - Sets `state.transitioning_in` to the given value.
-*   `'SET_TRANSITIONING_OUT, true | false'` - Sets `state.transitioning_out` to the given value.
-*   `'SET_LOADED', true | false` - Sets `state.loaded` to the given value.
-*   `'OPEN_MENU'` - Sets `state.menuOpened` to `true`.
-*   `'CLOSE_MENU'` - Sets `state.menuOpened` to `false`.
-*   `'UPDATE_REFERRAL_ROUTE'` - Sets `state.referral` to given referral object.
+-   `'REPLACE_QUERYDATA', { site, meta, loop }` - Replaces the `store`'s `site`, `meta`, and `loop` properties with the `site`, `meta`, and `loop` properties of the payload.
+-   `'SET_TRANSITIONING_IN, true | false'` - Sets `state.transitioning_in` to the given value.
+-   `'SET_TRANSITIONING_OUT, true | false'` - Sets `state.transitioning_out` to the given value.
+-   `'SET_LOADED', true | false` - Sets `state.loaded` to the given value.
+-   `'OPEN_MENU'` - Sets `state.menuOpened` to `true`.
+-   `'CLOSE_MENU'` - Sets `state.menuOpened` to `false`.
+-   `'UPDATE_REFERRAL_ROUTE'` - Sets `state.referral` to given referral object.
 
 ### Actions
 
@@ -334,7 +335,7 @@ this.$store.dispatch('ACTION_NAME', payload)
 
 Default Vuepress actions:
 
-*   `'LOAD_AND_REPLACE_QUERYDATA, { path: 'url string' }'` - Runs the following process:
+-   `'LOAD_AND_REPLACE_QUERYDATA, { path: 'url string' }'` - Runs the following process:
     1.  Sets `state.loaded` to `false`.
     1.  Checks `src/utils/cache.js` (which is a global cache that can be `import`ed into any other file) for the given `path` key.
         If none is found:
@@ -352,9 +353,9 @@ Getters are shortcuts to dynamic state properties:
 
 Default Vuepress getters include:
 
-*   `loading` - Returns the opposite of `$store.state.loaded`.
-*   `post` - Returns either the first post in `$store.state.loop` or, if none, an empty object.
-*   `referralPath` - Returns either the `fullPath` of the current value of `$store.state.referral` or, if none, an empty string.
+-   `loading` - Returns the opposite of `$store.state.loaded`.
+-   `post` - Returns either the first post in `$store.state.loop` or, if none, an empty object.
+-   `referralPath` - Returns either the `fullPath` of the current value of `$store.state.referral` or, if none, an empty string.
 
 ## Vuepress Events
 
@@ -387,52 +388,52 @@ Vuepress comes with a few SCSS [partials](http://sass-lang.com/guide) to make wr
 
 Default partials include:
 
-*   `base` - Style applied in `App.vue`, affecting every page on the site.
-*   `easings` - Several common easing functions. Includes:
+-   `base` - Style applied in `App.vue`, affecting every page on the site.
+-   `easings` - Several common easing functions. Includes:
 
-    *   easeIn, easeOut, and easeInOut for:
-        *   Sine
-        *   Quad
-        *   Cubic
-        *   Quart
-        *   Quint
-        *   Expo
-        *   Circ
-        *   Back
-        *   Fast
-    *   authenticMotion
+    -   easeIn, easeOut, and easeInOut for:
+        -   Sine
+        -   Quad
+        -   Cubic
+        -   Quart
+        -   Quint
+        -   Expo
+        -   Circ
+        -   Back
+        -   Fast
+    -   authenticMotion
 
-*   `transitions` - Common transitions applied in `App.vue`, affecting every page on the site. Includes:
+-   `transitions` - Common transitions applied in `App.vue`, affecting every page on the site. Includes:
 
-    *   `fade`
-    *   `slide-left`
-    *   `slide-right`
+    -   `fade`
+    -   `slide-left`
+    -   `slide-right`
 
     Usable with:
 
     `<transition name="transition-name"><your-code-here/></transition>`
 
-*   `vars` - Variables to use across the site. Import in any given template to make global CSS changes much easier to manage. Defaults include:
+-   `vars` - Variables to use across the site. Import in any given template to make global CSS changes much easier to manage. Defaults include:
 
-    *   `$white: #ffffff;`
-    *   `$black: #000000;`
-    *   `$font-family: 'Helvetica';`
-    *   `$desktop-padding: 50px;`
-    *   `$mobile-padding: 20px;`
-    *   `$header-height: 80px;`
+    -   `$white: #ffffff;`
+    -   `$black: #000000;`
+    -   `$font-family: 'Helvetica';`
+    -   `$desktop-padding: 50px;`
+    -   `$mobile-padding: 20px;`
+    -   `$header-height: 80px;`
 
     The following are breakpoints that can be used with `@media #{$size} { /* your rules here */ }`:
 
-    *   `$gt-cinema: "only screen and (min-width: 1800px)";`
-    *   `$lt-desktop: "only screen and (max-width: 1100px)";`
-    *   `$lt-phone: "only screen and (max-width: 750px)";`
-    *   `$lt-phone-landscape: "only screen and (max-width: 750px) and (orientation: landscape)";`
+    -   `$gt-cinema: "only screen and (min-width: 1800px)";`
+    -   `$lt-desktop: "only screen and (max-width: 1100px)";`
+    -   `$lt-phone: "only screen and (max-width: 750px)";`
+    -   `$lt-phone-landscape: "only screen and (max-width: 750px) and (orientation: landscape)";`
 
     `vars` includes the following mixins:
 
-    *   `fill` - `position: absolute` with `top`, `right`, `bottom`, and `left` set to `0`.
-    *   `cover` - Centered, no-repeat, `background-size: cover`.
-    *   `contain` - Same as `cover`, but with `background-size: contain`.
+    -   `fill` - `position: absolute` with `top`, `right`, `bottom`, and `left` set to `0`.
+    -   `cover` - Centered, no-repeat, `background-size: cover`.
+    -   `contain` - Same as `cover`, but with `background-size: contain`.
 
 ## Deploying
 
@@ -443,6 +444,67 @@ Run `npm run deploy` to generate a config file based on a few user inputs. The q
 **Important note from fh-deploy readme:**
 
 Running fh-deploy will automatically overwrite any files of the same name on your server WITHOUT prompting. **Assume your remote files are going to be overwritten as soon as you run fh-deploy and make sure you keep up-to-date backups!**
+
+## Contributing
+
+Thanks for your interest in working on Vuepress! You can start any way you'd like, but here's how the Funkhaus team does it:
+
+1. Install [Local by Flywheel](https://local.getflywheel.com/) to quickly spin up new local WordPress sites.
+1. Create a new WordPress site in Local. We'll call ours "Vuepress" as an example.
+1. Clone this repo into the `wp-content/themes` folder on the new site. On OSX, that'd look like this:
+
+    ```sh
+    cd ~/Local\ Sites/vuepress/app/public/wp-content/themes
+    git clone https://github.com/funkhaus/vuepress
+    ```
+
+1. Activate the Vuepress theme in the WordPress backend.
+1. Open the repo in your editor of choice and run (optionally using [LiveReload](https://www.npmjs.com/package/livereload)):
+
+    ```sh
+    npm install
+
+    # watch development build, or...
+    npm run dev
+
+    # ...use livereload for a more seamless experience
+    livereload . & npm run dev
+    ```
+
+1. When you're ready to submit, `npm run build` to make sure the build compiles correctly, then submit your pull request!
+
+#### Developing for `fh-components`
+
+If you're developing for [fh-components](https://github.com/funkhaus/fh-components) as well, we recommend using `npm link`:
+
+```sh
+# Clone the fh-components repo in a shared location
+cd ~/Desktop
+git clone https://github.com/funkhaus/fh-components
+
+# Make this new fh-components clone the definitive version
+cd fh-components
+npm link
+
+# Head to the Vuepress theme installation
+cd ~/Local\ Sites/vuepress/app/public/wp-content/themes/vuepress
+# Uninstall the local fh-components instance and instead use the cloned version above
+npm uninstall fh-components
+npm link fh-components
+```
+
+From here, running `npm run dev` on both `fh-components` and the Vuepress theme will reflect changes in `fh-components`. (You can edit the `src/views/Default.vue` template to test out new components.)
+
+When you're done making changes and have published the new `fh-components`:
+
+```sh
+cd ~/Local\ Sites/vuepress/app/public/wp-content/themes/vuepress
+
+# unlink the local version
+npm uninstall fh-components
+# make sure fh-components is installed in package.json
+npm install fh-components
+```
 
 ## Recommended Reading
 
@@ -457,13 +519,14 @@ Not Vuepress-specific reading material, but rather good practices and articles.
 
 http://funkhaus.us
 
-Version: 1.1.6
+Version: 1.1.7
 
-*   1.1.6 - New user tutorial available, trimmed down readme, several misc fixes
-*   1.1.5 - Several misc fixes, added fh-deploy version control in package.json
-*   1.1.4 - Restructuring according to [this issue](https://github.com/funkhaus/vuepress/issues/34)
-*   1.1.3 - Split Vuepress functionality into `/functions` directory
-*   1.1.2 - Added [TGM Plugin Activation](http://tgmpluginactivation.com/) to require plugins. Switching to x.x.x version numbering.
-*   1.11 - Switched `_custom_developer_id` to `custom_developer_id`
-*   1.1 - Switched `_custom_guid` to `_custom_developer_id`
-*   1.0 - Initial release
+-   1.1.7 - Updated NPM packages, adding "contributing" section
+-   1.1.6 - New user tutorial available, trimmed down readme, several misc fixes
+-   1.1.5 - Several misc fixes, added fh-deploy version control in package.json
+-   1.1.4 - Restructuring according to [this issue](https://github.com/funkhaus/vuepress/issues/34)
+-   1.1.3 - Split Vuepress functionality into `/functions` directory
+-   1.1.2 - Added [TGM Plugin Activation](http://tgmpluginactivation.com/) to require plugins. Switching to x.x.x version numbering.
+-   1.11 - Switched `_custom_developer_id` to `custom_developer_id`
+-   1.1 - Switched `_custom_guid` to `_custom_developer_id`
+-   1.0 - Initial release
