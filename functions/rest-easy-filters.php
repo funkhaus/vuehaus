@@ -212,3 +212,17 @@
     //      return $related;
     //  }
     //  add_filter('rez_gather_related', 'add_adjacent_posts', 10, 2);
+
+    /**
+     *  Add WP-Shopify options to site data
+     *
+     * @param array $site_data The site data currently being processed by Rest-Easy
+     */
+    function add_wps_options_to_site_data($site_data){
+        if ( function_exists('get_wshop_domain') ){
+            $site_data['storefrontToken'] = get_wshop_api_key();
+            $site_data['shopifyDomain'] = get_wshop_domain();
+        }
+        return $site_data;
+    }
+    add_filter('rez_build_site_data', 'add_wps_options_to_site_data');
