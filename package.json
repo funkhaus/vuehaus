@@ -38,7 +38,8 @@
         "functions.php",
         "index.php",
         "style.css",
-        "screenshot.png"
+        "screenshot.png",
+        "screenshot.jpg"
     ],
     "author": "Funkhaus",
     "license": "ISC",
