@@ -1,6 +1,6 @@
 {
     "name": "vuepress",
-    "version": "1.1.7",
+    "version": "2.0.0",
     "description": "Build smooth, responsive Wordpress sites with Vue.",
     "main": "src/main.js",
     "scripts": {
@@ -10,7 +10,7 @@
         "clean": "rimraf static/bundle.*",
         "deploy": "fh-deploy",
         "format": "prettier --write 'src/**/*+(.js|.vue|.scss)'",
-        "analyze": "webpack --profile --json > bundleStats.json && webpack-bundle-analyzer bundleStats.json",
+        "analyze": "NODE_ENV=production webpack --profile --json > bundleStats.json && webpack-bundle-analyzer bundleStats.json",
         "precommit": "pretty-quick --staged"
     },
     "repository": {

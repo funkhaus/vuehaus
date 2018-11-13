@@ -8,7 +8,7 @@ Vuepress is a boilerplate used to build fast, responsive [WordPress](https://wor
 
 # Tutorial
 
-Head over to the [tutorial](https://github.com/funkhaus/vuepress/wiki) to learn how to build Vue.js + WordPress sites with Vuepress!
+Head over to the [tutorial](https://github.com/funkhaus/vuehaus/wiki) to learn how to build Vue.js + WordPress sites with Vuepress!
 
 # Reference
 
@@ -32,7 +32,7 @@ Head over to the [tutorial](https://github.com/funkhaus/vuepress/wiki) to learn 
     1.  [Mutations](#mutations)
     1.  [Actions](#actions)
     1.  [Getters](#getters)
-1.  [Vuepress Events](#vuepress-events)
+1.  [Vuepress Events](#vuehaus-events)
 1.  [Partials](#partials)
 1.  [Deploying](#deploying)
 1.  [Recommended Reading](#recommended-reading)
@@ -40,7 +40,7 @@ Head over to the [tutorial](https://github.com/funkhaus/vuepress/wiki) to learn 
 
 ## Install
 
-1.  In a WordPress `themes/` directory: `git clone https://github.com/funkhaus/vuepress my-theme`
+1.  In a WordPress `themes/` directory: `git clone https://github.com/funkhaus/vuehaus my-theme`
 1.  `cd my-theme`
 1.  `npm install`
 1.  Go to the WordPress back-end, activate, the Vuepress theme, and follow the instructions to install [Rest-Easy](https://github.com/funkhaus/Rest-Easy).
@@ -285,7 +285,7 @@ Vuepress defines a few utility functions to make building the routing table easi
 
 ### Upgrading Plugins
 
-If you need to upgrade your version of [Rest-Easy](https://github.com/funkhaus/Rest-Easy), change the `$latest_rest_easy` variable in `functions/vuepress-plugins.php` to match the latest Rest Easy version. You'll be prompted to upgrade the next time you load any page on the WordPress backend.
+If you need to upgrade your version of [Rest-Easy](https://github.com/funkhaus/Rest-Easy), change the `$latest_rest_easy` variable in `functions/vuehaus-plugins.php` to match the latest Rest Easy version. You'll be prompted to upgrade the next time you load any page on the WordPress backend.
 
 ## Vuex and State
 
@@ -454,8 +454,8 @@ Thanks for your interest in working on Vuepress! You can start any way you'd lik
 1. Clone this repo into the `wp-content/themes` folder on the new site. On OSX, that'd look like this:
 
     ```sh
-    cd ~/Local\ Sites/vuepress/app/public/wp-content/themes
-    git clone https://github.com/funkhaus/vuepress
+    cd ~/Local\ Sites/vuehaus/app/public/wp-content/themes
+    git clone https://github.com/funkhaus/vuehaus
     ```
 
 1. Activate the Vuepress theme in the WordPress backend.
@@ -487,7 +487,7 @@ cd fh-components
 npm link
 
 # Head to the Vuepress theme installation
-cd ~/Local\ Sites/vuepress/app/public/wp-content/themes/vuepress
+cd ~/Local\ Sites/vuehaus/app/public/wp-content/themes/vuehaus
 # Uninstall the local fh-components instance and instead use the cloned version above
 npm uninstall fh-components
 npm link fh-components
@@ -498,7 +498,7 @@ From here, running `npm run dev` on both `fh-components` and the Vuepress theme 
 When you're done making changes and have published the new `fh-components`:
 
 ```sh
-cd ~/Local\ Sites/vuepress/app/public/wp-content/themes/vuepress
+cd ~/Local\ Sites/vuehaus/app/public/wp-content/themes/vuehaus
 
 # unlink the local version
 npm uninstall fh-components
@@ -524,7 +524,7 @@ Version: 1.1.7
 -   1.1.7 - Updated NPM packages, adding "contributing" section
 -   1.1.6 - New user tutorial available, trimmed down readme, several misc fixes
 -   1.1.5 - Several misc fixes, added fh-deploy version control in package.json
--   1.1.4 - Restructuring according to [this issue](https://github.com/funkhaus/vuepress/issues/34)
+-   1.1.4 - Restructuring according to [this issue](https://github.com/funkhaus/vuehaus/issues/34)
 -   1.1.3 - Split Vuepress functionality into `/functions` directory
 -   1.1.2 - Added [TGM Plugin Activation](http://tgmpluginactivation.com/) to require plugins. Switching to x.x.x version numbering.
 -   1.11 - Switched `_custom_developer_id` to `custom_developer_id`

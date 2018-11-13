@@ -2,7 +2,7 @@
 /*
  * Custom Rest-Easy filters go in this file
  * You can see the documentation here: https://github.com/funkhaus/Rest-Easy
- * Common examples of filters to add in this file can be found here: https://github.com/funkhaus/vuepress/tree/master/functions
+ * Common examples of filters to add in this file can be found here: https://github.com/funkhaus/vuehaus/tree/master/functions
  */
 
  /**

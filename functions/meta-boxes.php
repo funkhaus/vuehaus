@@ -13,19 +13,19 @@
  */
 	function custom_media_meta($post) {
 
-        // From functions/custom-vuepress-templates.php
-        $custom_vuepress_templates = get_custom_vuepress_templates();
+        // From functions/custom-vuehaus-templates.php
+        $custom_vuehaus_templates = get_custom_vuehaus_templates();
 
 		?>
 
         	<div class="custom-meta">
 
-                <?php if( !empty($custom_vuepress_templates) and count($custom_vuepress_templates) > 1 ) : ?>
+                <?php if( !empty($custom_vuehaus_templates) and count($custom_vuehaus_templates) > 1 ) : ?>
 
-                    <label for="custom-vuepress-template">Select the custom template for this page:</label>
-                    <select id="custom-vuepress-template" name="custom_vuepress_template">
-                        <?php foreach( $custom_vuepress_templates as $template ) : ?>
-                            <option value="<?php echo $template; ?>" <?php selected($post->custom_vuepress_template, $template); ?>><?php echo $template; ?></option>
+                    <label for="custom-vuehaus-template">Select the custom template for this page:</label>
+                    <select id="custom-vuehaus-template" name="custom_vuehaus_template">
+                        <?php foreach( $custom_vuehaus_templates as $template ) : ?>
+                            <option value="<?php echo $template; ?>" <?php selected($post->custom_vuehaus_template, $template); ?>><?php echo $template; ?></option>
                         <?php endforeach; ?>
     				</select>
     				<br/>
@@ -102,8 +102,8 @@
         if( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
             return $post_id;
         }
-        if( isset($_POST['custom_vuepress_template']) ) {
-	        update_post_meta($post_id, 'custom_vuepress_template', $_POST['custom_vuepress_template']);
+        if( isset($_POST['custom_vuehaus_template']) ) {
+	        update_post_meta($post_id, 'custom_vuehaus_template', $_POST['custom_vuehaus_template']);
         }
         if( isset($_POST['custom_video_url']) ) {
 	        update_post_meta($post_id, 'custom_video_url', $_POST['custom_video_url']);
