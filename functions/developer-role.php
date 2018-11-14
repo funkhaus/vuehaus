@@ -35,6 +35,19 @@
     add_filter( 'user_can_richedit', 'disabled_rich_editor');
 
     /*
+     * Deactivate attachment serialization on certain pages
+     */
+    function deactivate_attachment_serialization($allow_attachment_serialization) {
+        global $post;
+
+        if($post->_custom_deactivate_attachment_serialization === 'on') {
+            return false;
+        }
+        return true;
+    }
+    add_filter( 'rez-serialize-attachments', 'deactivate_attachment_serialization');
+
+    /*
      * Add developer metaboxes to the new/edit page
      */
     function custom_add_developer_metaboxes($post_type, $post){
@@ -60,6 +73,10 @@
 
                 <label for="custom-richedit">Hide rich editor:</label>
                 <input id="custom-richedit" class="short" title="Hide rich editor" name="_custom_hide_richedit" type="checkbox" <?php if( $post->_custom_hide_richedit === 'on' ) echo 'checked'; ?>>
+                <br/>
+
+                <label for="custom-attachment-serialize">Prevent attachment serialization:</label>
+                <input id="custom-attachment-serialize" class="short" title="Prevent attachment serialization" name="_custom_deactivate_attachment_serialization" type="checkbox" <?php if( $post->_custom_deactivate_attachment_serialization === 'on' ) echo 'checked'; ?>>
                 <br/>
 
             </div>
@@ -105,6 +122,13 @@
             update_post_meta($post_id, '_custom_hide_richedit', $_POST['_custom_hide_richedit']);
         } else {
             update_post_meta($post_id, '_custom_hide_richedit', 0);
+        }
+
+        if( isset($_POST['_custom_deactivate_attachment_serialization']) ){
+            $value = $_POST['_custom_deactivate_attachment_serialization'] == 'on' ? 'on' : 0;
+            update_post_meta($post_id, '_custom_deactivate_attachment_serialization', $_POST['_custom_deactivate_attachment_serialization']);
+        } else {
+            update_post_meta($post_id, '_custom_deactivate_attachment_serialization', 0);
         }
 
     }
