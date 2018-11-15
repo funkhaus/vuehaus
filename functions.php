@@ -6,6 +6,9 @@
     // Builds Vue router
     include_once get_template_directory() . '/functions/router.php';
 
+    // Sets up custom Gutenberg blocks
+    include_once get_template_directory() . '/functions/blocks.php';
+
     // Custom Rest-Easy filters
     include_once get_template_directory() . '/functions/rest-easy-filters.php';
 
@@ -35,3 +38,9 @@
 
      // Handles Developer role
      include_once get_template_directory() . '/functions/developer-role.php';
+
+     // Add fonts to admin area
+     function include_vp_fonts(){
+         echo get_template_part('parts/font-loader');
+     }
+     add_action( 'admin_head', 'include_vp_fonts' );

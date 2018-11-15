@@ -28,6 +28,12 @@ Head over to the [tutorial](https://github.com/funkhaus/vuehaus/wiki) to learn h
     1.  [Getters](#getters)
 1.  [Vuehaus Events](#vuehaus-events)
 1.  [Partials](#partials)
+1.  [Gutenberg Blocks](#gutenberg-blocks)
+    1.  [Adding a Block](#adding-a-block)
+    1.  [Block Content](#block-content)
+    1.  [Block Content Types](#block-content-types)
+        1. [Adding Content Types](#adding-content-types)
+    1.  [Rendering Gutenberg Content](#rendering-gutenberg-content)
 1.  [Deploying](#deploying)
 1.  [Recommended Reading](#recommended-reading)
 1.  [Contributing](#contributing)
@@ -428,6 +434,96 @@ Default partials include:
     -   `fill` - `position: absolute` with `top`, `right`, `bottom`, and `left` set to `0`.
     -   `cover` - Centered, no-repeat, `background-size: cover`.
     -   `contain` - Same as `cover`, but with `background-size: contain`.
+
+## Gutenberg Blocks
+
+Vuehaus comes with [Gutenberg](https://wordpress.org/gutenberg/) support out of the box, including a simple way to create and use your own custom blocks.
+
+### Adding a Block
+
+To add a new block:
+
+-   Call `buildBlock` in `blocks/src/index.js`
+-   Run `npm run block-dev` for development and `npm run block-build` for production.
+
+The simplest example is creating a new text block:
+
+```js
+buildBlock({
+    // The unique slug of your block (namespaced to your theme) (required)
+    slug: 'text-block',
+
+    // Class applied to the block (required)
+    class: 'text-block',
+
+    // The human-readable name of your block (optional)
+    name: 'Text Block',
+
+    // A short block description (optional)
+    description: 'A block of text.',
+
+    // WP Dash Icon (https://developer.wordpress.org/resource/dashicons/) (optional)
+    icon: 'format-gallery',
+
+    // The block content (required)
+    content: [
+        {
+            // Unique name for this item
+            name: 'myContent',
+            // Item type - 'text'
+            type: 'text'
+        }
+    ]
+})
+```
+
+When you've added a new block, it will appear under your theme name in the block menu when editing a Gutenberg post.
+
+### Block Content
+
+`content` is an array that contains 1 or more objects with a name and a type:
+
+```js
+content: [
+    { name: 'firstWord', type: 'text' },
+    { name: 'middleWord', type: 'text' },
+    { name: 'lastWord', type: 'text' }
+]
+```
+
+You can also include [JSX](https://reactjs.org/docs/introducing-jsx.html) in your content:
+
+```js
+content: [
+    <h2>Enter Your Headline Here:</h2>,
+    { name: 'headline', type: 'text' },
+    <h2>Enter Your Content Here:</h2>,
+    { name: 'body', type: 'text' }
+]
+```
+
+### Block Content Types
+
+You can use any of the following as the `type` parameter in block content:
+
+-   `text`
+-   `image`
+
+#### Adding Content Types
+
+To add a new content type:
+
+1. Create a new JS file in `blocks/src/prebuilt`.
+1. Export an object containing `attributes`, `edit`, and `save` from this file.
+    1. You can use `blocks/src/prebuilt/text.js` as a model for each property, all of which are required to save and render content correctly.
+1. Import the result into `blocks/src/prebuilt/index.js`. Export this value with the name of the type as the key.
+    1. Example: `text.js` is imported to the index file, then exported with the key `text`. Blocks wanting to use this type can do so by setting their `type` to `'text'`.
+
+### Rendering Gutenberg Content
+
+[fh-components](https://github.com/funkhaus/fh-components) comes with a `wp-content` component designed for rendering WordPress content, but we recommend using the built-in `gutenberg-content` component for Gutenberg pages.
+
+It accepts all the same [arguments](https://github.com/funkhaus/fh-components#wp-content) as `wp-content`, but comes with extra `replace` values to handle images in content.
 
 ## Deploying
 
