@@ -71,7 +71,7 @@ Here are a bunch of useful examples of how to use the Rest-Easy filter functions
 
 ## Example of some useful shortcodes
 
-Here are a bunch of useful examples of how to use WordPress shortcodes with Vuepress. You will need both the PHP and the Vue template.
+Here are a bunch of useful examples of how to use WordPress shortcodes with vuehaus. You will need both the PHP and the Vue template.
 
 ```php
 /*

@@ -242,7 +242,7 @@
     add_filter('admin_body_class', 'add_developer_admin_body_class');
 
     // add extra capabilities for common plugins
-    function add_extra_vp_capabilities(){
+    function add_extra_vh_capabilities(){
         global $wp_roles;
 
         // add desired developer capabilities here
@@ -293,4 +293,4 @@
         }
     }
     // add permissions after any plugin activated
-    add_action('activated_plugin', 'add_extra_vp_capabilities');
+    add_action('activated_plugin', 'add_extra_vh_capabilities');
