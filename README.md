@@ -1,14 +1,8 @@
-## This might not be the Vuepress you're looking for!
-
-This repo is a boilerplate WordPress theme that makes WP and Vue work well together. You might be looking for [VuePress](https://vuepress.vuejs.org/), the Vue-powered static site generator. We only just found out about the name conflict, so we're figuring out what to do from here!
-
-# What
-
-Vuepress is a boilerplate used to build fast, responsive [WordPress](https://wordpress.org/) templates with [Vue.js](https://vuejs.org/).
+Vuehaus is a boilerplate used to build fast, responsive [WordPress](https://wordpress.org/) templates with [Vue.js](https://vuejs.org/). Built by [Funkhaus](http://funkhaus.us/).
 
 # Tutorial
 
-Head over to the [tutorial](https://github.com/funkhaus/vuehaus/wiki) to learn how to build Vue.js + WordPress sites with Vuepress!
+Head over to the [tutorial](https://github.com/funkhaus/vuehaus/wiki) to learn how to build Vue.js + WordPress sites with Vuehaus!
 
 # Reference
 
@@ -32,7 +26,7 @@ Head over to the [tutorial](https://github.com/funkhaus/vuehaus/wiki) to learn h
     1.  [Mutations](#mutations)
     1.  [Actions](#actions)
     1.  [Getters](#getters)
-1.  [Vuepress Events](#vuehaus-events)
+1.  [Vuehaus Events](#vuehaus-events)
 1.  [Partials](#partials)
 1.  [Deploying](#deploying)
 1.  [Recommended Reading](#recommended-reading)
@@ -43,7 +37,7 @@ Head over to the [tutorial](https://github.com/funkhaus/vuehaus/wiki) to learn h
 1.  In a WordPress `themes/` directory: `git clone https://github.com/funkhaus/vuehaus my-theme`
 1.  `cd my-theme`
 1.  `npm install`
-1.  Go to the WordPress back-end, activate, the Vuepress theme, and follow the instructions to install [Rest-Easy](https://github.com/funkhaus/Rest-Easy).
+1.  Go to the WordPress back-end, activate, the Vuehaus theme, and follow the instructions to install [Rest-Easy](https://github.com/funkhaus/Rest-Easy).
 1.  `npm run dev`
 1.  To build: `npm run build`
 1.  (Optional) To build and deploy to server using [fh-deploy](https://github.com/funkhaus/fh-deploy): `npm run deploy`
@@ -84,7 +78,7 @@ _get(this.$store.getters.post, 'related.children')
 
 ### Loading Fonts
 
-Vuepress includes the Google/Typekit [Web Font Loader](https://github.com/typekit/webfontloader) in `parts/font-loader.php`. Follow the instructions on that repo to load fonts from Google, Typekit, or your own uploads.
+Vuehaus includes the Google/Typekit [Web Font Loader](https://github.com/typekit/webfontloader) in `parts/font-loader.php`. Follow the instructions on that repo to load fonts from Google, Typekit, or your own uploads.
 
 ```js
 // font loader example
@@ -131,7 +125,7 @@ WebFontConfig = {
 
 ### Images
 
-Vuepress comes with a component called `responsive-image` that provides some built-in image handling, including fading in images as they load. You can pass an image object from Rest-Easy's attachment serializer and it will build itself automatically:
+Vuehaus comes with a component called `responsive-image` that provides some built-in image handling, including fading in images as they load. You can pass an image object from Rest-Easy's attachment serializer and it will build itself automatically:
 
 ```html
 <!-- Build a responsive image component from the featured image of the first post in The Loop -->
@@ -155,11 +149,11 @@ You must include either an `object` or a `src` parameter on a `responsive-image`
 
 ### Images with Videos
 
-All images in Vuepress have an associated video URL (saved as a metafield called `custom_video_url`). You can access this in a serialized image in Vuex with `image.videoUrl`.
+All images in Vuehaus have an associated video URL (saved as a metafield called `custom_video_url`). You can access this in a serialized image in Vuex with `image.videoUrl`.
 
 ### Shared Styles
 
-Vuepress supports SCSS out of the box, and comes with a style vars file in `src/styles/_vars.scss` and the base styling for the entire site in `src/styles/_base.scss`.
+Vuehaus supports SCSS out of the box, and comes with a style vars file in `src/styles/_vars.scss` and the base styling for the entire site in `src/styles/_base.scss`.
 
 You can import the vars file in any Vue template like this:
 
@@ -171,7 +165,7 @@ You can import the vars file in any Vue template like this:
 </style>
 ```
 
-Vuepress also comes with a few suggested breakpoints in that same vars file - you can use them in a media query like this:
+Vuehaus also comes with a few suggested breakpoints in that same vars file - you can use them in a media query like this:
 
 ```sass
 @media #{ $lt-phone } {
@@ -188,7 +182,7 @@ The default breakpoints (with `lt` for "less than" and `gt` for "greater than") 
 
 ### The Developer Role and Developer IDs
 
-Since URLs can easily change in the WordPress backend, Vuepress includes a new WP role, Developer, that has access to a set of controls that other roles (even Administrator) can't see. One of these controls is for a page's "Developer ID" - an arbitrary value that can reliably identify a page.
+Since URLs can easily change in the WordPress backend, Vuehaus includes a new WP role, Developer, that has access to a set of controls that other roles (even Administrator) can't see. One of these controls is for a page's "Developer ID" - an arbitrary value that can reliably identify a page.
 
 The Developer ID is accessible via a post object's `custom_developer_id` property - for example, `$post->custom_developer_id`.
 
@@ -196,7 +190,7 @@ If we set the About page's Developer ID to `about`, then rewrite the relevant li
 
 ```php
 ...
-    // path_from_dev_id is a Vuepress function that retrieves a page's relative path from its Developer ID
+    // path_from_dev_id is a Vuehaus function that retrieves a page's relative path from its Developer ID
     path_from_dev_id('about')                         => 'About'
 ...
 ```
@@ -205,7 +199,7 @@ This will guarantee that the path to this page will always render the About temp
 
 ### Developer Capabilities
 
-The Developer role in Vuepress has a few extra capabilities available:
+The Developer role in Vuehaus has a few extra capabilities available:
 
 #### Preventing deletion
 
@@ -219,7 +213,7 @@ Check the "Hide Rich Editor" box to prevent non-Developer users from using WordP
 
 Take a look at the [path-to-regexp documentation](https://github.com/pillarjs/path-to-regexp) for examples of routing using regex capabilities.
 
-The routing table in Vuepress automatically converts a string-string key-value pair to a Vue route object:
+The routing table in Vuehaus automatically converts a string-string key-value pair to a Vue route object:
 
 ```php
 array(
@@ -273,7 +267,7 @@ When trying to get the children of the front page, you'll need to use `slug_from
 
 ### Utility Functions
 
-Vuepress defines a few utility functions to make building the routing table easier:
+Vuehaus defines a few utility functions to make building the routing table easier:
 
 -   `get_child_of_dev_id($dev_id, $nth_child = 0)` - Get the post object of the nth child (zero-based, default `0`) of a page with the given Developer ID.
 -   `get_child_of_dev_id_path($dev_id, $nth_child = 0, $after = '')` - Get the relative path of the nth child of a page with the given Developer ID. Adds `$after` to the retrieved path.
@@ -289,7 +283,7 @@ If you need to upgrade your version of [Rest-Easy](https://github.com/funkhaus/R
 
 ## Vuex and State
 
-Vuepress uses [Vuex](https://vuex.vuejs.org/en/intro.html) to handle a site's state. The default store in `src/utils/store.js` is set up like this:
+Vuehaus uses [Vuex](https://vuex.vuejs.org/en/intro.html) to handle a site's state. The default store in `src/utils/store.js` is set up like this:
 
 ```js
 {
@@ -298,7 +292,7 @@ Vuepress uses [Vuex](https://vuex.vuejs.org/en/intro.html) to handle a site's st
     meta: jsonData.meta,
     loop: jsonData.loop,
 
-    // Vuepress-specific
+    // Vuehaus-specific
     transitioning_in: false,
     transitioning_out: false,
     loaded: true
@@ -315,7 +309,7 @@ You can commit a mutation from any Vue component by using:
 this.$store.commit('MUTATION_NAME', payload)
 ```
 
-Default Vuepress mutations:
+Default Vuehaus mutations:
 
 -   `'REPLACE_QUERYDATA', { site, meta, loop }` - Replaces the `store`'s `site`, `meta`, and `loop` properties with the `site`, `meta`, and `loop` properties of the payload.
 -   `'SET_TRANSITIONING_IN, true | false'` - Sets `state.transitioning_in` to the given value.
@@ -333,7 +327,7 @@ Where mutations are synchronous, actions are asynchronous:
 this.$store.dispatch('ACTION_NAME', payload)
 ```
 
-Default Vuepress actions:
+Default Vuehaus actions:
 
 -   `'LOAD_AND_REPLACE_QUERYDATA, { path: 'url string' }'` - Runs the following process:
     1.  Sets `state.loaded` to `false`.
@@ -351,13 +345,13 @@ Getters are shortcuts to dynamic state properties:
 
 `$store.state.getters.desiredGetter`
 
-Default Vuepress getters include:
+Default Vuehaus getters include:
 
 -   `loading` - Returns the opposite of `$store.state.loaded`.
 -   `post` - Returns either the first post in `$store.state.loop` or, if none, an empty object.
 -   `referralPath` - Returns either the `fullPath` of the current value of `$store.state.referral` or, if none, an empty string.
 
-## Vuepress Events
+## Vuehaus Events
 
 Throttled resize and scroll events are available to any child of the App component:
 
@@ -376,7 +370,7 @@ Both events are fired after the `$root` element saves updated window dimensions/
 
 ## Partials
 
-Vuepress comes with a few SCSS [partials](http://sass-lang.com/guide) to make writing CSS easier. In a Vue template file:
+Vuehaus comes with a few SCSS [partials](http://sass-lang.com/guide) to make writing CSS easier. In a Vue template file:
 
 ```
 <style lang="scss">
@@ -437,7 +431,7 @@ Default partials include:
 
 ## Deploying
 
-Vuepress comes with [fh-deploy](https://www.npmjs.com/package/fh-deploy) to make deploying your site as easy as possible.
+Vuehaus comes with [fh-deploy](https://www.npmjs.com/package/fh-deploy) to make deploying your site as easy as possible.
 
 Run `npm run deploy` to generate a config file based on a few user inputs. The queue of files to upload is in the package.json `files` property. `npm run deploy` automatically runs `npm run build` and sends the queued files to your server!
 
@@ -447,10 +441,10 @@ Running fh-deploy will automatically overwrite any files of the same name on you
 
 ## Contributing
 
-Thanks for your interest in working on Vuepress! You can start any way you'd like, but here's how the Funkhaus team does it:
+Thanks for your interest in working on Vuehaus! You can start any way you'd like, but here's how the Funkhaus team does it:
 
 1. Install [Local by Flywheel](https://local.getflywheel.com/) to quickly spin up new local WordPress sites.
-1. Create a new WordPress site in Local. We'll call ours "Vuepress" as an example.
+1. Create a new WordPress site in Local. We'll call ours "Vuehaus" as an example.
 1. Clone this repo into the `wp-content/themes` folder on the new site. On OSX, that'd look like this:
 
     ```sh
@@ -458,7 +452,7 @@ Thanks for your interest in working on Vuepress! You can start any way you'd lik
     git clone https://github.com/funkhaus/vuehaus
     ```
 
-1. Activate the Vuepress theme in the WordPress backend.
+1. Activate the Vuehaus theme in the WordPress backend.
 1. Open the repo in your editor of choice and run (optionally using [LiveReload](https://www.npmjs.com/package/livereload)):
 
     ```sh
@@ -486,14 +480,14 @@ git clone https://github.com/funkhaus/fh-components
 cd fh-components
 npm link
 
-# Head to the Vuepress theme installation
+# Head to the Vuehaus theme installation
 cd ~/Local\ Sites/vuehaus/app/public/wp-content/themes/vuehaus
 # Uninstall the local fh-components instance and instead use the cloned version above
 npm uninstall fh-components
 npm link fh-components
 ```
 
-From here, running `npm run dev` on both `fh-components` and the Vuepress theme will reflect changes in `fh-components`. (You can edit the `src/views/Default.vue` template to test out new components.)
+From here, running `npm run dev` on both `fh-components` and the Vuehaus theme will reflect changes in `fh-components`. (You can edit the `src/views/Default.vue` template to test out new components.)
 
 When you're done making changes and have published the new `fh-components`:
 
@@ -508,25 +502,13 @@ npm install fh-components
 
 ## Recommended Reading
 
-Not Vuepress-specific reading material, but rather good practices and articles.
+Not Vuehaus-specific reading material, but rather good practices and articles.
 
 1.  [Maintainable CSS](https://maintainablecss.com/chapters/introduction/), a guide to writing readable and easily-maintained CSS
 1.  [SVG Tips for Designers](https://www.sarasoueidan.com/blog/svg-tips-for-designers/)
 
 ---
 
-**Vuepress**
+**Vuehaus**
 
 http://funkhaus.us
-
-Version: 1.1.7
-
--   1.1.7 - Updated NPM packages, adding "contributing" section
--   1.1.6 - New user tutorial available, trimmed down readme, several misc fixes
--   1.1.5 - Several misc fixes, added fh-deploy version control in package.json
--   1.1.4 - Restructuring according to [this issue](https://github.com/funkhaus/vuehaus/issues/34)
--   1.1.3 - Split Vuepress functionality into `/functions` directory
--   1.1.2 - Added [TGM Plugin Activation](http://tgmpluginactivation.com/) to require plugins. Switching to x.x.x version numbering.
--   1.11 - Switched `_custom_developer_id` to `custom_developer_id`
--   1.1 - Switched `_custom_guid` to `_custom_developer_id`
--   1.0 - Initial release
