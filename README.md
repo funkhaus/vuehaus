@@ -439,6 +439,13 @@ Default partials include:
 
 Vuehaus comes with [Gutenberg](https://wordpress.org/gutenberg/) support out of the box, including a simple way to create and use your own custom blocks.
 
+TL;DR:
+
+-   Run npm run block-dev for development
+-   Add blocks in blocks/src/index.js
+-   Run npm run block-build to build blocks for production
+-   Use gutenberg-content instead of wp-content to render content
+
 ### Adding a Block
 
 To add a new block:
