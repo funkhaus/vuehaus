@@ -134,3 +134,32 @@ export const scrollUp = () => {
 export const clamp = (val, min, max) => {
     return Math.min(Math.max(val, min), max)
 }
+
+// mimics PHP's nl2br
+export const nl2br = str => {
+    return str.replace(/(?:\r\n|\r|\n)/g, '<br>')
+}
+
+// wait for an element with the given CSS selector to appear:
+// await asyncWaitFor('.thing')
+// doSomethingWith('.thing')
+export const asyncWaitFor = item => {
+    return new Promise(res => {
+        let present = false
+
+        // set up loop
+        const check = () => {
+            present = document.querySelector(item)
+
+            if (!present) {
+                requestAnimationFrame(check)
+            } else {
+                requestAnimationFrame(res)
+            }
+        }
+
+        // kick off loop
+        check()
+    })
+}
+
