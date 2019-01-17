@@ -63,11 +63,13 @@ export default new Vuex.Store({
             // wait for data
             const data = await cache[path]
 
-            // if we're still waiting for the data from this path, replace it and finish loading
+            // if we're still waiting for the data from this path, replace it
             if (context.state.currentlyFetching == path) {
                 context.commit('REPLACE_QUERYDATA', data)
-                context.commit('SET_LOADED', true)
             }
+
+            // notify that we're finished loading
+            context.commit('SET_LOADED', true)
         }
     },
     getters: {
