@@ -34,6 +34,7 @@ Head over to the [tutorial](https://github.com/funkhaus/vuehaus/wiki) to learn h
     1.  [Block Content Types](#block-content-types)
         1. [Adding Content Types](#adding-content-types)
     1.  [Rendering Gutenberg Content](#rendering-gutenberg-content)
+    1.  [Removing Block Support](#removing-block-support)
 1.  [Deploying](#deploying)
 1.  [Recommended Reading](#recommended-reading)
 1.  [Contributing](#contributing)
@@ -531,6 +532,20 @@ To add a new content type:
 [fh-components](https://github.com/funkhaus/fh-components) comes with a `wp-content` component designed for rendering WordPress content, but we recommend using the built-in `gutenberg-content` component for Gutenberg pages.
 
 It accepts all the same [arguments](https://github.com/funkhaus/fh-components#wp-content) as `wp-content`, but comes with extra `replace` values to handle images in content.
+
+### Removing Block Support
+
+If you don't want to support custom Gutenberg blocks and want to simplify your theme, you can:
+
+1. Delete the `blocks/` directory
+1. Delete `functions/blocks.php`
+1. Remove this line from `functions.php`:
+
+    `include_once get_template_directory() . '/functions/blocks.php';`
+
+1. Remove this line from `package.json`'s `files` array:
+
+    `"blocks/**/*.*",`
 
 ## Deploying
 
