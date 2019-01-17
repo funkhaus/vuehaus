@@ -551,7 +551,9 @@ If you don't want to support custom Gutenberg blocks and want to simplify your t
 
 Vuehaus comes with [fh-deploy](https://www.npmjs.com/package/fh-deploy) to make deploying your site as easy as possible.
 
-Run `npm run deploy` to generate a config file based on a few user inputs. The queue of files to upload is in the package.json `files` property. `npm run deploy` automatically runs `npm run build` and sends the queued files to your server!
+Run `npm run deploy` to generate a config file based on a few user inputs. The queue of files to upload is in the package.json `files` property. `npm run deploy` automatically uploads whatever you have in your directory at the time to your server, so we recommend running `npm run build` first - a full deploy command might look like this:
+
+`npm run build && npm run deploy`
 
 **Important note from fh-deploy readme:**
 
