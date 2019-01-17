@@ -226,3 +226,14 @@
         return $site_data;
     }
     add_filter('rez_build_site_data', 'add_wps_options_to_site_data');
+
+    /**
+     *  Add next posts link to site data for infinite scroll
+     *
+     * @param array $site_data The site data currently being processed by Rest-Easy
+     */
+    function add_next_post_page_link($input) {
+        $input['meta']['next_post_link'] = next_posts(0, false);
+        return $input;
+    }
+    add_filter('rez_build_site_data', 'add_next_post_page_link');

@@ -24,7 +24,7 @@ components.keys().map(component => {
 // Vue.component('flex-text', require('fh-components/flex-text'))
 Vue.component('hamburger-button', require('fh-components/hamburger-button'))
 Vue.component('image-loader', require('fh-components/image-loader'))
-// Vue.component('load-on-view', require('fh-components/load-on-view'))
+Vue.component('load-on-view', require('fh-components/load-on-view'))
 // Vue.component('mailing-list', require('fh-components/mailing-list'))
 // Vue.component('menu-item', require('fh-components/wp-menu-item'))
 Vue.component('responsive-image', require('fh-components/responsive-image'))
