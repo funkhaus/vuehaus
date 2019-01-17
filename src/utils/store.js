@@ -15,7 +15,8 @@ export default new Vuex.Store({
         loop: jsonData.loop,
         loaded: true,
         menuOpened: false,
-        referral: null
+        referral: null,
+        currentlyFetching: null
     },
     mutations: {
         REPLACE_QUERYDATA: (state, data) => {
@@ -39,11 +40,17 @@ export default new Vuex.Store({
         },
         UPDATE_REFERRAL_ROUTE: (state, referral) => {
             state.referral = referral
+        },
+        SET_CURRENTLY_FETCHING: (state, { path }) => {
+            state.currentlyFetching = path
         }
     },
     actions: {
         LOAD_AND_REPLACE_QUERYDATA: async (context, payload) => {
             const path = payload.path || ''
+
+            // flag that we're looking for the given path
+            context.commit('SET_CURRENTLY_FETCHING', { path })
 
             // no cache? set it
             if (!cache[payload.path]) {
@@ -53,10 +60,14 @@ export default new Vuex.Store({
                 }).then(r => r.json())
             }
 
-            // wait for data, replace
+            // wait for data
             const data = await cache[path]
-            context.commit('REPLACE_QUERYDATA', data)
-            context.commit('SET_LOADED', true)
+
+            // if we're still waiting for the data from this path, replace it and finish loading
+            if (context.state.currentlyFetching == path) {
+                context.commit('REPLACE_QUERYDATA', data)
+                context.commit('SET_LOADED', true)
+            }
         }
     },
     getters: {
