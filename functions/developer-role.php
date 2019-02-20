@@ -235,7 +235,7 @@
     // add 'is-developer' class to WP admin pages if we're a developer
     function add_developer_admin_body_class($classes){
         if( user_is_developer() ){
-            $classes .= 'is-developer';
+            $classes .= ' is-developer';
         }
         return $classes;
     }
