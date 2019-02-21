@@ -38,7 +38,7 @@
          }
 
          // get ACF fields attached to target post
-         $acf_fields = get_fields($post_data['ID']);
+         $acf_fields = get_fields($post_data['id']);
 
          // prep to save serialized fields
          $post_data['acf'] = array();
