@@ -1,3 +1,5 @@
+**DEPRECATED: We have stopped developing this, check out our new boilerplate [stackhaus](https://github.com/funkhaus/stackhaus).**
+
 Vuehaus is a boilerplate used to build fast, responsive [WordPress](https://wordpress.org/) templates with [Vue.js](https://vuejs.org/). Built by [Funkhaus](http://funkhaus.us/).
 
 # Tutorial
